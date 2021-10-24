@@ -1,0 +1,14 @@
+version: 0.0
+os: linux
+
+files:
+  - source: ./
+    destination: /opt/apps
+
+hooks:
+  ApplicationStart:
+    - location: scripts/start_server.sh
+      runas: root
+  ApplicationStop:
+    - location: scripts/stop_server.sh
+      runas: root

@@ -31,6 +31,7 @@
           "extensions": [".js", ".jsx"] // option to allow using JSX syntax within both ".js" and ".jsx" file extensions
         }
       ],
+      "react/jsx-props-no-spreading": "off",
       "no-console": "error",
       "semi": "off",
       "no-param-reassign": "off"

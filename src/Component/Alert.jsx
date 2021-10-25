@@ -1,17 +1,44 @@
 import PropTypes from 'prop-types'
 import React from 'react'
+import Alert from 'react-bootstrap/Alert'
+import ButtonComponent from './Button'
 
-const AlertComponent = ({ msg, type }) => (
-  <div className={`alert ${type}`} role="alert">
-    {msg}
-  </div>
+const AlertComponent = ({
+  show,
+  title,
+  content,
+  variant,
+  action,
+}) => (
+  <Alert show={show} variant={variant}>
+    <Alert.Heading>{title}</Alert.Heading>
+    {content && (
+    <p>
+      {content}
+    </p>
+    )}
+    <hr />
+    {action && (
+    <div className="d-flex justify-content-end">
+      <ButtonComponent title="Close" onClick={action} variant="outline-success">
+        Close
+      </ButtonComponent>
+    </div>
+    )}
+  </Alert>
 )
 
 AlertComponent.defaultProps = {
-  type: 'alert-primary',
+  variant: 'success',
+  content: null,
 }
+
 AlertComponent.propTypes = {
-  msg: PropTypes.string.isRequired,
-  type: PropTypes.string,
+  show: PropTypes.bool.isRequired,
+  variant: PropTypes.string,
+  title: PropTypes.string.isRequired,
+  content: PropTypes.string,
+  action: PropTypes.func.isRequired,
 }
+
 export default AlertComponent

@@ -1,6 +1,7 @@
 import React, { useState } from 'react'
 import ButtonComponent from './Component/Button'
 import AlertComponent from './Component/Alert';
+import Swal from 'sweetalert2';
 
 import './App.css'
 import './static/styles/Alert.css'
@@ -12,12 +13,12 @@ function App() {
   const [showAlert, setShowAlert] = useState(initialAlertState)
 
   const openAlert = () => {
-    setShowAlert({
-      status: true,
-      title: 'Message Alert',
-      content: 'Content of alert component',
-    })
-  }
+    Swal.fire({
+     title: "Alkemy",
+     html: "You clicked the button!",
+     icon: 'success'
+   })
+ }
 
   const closeAlert = () => {
     setShowAlert(initialAlertState)

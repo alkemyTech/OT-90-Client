@@ -8,6 +8,7 @@ export default function Header() {
       .then((data) => setPublicData(data))
       .catch((error) => console.log(error))
   }, [])
+  console.log(publicData)
   return (
     <>
       {publicData && (
@@ -22,6 +23,10 @@ export default function Header() {
           </ul>
         </>
       )}
+      <div>
+        <button>Log In</button>
+        <button>Registrarse</button>
+      </div>
     </>
   )
 }

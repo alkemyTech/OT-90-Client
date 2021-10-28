@@ -7,6 +7,7 @@ export default function Root() {
     <Router>
       <Switch>
         <Route exact path="/" component={App} />
+        <Route path="/nosotros" component={() => '"Nostros" Screen under construction'} />
       </Switch>
     </Router>
   )

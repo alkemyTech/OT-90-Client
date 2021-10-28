@@ -1,7 +1,5 @@
-import '../static/styles/Slider.css'
-
-import Carousel from 'react-bootstrap/Carousel'
 import React from 'react';
+import SliderCarousel from './SliderCarousel';
 
 const fetchSlider = [
     {
@@ -21,20 +19,7 @@ const fetchSlider = [
 const Slider = () => {
     return (
   <>
-  <Carousel className="carouselContainer">
-    {fetchSlider.length > 0  ? (
-      fetchSlider.map( (slide, i) => {
-        return  <Carousel.Item key={i}>
-            <img
-                    className="d-block w-100"
-                    src={slide.imageURL} 
-            />
-          <Carousel.Caption className="carouselCaption">
-            <p>{slide.text}</p>
-          </Carousel.Caption>
-        </Carousel.Item>                    
-                }) ) : null } 
-  </Carousel>
+  <SliderCarousel fetchSlider={fetchSlider}/>
   </>
     )
 }

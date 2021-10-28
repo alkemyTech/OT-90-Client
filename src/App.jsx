@@ -1,10 +1,11 @@
 import React, { useState } from 'react'
 import ButtonComponent from './Component/Button'
-import AlertComponent from './Component/Alert';
+import AlertComponent from './Component/Alert'
+import Header from './Component/Header.jsx'
 
 import './App.css'
 import './static/styles/Alert.css'
-import 'bootstrap/dist/css/bootstrap.min.css';
+import 'bootstrap/dist/css/bootstrap.min.css'
 
 const initialAlertState = { status: false, title: '', content: '' }
 
@@ -25,8 +26,13 @@ function App() {
 
   return (
     <div className="App">
+      <Header />
       <div className="alert-custom">
-        <AlertComponent show={showAlert.status} action={() => closeAlert()} {...showAlert} />
+        <AlertComponent
+          show={showAlert.status}
+          action={() => closeAlert()}
+          {...showAlert}
+        />
       </div>
       <header className="App-header">
         <ButtonComponent title="Test Button" onClick={() => openAlert()} />

@@ -4,6 +4,23 @@ import {
   Col, Form, Row, Button, FloatingLabel,
 } from 'react-bootstrap';
 
+const validation = ({ email, password }) => {
+  const errors = {};
+  if (!email) {
+    errors.email = 'El email es requerido';
+  } else if (
+    !/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i.test(email)
+  ) {
+    errors.email = 'Email inválido';
+  }
+  if (!password) {
+    errors.password = 'La contraseña es requerida';
+  } else if (password.trim().length < 6) {
+    errors.password = 'Al menos 6 caracteres'
+  }
+  return errors;
+}
+
 const onSubmit = (values) => {
   // eslint-disable-next-line no-alert
   alert(JSON.stringify(values))
@@ -12,6 +29,7 @@ const onSubmit = (values) => {
 const Login = () => {
   return (
     <Formik
+      validate={validation}
       onSubmit={onSubmit}
       initialValues={{
         email: '',

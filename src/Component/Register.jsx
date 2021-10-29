@@ -1,9 +1,10 @@
+/* eslint-disable jsx-a11y/label-has-associated-control */
 import React from 'react'
 import { Formik } from 'formik'
 import '../features/register/register.css'
 
 const validate = ({ name, lastname, mail, password }) => {
-  let errors = {}
+  const errors = {}
   if (!name) {
     errors.name = 'Ingrese su nombre'
   } else if (!/^[a-zA-ZÀ-ÿ\s]{1,40}$/.test(name)) {
@@ -31,7 +32,6 @@ const validate = ({ name, lastname, mail, password }) => {
 
 const handleOnSubmit = (values, { resetForm }) => {
   resetForm()
-  console.log(values)
 }
 
 const Register = () => (
@@ -61,7 +61,7 @@ const Register = () => (
           >
             <h1 className="text-center py-3">Registrate</h1>
 
-            <label>Nombre</label>
+            <label htmlFor="name">Nombre</label>
             <input
               type="text"
               id="name"
@@ -76,7 +76,7 @@ const Register = () => (
               <p className="text-danger">{errors.name}</p>
             )}
 
-            <label>Apellido</label>
+            <label htmlFor="lastname">Apellido</label>
             <input
               type="text"
               id="lastname"
@@ -91,7 +91,7 @@ const Register = () => (
               <p className="text-danger">{errors.lastname}</p>
             )}
 
-            <label>Correo</label>
+            <label htmlFor="mail">Correo</label>
             <input
               type="email"
               id="mail"
@@ -105,7 +105,7 @@ const Register = () => (
               <p className="text-danger">{errors.mail}</p>
             )}
 
-            <label>Contraseña</label>
+            <label htmlFor="password">Contraseña</label>
             <input
               type="password"
               id="password"

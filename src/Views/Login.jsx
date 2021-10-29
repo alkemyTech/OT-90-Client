@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Formik } from 'formik';
 import {
   Col, Form, Row, Button, FloatingLabel,
@@ -27,6 +27,7 @@ const onSubmit = (values) => {
 }
 
 const Login = () => {
+  const [showPassword, setShowpassword] = useState(false)
   return (
     <Formik
       validate={validation}
@@ -71,7 +72,7 @@ const Login = () => {
                   className="mb-1"
                 >
                   <Form.Control
-                    type="password"
+                    type={showPassword ? 'text' : 'password'}
                     placeholder="Contraseña"
                     name="password"
                     value={values.password}
@@ -83,6 +84,12 @@ const Login = () => {
                   </Form.Control.Feedback>
                 </FloatingLabel>
               </Form.Group>
+              <Form.Check
+                name="showPassword"
+                className="mb-3"
+                label="Mostrar contraseña"
+                onChange={() => setShowpassword(!showPassword)}
+              />
               <Button className="d-block mx-auto" type="submit">Iniciar Sesion</Button>
             </Form>
           </Col>

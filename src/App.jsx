@@ -2,6 +2,7 @@ import React, { useState } from 'react'
 import Swal from 'sweetalert2';
 import ButtonComponent from './Component/Button'
 import AlertComponent from './Component/Alert'
+import Header from './Component/Header.jsx'
 import Loader from './Component/Loader'
 import './App.css'
 import './static/styles/Alert.css'
@@ -29,8 +30,13 @@ function App() {
 
   return (
     <div className="App">
+      <Header />
       <div className="alert-custom">
-        <AlertComponent show={showAlert.status} action={() => closeAlert()} {...showAlert} />
+        <AlertComponent
+          show={showAlert.status}
+          action={() => closeAlert()}
+          {...showAlert}
+        />
       </div>
       <Loader visible={visible} />
       <header className="App-header">

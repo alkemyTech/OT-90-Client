@@ -15,9 +15,9 @@ function Upload() {
     const newFileName = fileInput.current.files[0].name;
     const config = {
       bucketName: process.env.REACT_APP_AWS_S3_BUCKET,
-      dirName: process.env.REACT_APP_AWS_S3_DIRNAME,
+      s3Url: process.env.REACT_APP_AWS_S3_URL,
       region: process.env.REACT_APP_AWS_S3_REGION,
-      accessKeyId: process.env.REACT_APP_ACCESS_ID,
+      accessKeyId: process.env.REACT_APP_AWS_S3_KEY,
       secretAccessKey: process.env.REACT_APP_AWS_S3_SECRET,
     }
     const ReactS3Client = new S3(config);

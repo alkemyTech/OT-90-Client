@@ -1,0 +1,9 @@
+.carouselContainer {
+    width: 40vw;
+    height: 40vh;
+}
+
+.carouselCaption {
+    color: rgb(203, 18, 18);
+    background-color: rgb(225, 225, 225);
+}

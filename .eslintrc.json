@@ -34,6 +34,7 @@
       "react/jsx-props-no-spreading": "off",
       "no-console": "error",
       "semi": "off",
-      "no-param-reassign": "off"
+      "no-param-reassign": "off",
+      "linebreak-style" : 0
     }
 }

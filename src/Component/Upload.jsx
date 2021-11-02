@@ -4,6 +4,8 @@ import { Button } from 'react-bootstrap';
 
 import S3 from 'react-aws-s3';
 
+require('dotenv').config()
+
 function Upload() {
   const fileInput = useRef();
 
@@ -12,10 +14,11 @@ function Upload() {
     const file = fileInput.current.files[0];
     const newFileName = fileInput.current.files[0].name;
     const config = {
-      buckname: process.env.REACT_APP_DIR_NAME,
-      region: process.env.REACT_APP_REGION,
+      bucketName: process.env.REACT_APP_AWS_S3_BUCKET,
+      dirName: process.env.REACT_APP_AWS_S3_DIRNAME,
+      region: process.env.REACT_APP_AWS_S3_REGION,
       accessKeyId: process.env.REACT_APP_ACCESS_ID,
-      secretAccess_KEYREACT: process.env,
+      secretAccessKey: process.env.REACT_APP_AWS_S3_SECRET,
     }
     const ReactS3Client = new S3(config);
     ReactS3Client.uploadFile(file, newFileName)

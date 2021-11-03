@@ -2,6 +2,8 @@ import React from 'react'
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom'
 import PropTypes from 'prop-types'
 import Activities from '../Views/Activities'
+import Categories from '../Views/Catogeries'
+import Contacts from '../Views/Contacts'
 
 const Backoffice = (props) => {
   const { match } = props
@@ -11,6 +13,8 @@ const Backoffice = (props) => {
       <Switch>
         <Route exact path={path} component={() => 'Main backoffice route'} />
         <Route path={`${path}/activities`} component={Activities} />
+        <Route path={`${path}/categories`} component={Categories} />
+        <Route path={`${path}/contacts`} component={Contacts} />
       </Switch>
     </Router>
   )

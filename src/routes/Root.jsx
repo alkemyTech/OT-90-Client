@@ -2,6 +2,7 @@ import React from 'react'
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom'
 import App from '../App'
 import Login from '../Views/Login'
+import NewsDetail from '../Views/NewsDetail'
 import Backoffice from './Backoffice'
 
 export default function Root() {
@@ -10,6 +11,7 @@ export default function Root() {
       <Switch>
         <Route exact path="/" component={App} />
         <Route exact path="/login" component={Login} />
+        <Route exact path="/novedad/:id" component={NewsDetail} />
         <Route path="/nosotros" component={() => '"Nostros" Screen under construction'} />
         <Route path="/backoffice" component={Backoffice} />
       </Switch>

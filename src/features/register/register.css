@@ -1,0 +1,19 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+.formContainer input {
+  outline: 0;
+  border-radius: 5px;
+  border: 1px solid;
+  padding: 3px 10px;
+  margin-bottom: 15px;
+}
+
+.formContainer input:focus {
+  outline: 0;
+  border-radius: 5px;
+  border: 1px rgb(202, 202, 202) solid;
+}

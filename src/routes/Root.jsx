@@ -4,6 +4,7 @@ import App from '../App'
 import Register from '../Component/Register'
 import Login from '../Views/Login'
 import Backoffice from './Backoffice'
+import News from '../Views/News'
 
 export default function Root() {
   return (
@@ -12,6 +13,7 @@ export default function Root() {
         <Route exact path="/" component={App} />
         <Route path="/register" component={Register} />
         <Route exact path="/login" component={Login} />
+        <Route exact path="/novedades" component={News} />
         <Route path="/nosotros" component={() => '"Nostros" Screen under construction'} />
         <Route path="/backoffice" component={Backoffice} />
       </Switch>

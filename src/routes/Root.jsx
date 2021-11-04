@@ -13,7 +13,7 @@ export default function Root() {
         <Route exact path="/" component={App} />
         <Route path="/register" component={Register} />
         <Route exact path="/login" component={Login} />
-        <Route exact path="/novedad/:id" component={NewsDetail} />
+        <Route exact path="/novedades/:id" component={NewsDetail} />
         <Route path="/nosotros" component={() => '"Nostros" Screen under construction'} />
         <Route path="/backoffice" component={Backoffice} />
       </Switch>

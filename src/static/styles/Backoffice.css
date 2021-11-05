@@ -1,16 +1,6 @@
-.backoffice {
+.grid{
   display: grid;
   grid-template-columns: repeat(3, 1fr);
-  gap: 10px;
-  margin: 20px
-}
-.app {
-  border: 1px solid #000;
-  padding: 20px;
-  text-align: right;
-  cursor: pointer;
-  transition: .2s
-}
-.app:hover {
-  transform: scale(1.02);
+  gap: 30px;
+  margin: 30px;
 }

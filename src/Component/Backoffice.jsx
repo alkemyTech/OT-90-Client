@@ -1,6 +1,6 @@
 import React from 'react'
 import Button from 'react-bootstrap/Button'
-import './Backoffice.css'
+import '../static/styles/Backoffice.css'
 
 // localStorage.setItem('user-data', JSON.stringify(
 // { username: 'Ben', token: null, role: 'admin' }))

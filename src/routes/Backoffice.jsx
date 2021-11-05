@@ -11,6 +11,7 @@ const Backoffice = (props) => {
       <Switch>
         <Route exact path={path} component={() => 'Main backoffice route'} />
         <Route path={`${path}/activities`} component={Activities} />
+        <Route path={`${path}/testimonials`} component={Activities} />
       </Switch>
     </Router>
   )

@@ -2,8 +2,7 @@ import React from 'react'
 import 'bootstrap/dist/css/bootstrap.min.css'
 import Footer from '../Component/Footer';
 import Header from '../Component/Header';
-
-const colNames = ['Nombre', 'Acciones']
+import TestimonyForm from '../Component/TestimonyForm';
 
 function Testimonials() {
   return (
@@ -18,7 +17,7 @@ function Testimonials() {
           display: 'flex',
         }}
       >
-        <Table colNames={colNames} data={data} />
+       <TestimonyForm /> 
       </div>
       <Footer />
     </div>

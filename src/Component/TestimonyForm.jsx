@@ -52,12 +52,15 @@ function TestimonyForm(props) {
     }
   }
 
-  const validation = ({ name, content }) => {
+  const validation = ({ name, image, content }) => {
     const errors = {}
     if (name.length > 200) {
       errors.name = 'El nombre no puede superar los 200 caracteres'
     } else if (name.length === 0) {
       errors.name = 'El nombre no puede estar vacio'
+    }
+    if (image.length === 0) {
+      errors.image = 'Debe cargar una imagen'
     }
     if (content.length > 255) {
       errors.content = 'El contenido no puede superar los 255 caracteres'
@@ -101,6 +104,25 @@ function TestimonyForm(props) {
             />
             <Form.Control.Feedback type="invalid">
               {errors.name}
+            </Form.Control.Feedback>
+          </Form.Group>
+
+          <Form.Group className="mb-3" controlId="validationFormik01">
+            <Form.Label style={{ justifyContent: 'left', display: 'flex' }}>
+              Image
+            </Form.Label>
+            <Form.Control
+              type="file"
+              placeholder="Ingrese imagen del testimonio"
+              name="image"
+              value={values.image}
+              onBlur={handleBlur}
+              onChange={handleChange}
+              isValid={touched.image && !errors.image}
+              isInvalid={touched.image && errors.image}
+            />
+            <Form.Control.Feedback type="invalid">
+              {errors.image}
             </Form.Control.Feedback>
           </Form.Group>
 

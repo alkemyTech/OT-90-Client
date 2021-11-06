@@ -109,7 +109,7 @@ function TestimonyForm(props) {
 
           <Form.Group className="mb-3" controlId="validationFormik01">
             <Form.Label style={{ justifyContent: 'left', display: 'flex' }}>
-              Image
+              Imagen
             </Form.Label>
             <Form.Control
               type="file"

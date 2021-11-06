@@ -1,9 +1,14 @@
+import Button from 'react-bootstrap/Button';
+import Loader from './Loader';
 import PropTypes from 'prop-types'
 import React from 'react'
-import Button from 'react-bootstrap/Button';
 
-const ButtonComponent = ({ title, variant, onClick }) => (
-  <Button variant={variant} onClick={onClick}>{title}</Button>
+const ButtonComponent = ({
+  title, variant, onClick, isLoading = false, disabled = false,
+}) => (
+  <Button variant={variant} onClick={onClick} disabled={disabled}>
+    { isLoading ? <Loader visible={isLoading} width={20} height={20} className="" /> : title }
+  </Button>
 )
 
 ButtonComponent.defaultProps = {

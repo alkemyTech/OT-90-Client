@@ -6,9 +6,8 @@ export default function Header() {
     fetch('https://pokeapi.co/api/v2/pokemon/ditto')
       .then((res) => res.json())
       .then((data) => setPublicData(data))
-      .catch((error) => console.log(error))
+      .catch((error) => error)
   }, [])
-  console.log(publicData)
   return (
     <>
       {publicData && (
@@ -17,15 +16,13 @@ export default function Header() {
           <img src={publicData.sprites.front_default} alt={publicData.name} />
           {/* this would be the items */}
           <ul>
-            {publicData.abilities.map(({ ability }, index) => {
-              return <li key={index}>{ability.name}</li>
-            })}
+            {publicData.abilities.map(({ ability }) => <li key={ability.name}>{ability.name}</li>)}
           </ul>
         </>
       )}
       <div>
-        <button>Log In</button>
-        <button>Registrarse</button>
+        <input type="button" value="Login" />
+        <input type="button" value="Registrarse" />
       </div>
     </>
   )

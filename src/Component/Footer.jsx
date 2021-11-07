@@ -35,14 +35,14 @@ function Footer() {
         {/* Column1 LOGO */}
         <div className="col">
           <h4>Somos Más</h4>
-          {publicData !== 1 ? <img src={publicData.sprites.front_default} alt={publicData.name} /> : null }       
+          {publicData !== 1 ? <img src={publicData.sprites.front_default} alt={publicData.name} /> : null }
         </div>
         {/* Column2 NAV*/}
         <div className="col">
           <h4>Links</h4>
           <ui className="list-unstyled">
             {publicData !== 1 ? publicData.abilities.map(({ ability }, index) => {
-              return <li key={index}> <Link href="#">{ability.name}</Link></li>                   
+              return <li key={index}> <Link href="#">{ability.name}</Link></li>
             }) : null }
           </ui>
         </div>
@@ -62,4 +62,3 @@ function Footer() {
 }
 
 export default Footer
-

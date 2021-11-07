@@ -25,9 +25,7 @@ const loadComponent = (activity) => {
 function ActivityForm(props) {
   const { activity } = props
   const [config] = useState(loadComponent(activity))
-  const [action] = useState(
-    activity ? HttpActionEnum.PUT : HttpActionEnum.POST,
-  )
+  const [action] = useState(activity ? HttpActionEnum.PUT : HttpActionEnum.POST)
   const [isLoading, setIsLoading] = useState(false)
   const [blurredEditor, setblurredEditor] = useState(false)
 
@@ -65,6 +63,85 @@ function ActivityForm(props) {
     return errors
   }
 
+  const renderNameFormGroup = (formikItems) => (
+    <Form.Group className="mb-3" controlId="validationFormik01">
+      <Form.Label style={{ justifyContent: 'left', display: 'flex' }}>
+        Nombre
+      </Form.Label>
+      <Form.Control
+        type="text"
+        placeholder="Ingrese el nombre de la actividad"
+        name="name"
+        value={formikItems.values.name}
+        onBlur={formikItems.handleBlur}
+        onChange={formikItems.handleChange}
+        isValid={formikItems.touched.name && !formikItems.errors.name}
+        isInvalid={formikItems.touched.name && formikItems.errors.name}
+      />
+      <Form.Control.Feedback type="invalid">
+        {formikItems.errors.name}
+      </Form.Control.Feedback>
+    </Form.Group>
+  )
+
+  const renderCKEditor = (formikItems) => (
+    <CKEditor
+      config={{ placeholder: 'Ingrese el contenido de la actividad' }}
+      editor={ClassicEditor}
+      onBlur={() => {
+        setblurredEditor(true)
+      }}
+      data={formikItems.values.content}
+      onChange={(event, editor) => {
+        formikItems.setFieldValue('content', editor.getData(), true)
+      }}
+    />
+  )
+
+  const renderContentFormGroup = (formikItems) => (
+    <Form.Group className="mb-3" controlId="validationFormik02">
+      <Form.Label style={{ justifyContent: 'left', display: 'flex' }}>
+        Contenido
+      </Form.Label>
+      {renderCKEditor(formikItems)}
+      <Form.Label visuallyHidden={!blurredEditor} style={{ color: 'red' }}>
+        {formikItems.errors.content}
+      </Form.Label>
+    </Form.Group>
+  )
+
+  const renderSubmitButton = (formikItems) => (
+    <ButtonComponent
+      variant="primary"
+      title={config.textButton}
+      onClick={async () => onSumbit(
+        activity
+          ? {
+            id: activity.id,
+            name: formikItems.values.name,
+            content: formikItems.values.content,
+          }
+          : {
+            name: formikItems.values.name,
+            content: formikItems.values.content,
+          },
+        action,
+      )}
+      isLoading={isLoading}
+      disabled={formikItems.errors.name || formikItems.errors.content}
+    />
+  )
+
+  const renderOnSubmitFormGroup = (formikItems) => (
+    <Form.Group
+      className="mb-3"
+      controlId="formBasicPassword"
+      style={{ justifyContent: 'left', display: 'flex' }}
+    >
+      {renderSubmitButton(formikItems)}
+    </Form.Group>
+  )
+
   return (
     <Formik
       validate={validation}
@@ -73,74 +150,11 @@ function ActivityForm(props) {
         content: config.content,
       }}
     >
-      {({
-        handleChange,
-        setFieldValue,
-        handleBlur,
-        values,
-        errors,
-        touched,
-      }) => (
+      {(formikItems) => (
         <Form style={{ width: '100%' }} noValidate>
-          <Form.Group className="mb-3" controlId="validationFormik01">
-            <Form.Label style={{ justifyContent: 'left', display: 'flex' }}>
-              Nombre
-            </Form.Label>
-            <Form.Control
-              type="text"
-              placeholder="Ingrese el nombre de la actividad"
-              name="name"
-              value={values.name}
-              onBlur={handleBlur}
-              onChange={handleChange}
-              isValid={touched.name && !errors.name}
-              isInvalid={touched.name && errors.name}
-            />
-            <Form.Control.Feedback type="invalid">
-              {errors.name}
-            </Form.Control.Feedback>
-          </Form.Group>
-
-          <Form.Group className="mb-3" controlId="validationFormik02">
-            <Form.Label style={{ justifyContent: 'left', display: 'flex' }}>
-              Contenido
-            </Form.Label>
-            <CKEditor
-              config={{ placeholder: 'Ingrese el contenido de la actividad' }}
-              editor={ClassicEditor}
-              onBlur={() => {
-                setblurredEditor(true)
-              }}
-              data={values.content}
-              onChange={(event, editor) => {
-                setFieldValue('content', editor.getData(), true)
-              }}
-            />
-            <Form.Label visuallyHidden={!blurredEditor} style={{ color: 'red' }}>
-              {errors.content}
-            </Form.Label>
-          </Form.Group>
-          <Form.Group
-            className="mb-3"
-            controlId="formBasicPassword"
-            style={{ justifyContent: 'left', display: 'flex' }}
-          >
-            <ButtonComponent
-              variant="primary"
-              title={config.textButton}
-              onClick={
-                async () => onSumbit(
-                  activity ? {
-                    id: activity.id, name: values.name, content: values.content,
-                  } : {
-                    name: values.name, content: values.content,
-                  }, action,
-                )
-              }
-              isLoading={isLoading}
-              disabled={errors.name || errors.content}
-            />
-          </Form.Group>
+          {renderNameFormGroup(formikItems)}
+          {renderContentFormGroup(formikItems)}
+          {renderOnSubmitFormGroup(formikItems)}
         </Form>
       )}
     </Formik>

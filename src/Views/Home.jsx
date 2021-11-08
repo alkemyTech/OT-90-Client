@@ -75,7 +75,7 @@ const HomeContainer = () => {
   useEffect(() => {
     const getNews = async () => {
       try {
-        const { data: news } = await sendRequest('GET', '/news', null)
+        const { data: news } = await sendRequest('GET', '/news?limit=4', null)
         dispatch({ type: 'GET_DATA_OK', payload: news })
       } catch (e) {
         dispatch({ type: 'ERROR', payload: e })

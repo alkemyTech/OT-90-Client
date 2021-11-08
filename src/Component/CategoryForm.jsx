@@ -27,7 +27,6 @@ const CategoryForm = (body) => {
         setVisible(false)
         setShow(true)
       } else {
-        // await axios.patch(`http://localhost:3001/categories/${id}`, form)
         await sendRequest('put',`/categories/${id}`, form)
         setVisible(false)
         setVariant('success')
@@ -36,7 +35,6 @@ const CategoryForm = (body) => {
       }
     } catch (error) {
       setVariant('danger')
-      console.log(error)
       setTitle(`No se pudo crear la categoría`)
       setShow(true)
       setVisible(false)

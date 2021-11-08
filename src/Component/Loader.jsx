@@ -5,7 +5,7 @@ import '../static/styles/Loader.css'
 import 'react-loader-spinner/dist/loader/css/react-spinner-loader.css'
 
 const Loader = ({
-  height = 500, width = 500, visible = false,
+  height = 500, width = 500, visible = false, className = 'loader',
 }) => (
   <Spinner
     type="Circles"
@@ -13,7 +13,7 @@ const Loader = ({
     height={height}
     width={width}
     visible={visible}
-    className="loader"
+    className={className}
   />
 )
 

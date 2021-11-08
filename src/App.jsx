@@ -44,10 +44,10 @@ function App() {
       </div>
       <Loader visible={visible} />
       <header className="App-header">
-        <ButtonComponent title="Test Button!!!!!!!!!!!!!" isLoading={false}  disabled={false} onClick={() => openAlert()} />
+        <ButtonComponent title="Test Button!!!!!!!!!!!!!" isLoading={false} disabled={false} onClick={() => openAlert()} />
       </header>
 
-      <CategoryForm />
+      <CategoryForm name="asd" description="description1" id={1} />
     </div>
   )
 }

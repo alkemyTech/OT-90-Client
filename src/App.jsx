@@ -8,6 +8,7 @@ import Backoffice from './Component/Backoffice'
 import './App.css'
 import './static/styles/Alert.css'
 import 'bootstrap/dist/css/bootstrap.min.css'
+import CategoryForm from './Component/CategoryForm';
 
 const initialAlertState = { status: false, title: '', content: '' }
 
@@ -43,8 +44,10 @@ function App() {
       </div>
       <Loader visible={visible} />
       <header className="App-header">
-        <ButtonComponent title="Test Button" onClick={() => openAlert()} />
+        <ButtonComponent title="Test Button!!!!!!!!!!!!!" isLoading={false}  disabled={false} onClick={() => openAlert()} />
       </header>
+
+      <CategoryForm />
     </div>
   )
 }

@@ -7,6 +7,7 @@ import { Link } from 'react-router-dom';
 import AlertComponent from '../Component/Alert';
 import Loader from '../Component/Loader';
 import Slider from '../Component/Slider';
+import sendRequest from '../httpClient'
 
 const Home = ({ news }) => (
   <Container>
@@ -20,7 +21,7 @@ const Home = ({ news }) => (
             <Link className="text-decoration-none text-dark" to={`/novedades/${id}`}>
               <Card.Img variant="top" src={image} />
               <Card.Body>
-                <Card.Title className="text-decoration-none">{name}</Card.Title>
+                <Card.Title>{name}</Card.Title>
               </Card.Body>
             </Link>
           </Card>
@@ -74,13 +75,8 @@ const HomeContainer = () => {
   useEffect(() => {
     const getNews = async () => {
       try {
-        const fetchNews = await fetch('http://localhost:3001/news')
-        const newsJson = await fetchNews.json()
-        if (!fetchNews.ok) {
-          dispatch({ type: 'ERROR', payload: newsJson })
-          return
-        }
-        dispatch({ type: 'GET_DATA_OK', payload: newsJson })
+        const { data: news } = await sendRequest('GET', '/news', null)
+        dispatch({ type: 'GET_DATA_OK', payload: news })
       } catch (e) {
         dispatch({ type: 'ERROR', payload: e })
       }

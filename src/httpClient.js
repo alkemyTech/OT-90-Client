@@ -11,9 +11,9 @@ export default async function sendRequest(method, relativeUrl, data) {
     ? process.env.REACT_APP_BASE_URL_PRODUCTION
     : process.env.REACT_APP_BASE_URL_LOCAL
   const url = baseUrl + relativeUrl
-    const response = await axios({
+  const response = await axios({
     method, url, data, headers: { Authorization: token },
   })
-    .catch((error) =>{throw error.message})
+    .catch((error) => { throw error.message })
   return response
 }

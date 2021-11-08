@@ -18,8 +18,8 @@ function RenderRows({ data, headers }) {
       ))}
       <td>
         <div className="d-flex justify-content-evenly">
-          <ButtonComponent title="Editar" onClick={edit} />
-          <ButtonComponent title="Eliminar" variant="danger" onClick={deleteElement} />
+          <ButtonComponent isLoading={false} disabled={false} title="Editar" onClick={edit} />
+          <ButtonComponent isLoading={false} disabled={false} title="Eliminar" variant="danger" onClick={deleteElement} />
         </div>
       </td>
     </tr>

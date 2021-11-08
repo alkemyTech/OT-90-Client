@@ -1,12 +1,15 @@
 import React, { useEffect, useReducer, useState } from 'react';
 import PropTypes from 'prop-types'
-import { Col, Row, Card } from 'react-bootstrap';
+import {
+  Col, Row, Card, Container,
+} from 'react-bootstrap';
 import { Link } from 'react-router-dom';
 import AlertComponent from '../Component/Alert';
 import Loader from '../Component/Loader';
+import sendRequest from '../httpClient'
 
 const News = ({ news }) => (
-  <>
+  <Container>
     <h1 className="p-3 mt-4">{news.length ? 'Novedades' : 'Sin Novedades' }</h1>
     <Row xs={1} md={2} lg={4} className="g-4 p-3">
       {news.map(({
@@ -14,16 +17,17 @@ const News = ({ news }) => (
       }) => (
         <Col key={id}>
           <Card>
-            <Card.Img variant="top" src={image} />
-            <Card.Body>
-              <Card.Title className="text-capitalize">{name}</Card.Title>
-              <Card.Link className="text-dark" as={Link} to={`/novedades/${id}`}>Ir a novedad</Card.Link>
-            </Card.Body>
+            <Link className="text-dark text-decoration-none" to={`/novedades/${id}`}>
+              <Card.Img variant="top" src={image} />
+              <Card.Body>
+                <Card.Title className="text-capitalize">{name}</Card.Title>
+              </Card.Body>
+            </Link>
           </Card>
         </Col>
       ))}
     </Row>
-  </>
+  </Container>
 )
 
 const NewsContainer = () => {
@@ -69,13 +73,12 @@ const NewsContainer = () => {
 
   useEffect(() => {
     const getNews = async () => {
-      const fetchNews = await fetch('http://localhost:3001/news')
-      const newsJson = await fetchNews.json()
-      if (!fetchNews.ok) {
-        dispatch({ type: 'ERROR', payload: newsJson })
-        return
+      try {
+        const { data: news } = await sendRequest('GET', '/news', null)
+        dispatch({ type: 'GET_DATA_OK', payload: news })
+      } catch (e) {
+        dispatch({ type: 'ERROR', payload: e })
       }
-      dispatch({ type: 'GET_DATA_OK', payload: newsJson })
     }
     getNews()
   }, [toggle])

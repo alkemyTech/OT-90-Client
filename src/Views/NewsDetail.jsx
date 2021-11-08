@@ -4,6 +4,7 @@ import { Col, Row } from 'react-bootstrap';
 import { useParams } from 'react-router-dom';
 import AlertComponent from '../Component/Alert';
 import Loader from '../Component/Loader';
+import sendRequest from '../httpClient'
 
 const NewsDetail = ({ data }) => {
   const { image, name, content } = data
@@ -68,13 +69,12 @@ const NewsDetailContainer = () => {
 
   useEffect(() => {
     const getNews = async () => {
-      const fetchNews = await fetch(`http://localhost:3001/news/${id}`)
-      const newsJson = await fetchNews.json()
-      if (!fetchNews.ok) {
-        dispatch({ type: 'ERROR', payload: newsJson })
-        return
+      try {
+        const { data: news } = await sendRequest('GET', `/news/${id}`, null)
+        dispatch({ type: 'GET_DATA_OK', payload: news })
+      } catch (e) {
+        dispatch({ type: 'ERROR', payload: e })
       }
-      dispatch({ type: 'GET_DATA_OK', payload: newsJson })
     }
     getNews()
   }, [id, toggle])

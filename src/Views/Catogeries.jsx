@@ -1,15 +1,71 @@
-import React from 'react';
+import React, { useEffect, useReducer, useState } from 'react';
 import Table from '../Component/Table'
-// import axios from 'axios'
+import sendRequest from '../httpClient'
+import Loader from '../Component/Loader';
+import AlertComponent from '../Component/Alert';
 
-const colName = ['Nombre', 'Acciones']
-const data = [{ name: 'Taller' }, { name: 'Paseos' }, { name: 'Taller' }, { name: 'Taller' }]
+const Categories = () => {
+  const initialState = {
+    data: {},
+    isLoading: true,
+    error: null,
+  }
 
-function Categories() {
+  const reducer = (state, action) => {
+    const { type, payload = {} } = action
+    switch (type) {
+      case 'GET_DATA':
+        return {
+          isLoading: true,
+          data: {},
+          error: null,
+        };
+      case 'GET_DATA_OK':
+        return {
+          isLoading: false,
+          data: payload,
+          error: null,
+        };
+      case 'ERROR':
+        return {
+          isLoading: false,
+          error: payload,
+          data: {},
+        };
+      default:
+        return state
+    }
+  }
+  const [{ error, data, isLoading }, dispatch] = useReducer(reducer, initialState)
+
+  const [toggle, setToggle] = useState(false)
+
+  const alertAction = () => {
+    dispatch({ type: 'GET_DATA' })
+    setToggle(!toggle)
+  }
+
+  useEffect(() => {
+    const getCategory = async () => {
+      try {
+        const { data: categories } = await sendRequest('GET', '/categories', null)
+        dispatch({ type: 'GET_DATA_OK', payload: categories })
+      } catch (e) {
+        dispatch({ type: 'ERROR', payload: e })
+      }
+    }
+    getCategory()
+  }, [toggle])
+
+  const headers = ['name', 'description']
+
+  if (isLoading) {
+    return <Loader visible />
+  }
   return (
-    <div className="container">
-      <Table tableName="Categoria" colNames={colName} data={data} />
-    </div>
+    error
+      ? <AlertComponent show={!isLoading} title="Error obteniendo novedadades" variant="warning" action={alertAction} />
+      : <Table title="Categoria" headers={headers} data={data} />
   )
 }
 

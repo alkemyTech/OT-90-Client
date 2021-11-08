@@ -2,6 +2,7 @@ import React, { useEffect, useReducer, useState } from 'react';
 import AlertComponent from '../../Component/Alert';
 import Loader from '../../Component/Loader';
 import Table from '../../Component/Table'
+import sendRequest from '../../httpClient'
 
 const NewsContainer = () => {
   const initialState = {
@@ -46,13 +47,12 @@ const NewsContainer = () => {
 
   useEffect(() => {
     const getNews = async () => {
-      const fetchNews = await fetch('http://localhost:3001/news')
-      const newsJson = await fetchNews.json()
-      if (!fetchNews.ok) {
-        dispatch({ type: 'ERROR', payload: newsJson })
-        return
+      try {
+        const { data: news } = await sendRequest('GET', '/news', null)
+        dispatch({ type: 'GET_DATA_OK', payload: news })
+      } catch (e) {
+        dispatch({ type: 'ERROR', payload: e })
       }
-      dispatch({ type: 'GET_DATA_OK', payload: newsJson })
     }
     getNews()
   }, [toggle])

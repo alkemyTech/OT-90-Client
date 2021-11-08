@@ -20,7 +20,7 @@ function Activities() {
           display: 'flex',
         }}
       >
-        <Table colNames={colNames} data={data} />
+        <Table tableName="Activities" colNames={colNames} data={data} />
       </div>
       <Footer />
     </div>

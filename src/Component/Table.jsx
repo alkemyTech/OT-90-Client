@@ -22,9 +22,10 @@ function renderRows(datas) {
 function Table(props) {
   const { colNames } = props
   const { data } = props
+  const { tableName } = props
   return (
     <table className="table caption-top">
-      <caption>Actividades</caption>
+      <caption>{tableName}</caption>
       <thead>
         <tr>
           <th scope="col">#</th>
@@ -39,6 +40,7 @@ function Table(props) {
 }
 
 Table.propTypes = {
+  tableName: PropTypes.string.isRequired,
   colNames: PropTypes.node.isRequired,
   data: PropTypes.shape({
     id: PropTypes.number.isRequired,

@@ -1,27 +1,14 @@
 import React from 'react';
-import Table from 'react-bootstrap/Table'
-import './Views.css'
+import Table from '../Component/Table'
 // import axios from 'axios'
+
+const colName = ['Nombre', 'Acciones']
+const data = [{ name: 'Taller' }, { name: 'Paseos' }, { name: 'Taller' }, { name: 'Taller' }]
 
 function Contacts() {
   return (
-    <div className="Table">
-      <Table striped bordered hover>
-        <thead>
-          <tr>
-            <th>id</th>
-            <th>nombre</th>
-            <th>description</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr>
-            <th> 1</th>
-            <th> prueba</th>
-            <th> prueba</th>
-          </tr>
-        </tbody>
-      </Table>
+    <div className="container">
+      <Table tableName="Contactos" colNames={colName} data={data} />
     </div>
   )
 }

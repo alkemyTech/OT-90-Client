@@ -1,9 +1,9 @@
 import React, { useState } from 'react'
 import { Container, Form, Button } from 'react-bootstrap'
-import axios from 'axios'
 import Loader from './Loader'
 import AlertComponent from './Alert'
 import sendRequest from '../httpClient'
+
 const CategoryForm = (body) => {
   const { name = '', description = '', id } = body
 
@@ -21,13 +21,13 @@ const CategoryForm = (body) => {
     try {
       setVisible(true)
       if (name === '' && description === '') {
-        await sendRequest('post','/categories', form)
+        await sendRequest('post', '/categories', form)
         setVariant('success')
         setTitle(`${form.name} Creada!`)
         setVisible(false)
         setShow(true)
       } else {
-        await sendRequest('put',`/categories/${id}`, form)
+        await sendRequest('put', `/categories/${id}`, form)
         setVisible(false)
         setVariant('success')
         setTitle(`${form.name} updated!`)
@@ -35,7 +35,7 @@ const CategoryForm = (body) => {
       }
     } catch (error) {
       setVariant('danger')
-      setTitle(`No se pudo crear la categoría`)
+      setTitle('No se pudo crear la categoría')
       setShow(true)
       setVisible(false)
     }

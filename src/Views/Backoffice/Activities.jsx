@@ -1,10 +1,10 @@
 import React from 'react'
 import 'bootstrap/dist/css/bootstrap.min.css'
-import Footer from '../Component/Footer';
-import Table from '../Component/Table'
-import Header from '../Component/Header';
+import Footer from '../../Component/Footer';
+import Table from '../../Component/Table'
+import Header from '../../Component/Header';
 
-const colNames = ['Nombre', 'Acciones']
+const headers = ['name']
 const data = [{ name: 'Taller' }, { name: 'Paseos' }, { name: 'Taller' }, { name: 'Taller' }]
 
 function Activities() {
@@ -20,7 +20,7 @@ function Activities() {
           display: 'flex',
         }}
       >
-        <Table colNames={colNames} data={data} />
+        <Table headers={headers} data={data} title="Actividades" />
       </div>
       <Footer />
     </div>

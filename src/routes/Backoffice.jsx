@@ -4,7 +4,7 @@ import PropTypes from 'prop-types'
 import Testimonials from '../Views/Testimonials'
 import Activities from '../Views/Backoffice/Activities'
 import News from '../Views/Backoffice/News'
-import Users from '@/Views/Backoffice/Users'
+import Users from '../Views/Backoffice/Users'
 
 const Backoffice = (props) => {
   const { match } = props

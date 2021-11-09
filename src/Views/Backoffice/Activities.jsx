@@ -1,30 +1,71 @@
-import React from 'react'
-import 'bootstrap/dist/css/bootstrap.min.css'
-import Footer from '../../Component/Footer';
+import React, { useEffect, useReducer, useState } from 'react';
 import Table from '../../Component/Table'
-import Header from '../../Component/Header';
+import sendRequest from '../../httpClient'
+import Loader from '../../Component/Loader';
+import AlertComponent from '../../Component/Alert';
 
-const headers = ['name']
-const data = [{ name: 'Taller' }, { name: 'Paseos' }, { name: 'Taller' }, { name: 'Taller' }]
+const Activities = () => {
+  const initialState = {
+    data: {},
+    isLoading: true,
+    error: null,
+  }
 
-function Activities() {
+  const reducer = (state, action) => {
+    const { type, payload = {} } = action
+    switch (type) {
+      case 'GET_DATA':
+        return {
+          isLoading: true,
+          data: {},
+          error: null,
+        };
+      case 'GET_DATA_OK':
+        return {
+          isLoading: false,
+          data: payload,
+          error: null,
+        };
+      case 'ERROR':
+        return {
+          isLoading: false,
+          error: payload,
+          data: {},
+        };
+      default:
+        return state
+    }
+  }
+  const [{ error, data, isLoading }, dispatch] = useReducer(reducer, initialState)
+
+  const [toggle, setToggle] = useState(false)
+
+  const alertAction = () => {
+    dispatch({ type: 'GET_DATA' })
+    setToggle(!toggle)
+  }
+
+  useEffect(() => {
+    const getCategory = async () => {
+      try {
+        const { data: contacts } = await sendRequest('GET', '/activities', null)
+        dispatch({ type: 'GET_DATA_OK', payload: contacts })
+      } catch (e) {
+        dispatch({ type: 'ERROR', payload: e })
+      }
+    }
+    getCategory()
+  }, [toggle])
+
+  const headers = ['name', 'conent', 'image']
+
+  if (isLoading) {
+    return <Loader visible />
+  }
   return (
-    <div className="App">
-      <Header />
-      <div
-        className="container"
-        style={{
-          minHeight: '100vh',
-          justifyContent: 'center',
-          alignItems: 'center',
-          display: 'flex',
-        }}
-      >
-        <Table headers={headers} data={data} title="Actividades" />
-      </div>
-      <Footer />
-    </div>
+    error
+      ? <AlertComponent show={!isLoading} title="Error obteniendo novedadades" variant="warning" action={alertAction} />
+      : <Table title="Actividades" headers={headers} data={data} />
   )
 }
-
 export default Activities

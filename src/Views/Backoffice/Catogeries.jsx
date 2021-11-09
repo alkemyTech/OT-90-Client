@@ -1,8 +1,8 @@
 import React, { useEffect, useReducer, useState } from 'react';
-import Table from '../Component/Table'
-import sendRequest from '../httpClient'
-import Loader from '../Component/Loader';
-import AlertComponent from '../Component/Alert';
+import Table from '../../Component/Table'
+import sendRequest from '../../httpClient'
+import Loader from '../../Component/Loader';
+import AlertComponent from '../../Component/Alert';
 
 const Categories = () => {
   const initialState = {

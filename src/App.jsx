@@ -2,11 +2,13 @@ import React, { useState } from 'react'
 import Swal from 'sweetalert2';
 import ButtonComponent from './Component/Button'
 import AlertComponent from './Component/Alert'
-import Header from './Component/Header.jsx'
+import Header from './Component/Header'
 import Loader from './Component/Loader'
+import Backoffice from './Component/Backoffice'
 import './App.css'
 import './static/styles/Alert.css'
 import 'bootstrap/dist/css/bootstrap.min.css'
+import CategoryForm from './Component/CategoryForm';
 
 const initialAlertState = { status: false, title: '', content: '' }
 
@@ -31,6 +33,8 @@ function App() {
   return (
     <div className="App">
       <Header />
+      {/* lo dejo para que se visualice */}
+      <Backoffice />
       <div className="alert-custom">
         <AlertComponent
           show={showAlert.status}
@@ -40,8 +44,10 @@ function App() {
       </div>
       <Loader visible={visible} />
       <header className="App-header">
-        <ButtonComponent title="Test Button" onClick={() => openAlert()} />
+        <ButtonComponent title="Test Button!!!!!!!!!!!!!" isLoading={false} disabled={false} onClick={() => openAlert()} />
       </header>
+
+      <CategoryForm name="asd" description="description1" id={1} />
     </div>
   )
 }

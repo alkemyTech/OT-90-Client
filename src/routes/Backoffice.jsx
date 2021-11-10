@@ -6,6 +6,7 @@ import Contacts from '../Views/Backoffice/Contacts'
 import Testimonials from '../Views/Testimonials'
 import Activities from '../Views/Backoffice/Activities'
 import News from '../Views/Backoffice/News'
+import BackofficeMainView from '../Views/Backoffice/Main'
 
 const Backoffice = (props) => {
   const { match } = props
@@ -13,7 +14,7 @@ const Backoffice = (props) => {
   return (
     <Router>
       <Switch>
-        <Route exact path={path} component={() => 'Main backoffice route'} />
+        <Route exact path={path} component={BackofficeMainView} />
         <Route path={`${path}/activities`} component={Activities} />
         <Route path={`${path}/categories`} component={Categories} />
         <Route path={`${path}/contacts`} component={Contacts} />

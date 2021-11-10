@@ -20,7 +20,7 @@ export default function Root() {
         <Route exact path="/login" component={Login} />
         <Route exact path="/novedades" component={News} />
         <Route exact path="/novedades/:id" component={NewsDetail} />
-        <Route exact path="/activities/:id" component={ActivitiesDetail} />
+        <Route exact path="/actividades/:id" component={ActivitiesDetail} />
         <Route path="/nosotros" component={() => '"Nostros" Screen under construction'} />
         <Route exact path="/contacto" component={Contact} />
         <Route path="/backoffice" component={Backoffice} />

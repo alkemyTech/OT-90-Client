@@ -12,7 +12,7 @@ const ActivitiesDetail = ({ data }) => {
   return (
     <Row className="justify-content-center min-vh-100 m-0 align-content-center">
       <Col sm="10" className="p-4 p-md-0">
-        {notFounded ? <h1 className="text-center">Novedad no encontrada</h1>
+        {notFounded ? <h1 className="text-center">Actividad no encontrada</h1>
           : (
             <article>
               <img src={image} alt="activities" className="mx-auto d-block" />
@@ -83,7 +83,7 @@ const ActivitiesDetailContainer = () => {
     return <Loader visible />
   }
   return (
-    error ? <AlertComponent show={!isLoading} title="Error obteniendo novedad" variant="warning" action={alertAction} /> : <ActivitiesDetail data={data} />
+    error ? <AlertComponent show={!isLoading} title="Error obteniendo actividad" variant="warning" action={alertAction} /> : <ActivitiesDetail data={data} />
   )
 }
 

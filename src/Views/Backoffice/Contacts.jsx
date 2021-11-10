@@ -4,7 +4,7 @@ import sendRequest from '../../httpClient'
 import Loader from '../../Component/Loader';
 import AlertComponent from '../../Component/Alert';
 
-const Activities = () => {
+const Contacts = () => {
   const initialState = {
     data: {},
     isLoading: true,
@@ -48,7 +48,7 @@ const Activities = () => {
   useEffect(() => {
     const getCategory = async () => {
       try {
-        const { data: contacts } = await sendRequest('GET', '/activities', null)
+        const { data: contacts } = await sendRequest('GET', '/contacts', null)
         dispatch({ type: 'GET_DATA_OK', payload: contacts })
       } catch (e) {
         dispatch({ type: 'ERROR', payload: e })
@@ -57,7 +57,7 @@ const Activities = () => {
     getCategory()
   }, [toggle])
 
-  const headers = ['name', 'conent', 'image']
+  const headers = ['name', 'phone', 'email', 'message']
 
   if (isLoading) {
     return <Loader visible />
@@ -65,7 +65,8 @@ const Activities = () => {
   return (
     error
       ? <AlertComponent show={!isLoading} title="Error obteniendo novedadades" variant="warning" action={alertAction} />
-      : <Table title="Actividades" headers={headers} data={data} />
+      : <Table title="Contactos" headers={headers} data={data} />
   )
 }
-export default Activities
+
+export default Contacts

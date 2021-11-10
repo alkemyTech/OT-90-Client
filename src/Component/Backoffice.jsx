@@ -9,20 +9,21 @@ import '../static/styles/Backoffice.css'
 const application = {
   sucess: true,
   body: [
-    { app: 'Clientes', permission: 'user' },
-    { app: 'Reportes', permission: 'user' },
-    { app: 'Fichadas', permission: 'user' },
-    { app: 'Update', permission: 'admin' },
-    { app: 'Tablero', permission: 'user' },
-    { app: 'Backup', permission: 'admin' },
-    { app: 'Otras aplicaciones', permission: 'user' }],
+    { app: 'Clientes', permission: ['admin'] },
+    { app: 'Reportes', permission: ['admin'] },
+    { app: 'Fichadas', permission: ['admin'] },
+    { app: 'Update', permission: ['admin'] },
+    { app: 'Tablero', permission: ['admin'] },
+    { app: 'Backup', permission: ['admin'] },
+    { app: 'Otras aplicaciones', permission: ['admin'] },
+    { app: 'Editar perfil', permission: ['user', 'admin'] }],
 }
 
 export default function Backoffice() {
   const { role } = JSON.parse(localStorage.getItem('user-data'))
   const appsFiltered = role === 'admin'
     ? application.body
-    : application.body.filter((app) => app.permission === role)
+    : application.body.filter((app) => app.permission.includes(role))
   return (
     <div className="grid">
       {appsFiltered.map((app) => (<Button size="lg" key={app.app}>{app.app}</Button>))}

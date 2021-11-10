@@ -8,8 +8,11 @@ import NewsDetail from '../Views/NewsDetail'
 import Backoffice from './Backoffice'
 import News from '../Views/News'
 import Contact from '../Views/Contact'
+import Conditional from './ConditionalRoute'
 
 export default function Root() {
+  const isAdmin = true
+  const isLogged = true
   return (
     <Router>
       <Switch>
@@ -21,7 +24,7 @@ export default function Root() {
         <Route exact path="/novedades/:id" component={NewsDetail} />
         <Route path="/nosotros" component={() => '"Nostros" Screen under construction'} />
         <Route exact path="/contacto" component={Contact} />
-        <Route path="/backoffice" component={Backoffice} />
+        <Conditional conditionToOpen={isLogged && isAdmin} component={Backoffice} pathRedirect="/" path="/backoffice" />
       </Switch>
     </Router>
   )

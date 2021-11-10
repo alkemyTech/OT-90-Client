@@ -1,50 +1,53 @@
 import React from 'react'
 import PropTypes from 'prop-types'
+import { Table } from 'react-bootstrap'
 import ButtonComponent from './Button'
 
-function renderCols(colNamess) {
-  return colNamess.map((col) => <th scope="col">{col}</th>)
-}
-
-function renderRows(datas) {
-  return datas.map((dat, index) => (
-    <tr>
+function RenderRows({ data, headers }) {
+  // eslint-disable-next-line no-alert
+  const edit = () => alert('Editar')
+  // eslint-disable-next-line no-alert
+  const deleteElement = () => alert('Eliminar')
+  return data.map((element, index) => (
+    <tr key={element.id}>
       <th scope="row">{index + 1}</th>
-      <td>{dat.name}</td>
+      {headers.map((header) => (
+        <td key={header}>
+          {header === 'image' ? <img style={{ maxWidth: '200px' }} src={element[header]} alt="" /> : element[header]}
+        </td>
+      ))}
       <td>
-        <ButtonComponent title="Editar" />
-        <ButtonComponent title="Eliminar" variant="danger" />
+        <div className="d-flex justify-content-evenly">
+          <ButtonComponent isLoading={false} disabled={false} title="Editar" onClick={edit} />
+          <ButtonComponent isLoading={false} disabled={false} title="Eliminar" variant="danger" onClick={deleteElement} />
+        </div>
       </td>
     </tr>
   ))
 }
 
-function Table(props) {
-  const { colNames } = props
-  const { data } = props
+function TableComponent({ headers, data, title }) {
   return (
-    <table className="table caption-top">
-      <caption>Actividades</caption>
+    <Table striped responsive hover bordered className="caption-top table align-middle">
+      <caption>{title}</caption>
       <thead>
         <tr>
           <th scope="col">#</th>
-          {renderCols(colNames)}
+          {headers.map((col) => <th key={col} className="text-capitalize" scope="col">{col}</th>)}
+          <th scope="col">Acciones</th>
         </tr>
       </thead>
       <tbody>
-        {renderRows(data)}
+        <RenderRows data={data} headers={headers} />
       </tbody>
-    </table>
+    </Table>
   )
 }
 
-Table.propTypes = {
-  colNames: PropTypes.node.isRequired,
-  data: PropTypes.shape({
-    id: PropTypes.number.isRequired,
-    name: PropTypes.string.isRequired,
-    content: PropTypes.string.isRequired,
-  }).isRequired,
+TableComponent.propTypes = {
+  headers: PropTypes.arrayOf(PropTypes.string).isRequired,
+  title: PropTypes.string.isRequired,
+  data: PropTypes.arrayOf(PropTypes.object).isRequired,
 }
 
-export default Table
+export default TableComponent

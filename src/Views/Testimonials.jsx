@@ -1,13 +1,10 @@
 import React from 'react'
 import 'bootstrap/dist/css/bootstrap.min.css'
 import Footer from '../Component/Footer';
-import Table from '../Component/Table'
 import Header from '../Component/Header';
+import TestimonyForm from '../Component/TestimonyForm';
 
-const colNames = ['Nombre', 'Acciones']
-const data = [{ name: 'Taller' }, { name: 'Paseos' }, { name: 'Taller' }, { name: 'Taller' }]
-
-function Activities() {
+function Testimonials() {
   return (
     <div className="App">
       <Header />
@@ -20,11 +17,11 @@ function Activities() {
           display: 'flex',
         }}
       >
-        <Table colNames={colNames} data={data} />
+       <TestimonyForm /> 
       </div>
       <Footer />
     </div>
   )
 }
 
-export default Activities
+export default Testimonials

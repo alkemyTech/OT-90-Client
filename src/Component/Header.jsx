@@ -1,4 +1,6 @@
-import React, { useState, useEffect } from 'react'
+import React, { useEffect, useState } from 'react'
+
+import NavBar from './NavBar'
 
 export default function Header() {
   const [publicData, setPublicData] = useState(null)
@@ -13,11 +15,8 @@ export default function Header() {
       {publicData && (
         <>
           {/* this would be the logo */}
-          <img src={publicData.sprites.front_default} alt={publicData.name} />
-          {/* this would be the items */}
-          <ul>
-            {publicData.abilities.map(({ ability }) => <li key={ability.name}>{ability.name}</li>)}
-          </ul>
+          <img src={publicData.sprites.front_default} alt={publicData.name} />    
+            <NavBar/>
         </>
       )}
       <div>

@@ -12,6 +12,7 @@ export const userSlice = createSlice({
       state.user = action.payload
     },
     logOut: (state) => {
+      localStorage.removeItem('user-data')
       state.isAuthenticated = false
       state.user = {}
     },

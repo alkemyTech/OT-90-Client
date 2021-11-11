@@ -30,6 +30,8 @@ jobs:
           node-version: 14.x
       - name: Install dependencies
         run: yarn
+      - name: Decrypt and create .env file
+        run: base64 --decode ${{ secrets.ENV_ENCODED }} > .env
       - name: Build
         run: yarn build
       - name: Deploy

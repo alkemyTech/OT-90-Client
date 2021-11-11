@@ -1,6 +1,8 @@
 import React, { useEffect, useState } from 'react'
 
+import { Link } from 'react-router-dom'
 import NavBar from './NavBar'
+import { useSelector } from 'react-redux'
 
 export default function Header() {
   const [publicData, setPublicData] = useState(null)
@@ -10,18 +12,27 @@ export default function Header() {
       .then((data) => setPublicData(data))
       .catch((error) => error)
   }, [])
+
+  const user = useSelector(selectUser).isAuthenticated
+
   return (
     <>
       {publicData && (
         <>
-          {/* this would be the logo */}
           <img src={publicData.sprites.front_default} alt={publicData.name} />    
-            <NavBar/>
         </>
       )}
       <div>
-        <input type="button" value="Login" />
-        <input type="button" value="Registrarse" />
+      <NavBar/>
+      <nav>
+          {user.isAuthenticated === true ? 
+          <button type="button" class="btn btn-outline-secondary"><Link to='/logout' >Cerrar Sesion</Link></button>
+          : null}
+          {user.isAuthenticated === false ? 
+          <><button type="button" class="btn btn-outline-info"><Link to='/login' >Login</Link></button>
+          <button type="button" class="btn btn-outline-info"><Link to='/register' >Registro</Link></button></> 
+          : null}
+    </nav>    
       </div>
     </>
   )

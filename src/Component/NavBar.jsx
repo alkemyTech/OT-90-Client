@@ -4,12 +4,12 @@ import React from 'react'
 export default function Navbar() {
     const NavBarItems = [
         {
-            view: "Registro",
-            root: "register"
+            view: "Nosotros",
+            root: "somosmas"
         },
         {
-            view: "Login",
-            root: "login"
+            view: "Testimonios",
+            root: "testimonials"
         },
         {
             view: "Novedades",

@@ -4,7 +4,7 @@ import {
   Card, Row, Col, Container,
 } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
-import AlertComponent from '../Component/Alert';
+import Swal from 'sweetalert2';
 import Loader from '../Component/Loader';
 import Slider from '../Component/Slider';
 import sendRequest from '../httpClient'
@@ -39,12 +39,12 @@ const HomeContainer = () => {
   }
 
   const reducer = (state, action) => {
-    const { type, payload = {} } = action
+    const { type, payload } = action
     switch (type) {
       case 'GET_DATA':
         return {
           isLoading: true,
-          data: {},
+          data: [],
           error: null,
         };
       case 'GET_DATA_OK':
@@ -57,41 +57,39 @@ const HomeContainer = () => {
         return {
           isLoading: false,
           error: payload,
-          data: {},
+          data: [],
         };
       default:
         return state
     }
   }
-  const [{ error, data, isLoading }, dispatch] = useReducer(reducer, initialState)
+  const [{ data, isLoading }, dispatch] = useReducer(reducer, initialState)
 
   const [toggle, setToggle] = useState(false)
-
-  const alertAction = () => {
-    dispatch({ type: 'GET_DATA' })
-    setToggle(!toggle)
-  }
 
   useEffect(() => {
     const getNews = async () => {
       try {
-        const { data: news } = await sendRequest('GET', '/news?limit=4&sort=createdAt:DESC', null)
-        dispatch({ type: 'GET_DATA_OK', payload: news })
+        const { data: { body } } = await sendRequest('GET', '/news?limit=4&sort=createdAt:DESC', null)
+        dispatch({ type: 'GET_DATA_OK', payload: body })
       } catch (e) {
         dispatch({ type: 'ERROR', payload: e })
+        const { isConfirmed } = await Swal.fire({
+          icon: 'error',
+          title: 'Error',
+          text: 'Ocurrio un error obteniendo la información, intenta nuevamente.',
+          confirmButtonText: 'Reintentar',
+        })
+        if (isConfirmed) {
+          dispatch({ type: 'GET_DATA' })
+          setToggle(!toggle)
+        }
       }
     }
     getNews()
   }, [toggle])
 
-  if (isLoading) {
-    return <Loader visible />
-  }
-  return (
-    error
-      ? <AlertComponent show={!isLoading} title="Error obteniendo novedadades" variant="warning" action={alertAction} />
-      : <Home news={data} />
-  )
+  return isLoading ? <Loader visible /> : <Home news={data} />
 }
 
 Home.propTypes = {

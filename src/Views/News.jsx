@@ -69,8 +69,8 @@ const NewsContainer = () => {
   useEffect(() => {
     const getNews = async () => {
       try {
-        const { data: news } = await sendRequest('GET', '/news', null)
-        dispatch({ type: 'GET_DATA_OK', payload: news })
+        const { data: { body } } = await sendRequest('GET', '/news', null)
+        dispatch({ type: 'GET_DATA_OK', payload: body })
       } catch (e) {
         dispatch({ type: 'ERROR', payload: e })
         const { isConfirmed } = await Swal.fire({

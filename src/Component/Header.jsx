@@ -26,7 +26,7 @@ const user = useSelector(selectUser)
       <Navbar.Toggle aria-controls="basic-navbar-nav" />
       <Navbar.Collapse id="basic-navbar-nav">
         <Nav className="me-auto">     
-          <NavDropdown title="Dropdown" id="basic-nav-dropdown">
+          <NavDropdown title="Menu" id="basic-nav-dropdown">
             <NavBarComponent/>
           </NavDropdown>
         </Nav>

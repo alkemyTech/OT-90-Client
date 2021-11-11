@@ -2,7 +2,7 @@ import React, { useEffect, useReducer, useState } from 'react';
 import PropTypes from 'prop-types'
 import { Col, Row } from 'react-bootstrap';
 import { useParams } from 'react-router-dom';
-import AlertComponent from '../Component/Alert';
+import Swal from 'sweetalert2';
 import Loader from '../Component/Loader';
 import sendRequest from '../httpClient'
 
@@ -33,7 +33,7 @@ const NewsDetailContainer = () => {
   }
 
   const reducer = (state, action) => {
-    const { type, payload = {} } = action
+    const { type, payload } = action
     switch (type) {
       case 'GET_DATA':
         return {
@@ -57,15 +57,10 @@ const NewsDetailContainer = () => {
         return state
     }
   }
-  const [{ error, data, isLoading }, dispatch] = useReducer(reducer, initialState)
+  const [{ data, isLoading }, dispatch] = useReducer(reducer, initialState)
 
   const [toggle, setToggle] = useState(false)
   const { id } = useParams()
-
-  const alertAction = () => {
-    dispatch({ type: 'GET_DATA' })
-    setToggle(!toggle)
-  }
 
   useEffect(() => {
     const getNews = async () => {
@@ -74,17 +69,22 @@ const NewsDetailContainer = () => {
         dispatch({ type: 'GET_DATA_OK', payload: news })
       } catch (e) {
         dispatch({ type: 'ERROR', payload: e })
+        const { isConfirmed } = await Swal.fire({
+          icon: 'error',
+          title: 'Error',
+          text: 'Ocurrio un error obteniendo la novedad, intenta nuevamente.',
+          confirmButtonText: 'Reintentar',
+        })
+        if (isConfirmed) {
+          dispatch({ type: 'GET_DATA' })
+          setToggle(!toggle)
+        }
       }
     }
     getNews()
   }, [id, toggle])
 
-  if (isLoading) {
-    return <Loader visible />
-  }
-  return (
-    error ? <AlertComponent show={!isLoading} title="Error obteniendo novedad" variant="warning" action={alertAction} /> : <NewsDetail data={data} />
-  )
+  return isLoading ? <Loader visible /> : <NewsDetail data={data} />
 }
 
 NewsDetail.propTypes = {

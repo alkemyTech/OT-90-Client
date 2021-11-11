@@ -3,6 +3,7 @@ import React from 'react'
 import { Formik } from 'formik'
 import '../features/register/register.css'
 import sendRequest from '../httpClient'
+import httpActionEnum from '../enums/HttpActionEnum'
 
 let changed = false
 const validate = ({
@@ -40,7 +41,18 @@ const validate = ({
 }
 const handleOnSubmit = (values, { resetForm }) => {
   // resetForm()
-  console.log(values)
+  const userData = {
+    firstName: values.firstName,
+    lastName: values.lastName,
+    password: values.password,
+    email: values.email,
+    image: values.image,
+    role: 'standard',
+  }
+  // co
+  // sendRequest(httpActionEnum.POST, '/users', userData)
+
+  console.log(userData)
 }
 
 const Register = () => (

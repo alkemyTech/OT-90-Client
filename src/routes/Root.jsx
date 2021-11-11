@@ -6,9 +6,9 @@ import Home from '../Views/Home'
 import Login from '../Views/Login'
 import News from '../Views/News'
 import NewsDetail from '../Views/NewsDetail'
-import React from 'react'
-// import App from '../App'
+import React from 'react''
 import Register from '../Component/Register'
+import Contact from '../Views/Contact'
 
 export default function Root() {
   return (
@@ -22,6 +22,7 @@ export default function Root() {
         <Route exact path="/novedades" component={News} />
         <Route exact path="/novedades/:id" component={NewsDetail} />
         <Route path="/nosotros" component={() => '"Nostros" Screen under construction'} />
+        <Route exact path="/contacto" component={Contact} />
         <Route path="/backoffice" component={Backoffice} />
       </Switch>
     </Router>

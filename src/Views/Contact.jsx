@@ -35,10 +35,11 @@ const Contact = () => {
     }
     return errors;
   }
-  const onSubmit = async (values) => {
+  const onSubmit = async (values, { resetForm }) => {
     try {
       setIsLoading(true)
       await sendRequest('POST', '/contacts', values)
+      resetForm({})
       Swal.fire({
         icon: 'success',
         title: 'Mensaje enviado',

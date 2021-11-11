@@ -57,7 +57,7 @@ const NewsContainer = () => {
     getNews()
   }, [toggle])
 
-  const headers = ['name', 'image', 'conent']
+  const headers = ['name', 'image', 'createdAt']
 
   if (isLoading) {
     return <Loader visible />

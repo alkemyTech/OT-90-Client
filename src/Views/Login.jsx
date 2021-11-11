@@ -3,6 +3,9 @@ import { Formik } from 'formik';
 import {
   Col, Form, Row, Button, FloatingLabel,
 } from 'react-bootstrap';
+import { useDispatch } from 'react-redux'
+import { useHistory } from 'react-router-dom'
+import { setLogged } from '../app/userSlice'
 
 const validation = ({ email, password }) => {
   const errors = {};
@@ -21,17 +24,20 @@ const validation = ({ email, password }) => {
   return errors;
 }
 
-const onSubmit = (values) => {
+const onSubmit = (values, history, dispatch) => {
   // eslint-disable-next-line no-alert
   alert(JSON.stringify(values))
+  dispatch(setLogged({ role: 'admin' }))
+  history.push('/backoffice')
 }
 
 const Login = () => {
+  const history = useHistory()
+  const dispatch = useDispatch()
   const [showPassword, setShowpassword] = useState(false)
   return (
     <Formik
       validate={validation}
-      onSubmit={onSubmit}
       initialValues={{
         email: '',
         password: '',
@@ -90,7 +96,7 @@ const Login = () => {
                 label="Mostrar contraseña"
                 onChange={() => setShowpassword(!showPassword)}
               />
-              <Button className="d-block mx-auto" type="submit">Iniciar Sesion</Button>
+              <Button className="d-block mx-auto" type="submit" onClick={() => onSubmit(values, history, dispatch)}>Iniciar Sesion</Button>
             </Form>
           </Col>
         </Row>

@@ -3,16 +3,20 @@ import React from 'react'
 import { Formik } from 'formik'
 import '../features/register/register.css'
 
-const validate = ({ name, lastname, mail, password }) => {
+let changed = false
+const validate = ({
+  name, lastname, mail, password, confirmPassword,
+}) => {
   const errors = {}
+  changed = true
   if (!name) {
     errors.name = 'Ingrese su nombre'
-  } else if (!/^[a-zA-ZÀ-ÿ\s]{1,40}$/.test(name)) {
+  } else if (!/^[a-zA-ZÀ-ÿ\s]{3,40}$/.test(name)) {
     errors.name = 'El nombre solo puede tener letras'
   }
   if (!lastname) {
     errors.lastname = 'Ingrese su apellido'
-  } else if (!/^[a-zA-ZÀ-ÿ\s]{1,40}$/.test(lastname)) {
+  } else if (!/^[a-zA-ZÀ-ÿ\s]{3,40}$/.test(lastname)) {
     errors.lastname = 'El apellido solo puede tener letras'
   }
   if (!mail) {
@@ -23,15 +27,19 @@ const validate = ({ name, lastname, mail, password }) => {
 
   if (!password) {
     errors.password = 'Ingrese su contraseña'
-  } else if (/^[0-9]{1,5}$/.test(password)) {
+  }
+  if (!/^(?=.*[A-Za-z])(?=.*\d)[a-zA-Z0-9!@#$%^&*()~¥=_+}{":;'?/>.<,`\-\|\[\]]{6,50}$/.test(password)) {
     errors.password = 'La contraseña debe tener al menos 6 digitos'
   }
 
+  if (!confirmPassword) errors.confirmPassword = 'Por favor, confirme su contraseña'
+  if (confirmPassword !== password) errors.confirmPassword = 'Las contraseñas deben coincidir'
+
   return errors
 }
-
 const handleOnSubmit = (values, { resetForm }) => {
-  resetForm()
+  // resetForm()
+  console.log(values)
 }
 
 const Register = () => (
@@ -43,6 +51,7 @@ const Register = () => (
           lastname: '',
           mail: '',
           password: '',
+          confirmPassword: '',
         }}
         validate={validate}
         onSubmit={handleOnSubmit}
@@ -96,7 +105,7 @@ const Register = () => (
               type="email"
               id="mail"
               name="mail"
-              placeholder="Ingrese un correo valido"
+              placeholder="Ingrese su correo electrónico"
               value={values.mail}
               onChange={handleChange}
               onBlur={handleBlur}
@@ -110,19 +119,42 @@ const Register = () => (
               type="password"
               id="password"
               name="password"
-              placeholder="Al menos 6 caracteres"
+              placeholder="Al menos 6 caracteres, debe incluir un número"
               value={values.password}
               onChange={handleChange}
               onBlur={handleBlur}
             />
 
             {touched.password && errors.password && (
-              <p className="text-danger">{errors.password}</p>
+            <p className="text-danger">{errors.password}</p>
             )}
 
-            <button type="submit" className="btn btn-primary">
-              Registrarse
-            </button>
+            <label htmlFor="confirmPassword">Confirmar Contraseña</label>
+            <input
+              type="password"
+              id="confirmPassword"
+              name="confirmPassword"
+              placeholder="Confirme su contraseña"
+              value={values.confirmPassword}
+              onChange={handleChange}
+              onBlur={handleBlur}
+            />
+
+            {touched.confirmPassword && errors.confirmPassword && (
+              <p className="text-danger">{errors.confirmPassword}</p>
+            )}
+            {console.log(changed)}
+            {Object.keys(errors).length === 0 && changed === true
+              ? (
+                <button type="submit" className="btn btn-primary">
+                  Registrarse
+                </button>
+              )
+              : (
+                <button type="submit" className="btn btn-primary" disabled>
+                  Registrarse
+                </button>
+              )}
           </form>
         )}
       </Formik>

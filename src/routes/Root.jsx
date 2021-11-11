@@ -6,7 +6,7 @@ import Home from '../Views/Home'
 import Login from '../Views/Login'
 import News from '../Views/News'
 import NewsDetail from '../Views/NewsDetail'
-import React from 'react''
+import React from 'react'
 import Register from '../Component/Register'
 import Contact from '../Views/Contact'
 

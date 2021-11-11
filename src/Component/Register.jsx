@@ -1,9 +1,11 @@
 /* eslint-disable jsx-a11y/label-has-associated-control */
-import React from 'react'
+// import React from 'react'
+import React from 'react';
 import { Formik } from 'formik'
 import '../features/register/register.css'
 import sendRequest from '../httpClient'
 import httpActionEnum from '../enums/HttpActionEnum'
+import Upload from './Upload'
 
 let changed = false
 const validate = ({
@@ -39,25 +41,21 @@ const validate = ({
 
   return errors
 }
-const handleOnSubmit = (values, { resetForm }) => {
-  // resetForm()
+const handleOnSubmit = async (values, { resetForm }) => {
   const userData = {
     firstName: values.firstName,
     lastName: values.lastName,
     password: values.password,
     email: values.email,
-    image: values.image,
     role: 'standard',
   }
-  // co
-  // sendRequest(httpActionEnum.POST, '/users', userData)
-
-  console.log(userData)
+  resetForm()
 }
 
 const Register = () => (
   <>
     <div className="formPage vh-100 d-flex align-items-center">
+
       <Formik
         initialValues={{
           firstName: '',
@@ -139,7 +137,7 @@ const Register = () => (
             />
 
             {touched.password && errors.password && (
-            <p className="text-danger">{errors.password}</p>
+              <p className="text-danger">{errors.password}</p>
             )}
 
             <label htmlFor="confirmPassword">Confirmar Contraseña</label>
@@ -156,6 +154,7 @@ const Register = () => (
             {touched.confirmPassword && errors.confirmPassword && (
               <p className="text-danger">{errors.confirmPassword}</p>
             )}
+
             {Object.keys(errors).length === 0 && changed === true
               ? (
                 <button type="submit" className="btn btn-primary">

@@ -13,7 +13,7 @@ import { selectUser } from '../app/userSlice'
 import BackofficeMain from '../Views/Backoffice/Main'
 
 const Backoffice = (props) => {
-  const isAdmin = useSelector(selectUser).user.role === 'admin'
+  const isAdmin = useSelector(selectUser).role === 'admin'
   const { match } = props
   const { path } = match
   return (

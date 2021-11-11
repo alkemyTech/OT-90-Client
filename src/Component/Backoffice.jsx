@@ -24,7 +24,7 @@ const application = {
 
 export default function Backoffice({ path }) {
   const history = useHistory()
-  const { role } = useSelector(selectUser).user
+  const { role } = useSelector(selectUser)
   const appsFiltered = role === 'admin'
     ? application.body
     : application.body.filter((app) => app.permission.includes(role))

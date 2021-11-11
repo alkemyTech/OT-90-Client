@@ -64,7 +64,7 @@ const Categories = () => {
   }
   return (
     error
-      ? <AlertComponent show={!isLoading} title="Error obteniendo novedadades" variant="warning" action={alertAction} />
+      ? <AlertComponent show={!isLoading} title="Error obteniendo categorias" variant="warning" action={alertAction} />
       : <Table title="Categoria" headers={headers} data={data} />
   )
 }

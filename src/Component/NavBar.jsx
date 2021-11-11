@@ -1,11 +1,12 @@
+import { NavDropdown } from 'react-bootstrap/'
 import { NavLink } from 'react-router-dom'
 import React from 'react'
 
-export default function Navbar() {
+export default function NavbarComponent() {
     const NavBarItems = [
         {
             view: "Nosotros",
-            root: "somosmas"
+            root: "nosotros"
         },
         {
             view: "Testimonios",
@@ -13,16 +14,20 @@ export default function Navbar() {
         },
         {
             view: "Novedades",
-            root: "news"
-        }
+            root: "novedades"
+        },
+        {
+            view: "Contacto",
+            root: "contacto"
+        },
+
     ]
   return (
-    <nav>
-      <ul>
-          <li><NavLink exact activeClassName="active" to='/' >Home</NavLink></li>
-          {NavBarItems.map(( item, index ) =>
-          <li key={index}><NavLink  activeClassName="active" to={`/${item.root}`}>{item.view}</NavLink></li>)}
-      </ul> 
-    </nav>                
+    <>
+    {NavBarItems.map((item, index) => 
+        <NavDropdown.Item key={index}><NavLink activeClassName="active"  to={`/${item.root}`} >{item.view}</NavLink></NavDropdown.Item>
+    )
+    }
+    </>               
   )
 }

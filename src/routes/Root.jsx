@@ -1,16 +1,19 @@
-import React from 'react'
-import { BrowserRouter as Router, Route, Switch } from 'react-router-dom'
-// import App from '../App'
-import Register from '../Component/Register'
+import { Route, BrowserRouter as Router, Switch } from 'react-router-dom'
+
+import Backoffice from './Backoffice'
+import Header from '../Component/Header'
 import Home from '../Views/Home'
 import Login from '../Views/Login'
-import NewsDetail from '../Views/NewsDetail'
-import Backoffice from './Backoffice'
 import News from '../Views/News'
+import NewsDetail from '../Views/NewsDetail'
+import React from 'react'
+// import App from '../App'
+import Register from '../Component/Register'
 
 export default function Root() {
   return (
     <Router>
+       <Route path="/" component={Header} />
       <Switch>
         {/* <Route exact path="/" component={App} /> */}
         <Route exact path="/" component={Home} />

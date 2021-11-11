@@ -1,39 +1,42 @@
+import { Button, Container, Nav, NavDropdown, Navbar } from 'react-bootstrap/'
 import React, { useEffect, useState } from 'react'
 
 import { Link } from 'react-router-dom'
-import NavBar from './NavBar'
+import NavBarComponent from './NavBar'
+import { selectUser } from '../app/userSlice'
 import { useSelector } from 'react-redux'
 
 export default function Header() {
-  const [publicData, setPublicData] = useState(null)
+  const [logo, setLogo] = useState(null)
   useEffect(() => {
     fetch('https://pokeapi.co/api/v2/pokemon/ditto')
       .then((res) => res.json())
-      .then((data) => setPublicData(data))
+      .then((data) => setLogo(data))
       .catch((error) => error)
   }, [])
 
-  const user = useSelector(selectUser).isAuthenticated
-
+const user = useSelector(selectUser)
   return (
     <>
-      {publicData && (
-        <>
-          <img src={publicData.sprites.front_default} alt={publicData.name} />    
-        </>
-      )}
-      <div>
-      <NavBar/>
-      <nav>
-          {user.isAuthenticated === true ? 
-          <button type="button" class="btn btn-outline-secondary"><Link to='/logout' >Cerrar Sesion</Link></button>
-          : null}
-          {user.isAuthenticated === false ? 
-          <><button type="button" class="btn btn-outline-info"><Link to='/login' >Login</Link></button>
-          <button type="button" class="btn btn-outline-info"><Link to='/register' >Registro</Link></button></> 
-          : null}
-    </nav>    
-      </div>
+    <Navbar bg="light" expand="lg">
+    <Container>
+      <Navbar.Brand href="#home">
+        {logo ? <Link to='/' ><img src={logo.sprites.front_default} alt={logo.name}/></Link> : <Link to='/' >"SomosMas"</Link>
+        }</Navbar.Brand>
+      <Navbar.Toggle aria-controls="basic-navbar-nav" />
+      <Navbar.Collapse id="basic-navbar-nav">
+        <Nav className="me-auto">     
+          <NavDropdown title="Dropdown" id="basic-nav-dropdown">
+            <NavBarComponent/>
+          </NavDropdown>
+        </Nav>
+        {user.isAuthenticated ? <Nav.Link><Link to='/logout' >Cerrar Sesion</Link></Nav.Link>
+        :<> <Button variant="outline-warning"><Link to='/login' >Login</Link></Button>
+        <Button variant="outline-warning"><Link to='/register' >Registro</Link></Button> </>
+        }
+      </Navbar.Collapse>
+  </Container>
+</Navbar>
     </>
   )
 }

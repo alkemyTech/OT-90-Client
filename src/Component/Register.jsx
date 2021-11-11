@@ -16,12 +16,12 @@ const validate = ({
   if (!firstName) {
     errors.firstName = 'Ingrese su nombre'
   } else if (!/^[a-zA-ZÀ-ÿ\s]{3,40}$/.test(firstName)) {
-    errors.firstName = 'El nombre solo puede tener letras'
+    errors.firstName = 'El nombre debe contener solo letras, al menos 3.'
   }
   if (!lastName) {
     errors.lastName = 'Ingrese su apellido'
   } else if (!/^[a-zA-ZÀ-ÿ\s]{3,40}$/.test(lastName)) {
-    errors.lastName = 'El apellido solo puede tener letras'
+    errors.lastName = 'El apellido solo puede tener letras, al menos 3.'
   }
   if (!email) {
     errors.email = 'Ingrese su email'

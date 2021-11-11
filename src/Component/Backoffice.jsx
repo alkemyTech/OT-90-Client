@@ -18,7 +18,8 @@ const application = {
     { app: 'Categorias', permission: 'admin', route: '/categories' },
     { app: 'Contactos', permission: 'admin', route: '/contacts' },
     { app: 'Testimonios', permission: 'admin', route: '/testimonials' },
-    { app: 'Usuarios', permission: 'admin', route: '/users' }],
+    { app: 'Usuarios', permission: 'admin', route: '/users' },
+    { app: 'Editar Perfil', permission: 'standard', route: '/users' }],
 }
 
 export default function Backoffice({ path }) {

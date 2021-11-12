@@ -3,6 +3,15 @@ import '../static/styles/Footer.css'
 import React, { useEffect, useReducer } from 'react'
 import { Link } from 'react-router-dom'
 import sendRequest from '../httpClient'
+import { FaFacebook, FaInstagram, FaLinkedin } from "react-icons/fa"
+
+
+const socialMediaIcons = {
+  "Facebook" : (<FaFacebook />),
+  "Instagram" : (<FaInstagram />),
+  "Linkedin" : (<FaLinkedin />),
+}
+
 
 function Footer() {
   const initialState = {
@@ -72,6 +81,12 @@ function Footer() {
     getIcon()
   }, () => 'ss')
 
+  const renderSocialMediaIcon = (socialMedia) => {
+    if(socialMediaIcons.hasOwnProperty(socialMedia)){
+      return socialMediaIcons[socialMedia]
+    }
+  }
+
   if (isLoading) {
     return <div className="main-footer" />
   }
@@ -108,7 +123,7 @@ function Footer() {
                 ? socialMedia.map(
                   (oneSocial) => (
                     <li key={oneSocial.url}>
-                      <a href={oneSocial.url}>{oneSocial.name}</a>
+                      <a href={oneSocial.url}>{renderSocialMediaIcon(oneSocial.name)}</a>
                     </li>
                   ),
                 )

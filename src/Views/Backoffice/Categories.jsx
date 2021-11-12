@@ -38,12 +38,6 @@ const Categories = () => {
             error: null,
             data: action.deleted.data.filter((d) => d.id !== action.deleted.id),
         };
-        case 'DELETE_OK':
-          return {
-            isLoading: false,
-            error: null,
-            data: action.deleted.data.filter((d) => d.id !== action.deleted.id),
-        };
       default:
         return state
     }

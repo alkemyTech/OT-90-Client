@@ -39,7 +39,7 @@ const Login = () => {
       const userData = await sendRequest(HttpActionEnum.POST, '/users/auth/login', values)
 
       dispatch(setLogged(userData.data.body.user))
-      history.push('/backoffice')
+      history.push('/')
       return 'ok'
     } catch (e) {
       setShow(true)

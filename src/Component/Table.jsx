@@ -1,12 +1,29 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import { Table } from 'react-bootstrap'
+import Swal from 'sweetalert2'
 import ButtonComponent from './Button'
 
 // eslint-disable-next-line no-alert
 function RenderRows({ data, headers, onDelete = () => alert('Eliminar') }) {
   // eslint-disable-next-line no-alert
   const edit = () => alert('Editar')
+
+  const openAlert = (id) => {
+    Swal.fire({
+      title: 'Atencion',
+      html: '¿Esta seguro que desea eliminar esta novedad?',
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonText: 'Eliminar',
+      confirmButtonColor: 'red',
+      cancelButtonText: 'Cancelar',
+    }).then((result) => {
+      if (result.isConfirmed) {
+        onDelete(id)
+      }
+    })
+  }
   return data.map((element, index) => (
     <tr key={element.id}>
       <th scope="row">{index + 1}</th>
@@ -18,7 +35,7 @@ function RenderRows({ data, headers, onDelete = () => alert('Eliminar') }) {
       <td>
         <div className="d-flex justify-content-evenly">
           <ButtonComponent isLoading={false} disabled={false} title="Editar" onClick={edit} />
-          <ButtonComponent isLoading={false} disabled={false} title="Eliminar" variant="danger" onClick={() => onDelete(element.id)} />
+          <ButtonComponent isLoading={false} disabled={false} title="Eliminar" variant="danger" onClick={() => openAlert(element.id)} />
         </div>
       </td>
     </tr>

@@ -3,8 +3,8 @@ import React, {useRef, useState} from 'react';
 import { Formik } from 'formik'
 import Loader from '../Component/Loader';
 import Swal from 'sweetalert2';
+import { Upload } from './AWS'
 import httpActionEnum from '../enums/HttpActionEnum'
-/* import Upload from './Upload' */
 import sendRequest from '../httpClient'
 import { useParams } from 'react-router-dom';
 
@@ -29,13 +29,14 @@ const [isLoading, setIsLoading] = useState(false)
 const fileInput = useRef()
 
 const handleOnSubmit = async (values, { resetForm }) => {
+  /* Upload(values.image) */
   try {
     const datOrg = {
       name: values.name,
       image: fileInput.current.files[0]
     }
     setIsLoading(true)
-    console.log(datOrg)
+    console.log(datOrg, id)
     alert(JSON.stringify(datOrg))
     /* await sendRequest(httpActionEnum.PUT, `/organization:${id}`, datOrg) */
     resetForm({})
@@ -100,8 +101,8 @@ return (
               id="image"
               name="image"
               ref={fileInput}
-              /* value={values.image} */
-              /* onChange={handleChange} */
+              value={values.image}
+              onChange={handleChange}
             />
 
             {Object.keys(errors).length === 0 && changed === true

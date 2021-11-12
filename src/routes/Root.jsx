@@ -1,7 +1,7 @@
 import React from 'react'
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom'
 // import App from '../App'
-import { useSelector } from 'react-redux'
+import { useSelector, useDispatch } from 'react-redux'
 import Register from '../Component/Register'
 import Home from '../Views/Home'
 import Login from '../Views/Login'
@@ -10,10 +10,18 @@ import Backoffice from './Backoffice'
 import News from '../Views/News'
 import Contact from '../Views/Contact'
 import Conditional from './ConditionalRoute'
-import { selectUser } from '../app/userSlice'
+import { selectUser, setLogged } from '../app/userSlice'
 
 export default function Root() {
-  const isLogged = useSelector(selectUser).isAuthenticated
+  const dispatch = useDispatch()
+  let isLogged = useSelector(selectUser).isAuthenticated
+
+  const { isAuthenticated } = useSelector(selectUser)
+  const userData = JSON.parse(localStorage.getItem('user-data'))
+  if (!isAuthenticated && userData) {
+    dispatch(setLogged(userData))
+    isLogged = true
+  }
   return (
     <Router>
       <Switch>

@@ -8,6 +8,8 @@ import httpActionEnum from '../enums/HttpActionEnum'
 import sendRequest from '../httpClient'
 import { useParams } from 'react-router-dom';
 
+const EditOrganizationContainer = () => {
+
 let changed = false
 const validate = ({
   name
@@ -21,13 +23,9 @@ const validate = ({
   return errors
 }}
 
-const [isLoading, setIsLoading] = useState(false)
 const { id } = useParams()
+const [isLoading, setIsLoading] = useState(false)
 
-
-/* const fileInput = useRef();
-const file = fileInput.current.files[0];
-"ver html form" */
 const fileInput = useRef()
 
 const handleOnSubmit = async (values, { resetForm }) => {
@@ -37,7 +35,9 @@ const handleOnSubmit = async (values, { resetForm }) => {
       image: fileInput.current.files[0]
     }
     setIsLoading(true)
-    await sendRequest(httpActionEnum.PUT, `/organization:${id}`, datOrg)
+    console.log(datOrg)
+    alert(JSON.stringify(datOrg))
+    /* await sendRequest(httpActionEnum.PUT, `/organization:${id}`, datOrg) */
     resetForm({})
     Swal.fire({
       icon: 'success',
@@ -54,9 +54,9 @@ const handleOnSubmit = async (values, { resetForm }) => {
     setIsLoading(false)
   }
 }
-
-const EditOrganization = () => (
+return (
   <>
+
     <Loader visible={isLoading} />
     <div className="formPage vh-100 d-flex align-items-center">
 
@@ -119,7 +119,7 @@ const EditOrganization = () => (
         )}
       </Formik>
     </div>
-  </>
 )
-
-export default EditOrganization
+</>)
+}
+export default EditOrganizationContainer

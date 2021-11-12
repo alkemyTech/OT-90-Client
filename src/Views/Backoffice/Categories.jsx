@@ -32,6 +32,18 @@ const Categories = () => {
           error: payload,
           data: {},
         };
+        case 'DELETE_OK':
+          return {
+            isLoading: false,
+            error: null,
+            data: action.deleted.data.filter((d) => d.id !== action.deleted.id),
+        };
+        case 'DELETE_OK':
+          return {
+            isLoading: false,
+            error: null,
+            data: action.deleted.data.filter((d) => d.id !== action.deleted.id),
+        };
       default:
         return state
     }
@@ -43,6 +55,16 @@ const Categories = () => {
   const alertAction = () => {
     dispatch({ type: 'GET_DATA' })
     setToggle(!toggle)
+  }
+  
+
+  const deleteCategories = async (id) => {
+    try {
+      const response = await sendRequest('DELETE', `/categories/${id}`, null)
+      dispatch({ type: 'DELETE_OK', payload: response, deleted: { id, data } })
+    } catch (e) {
+      dispatch({ type: 'ERROR', payload: e })
+    }
   }
 
   useEffect(() => {
@@ -64,8 +86,8 @@ const Categories = () => {
   }
   return (
     error
-      ? <AlertComponent show={!isLoading} title="Error obteniendo novedadades" variant="warning" action={alertAction} />
-      : <Table title="Categoria" headers={headers} data={data} />
+      ? <AlertComponent show={!isLoading} title="Error obteniendo categorias" variant="warning" action={alertAction} />
+      : <Table title="Categorias" headers={headers} data={data} onDelete={deleteCategories} />
   )
 }
 

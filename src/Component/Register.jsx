@@ -57,7 +57,7 @@ const Register = () => {
         firstName: values.firstName,
         lastName: values.lastName,
         email: values.email,
-        role: 'standard',
+        role: 'Standard',
       }
       const password = { password: values.password }
       const userData = await sendRequest(httpActionEnum.POST, '/users', { ...data, ...password })

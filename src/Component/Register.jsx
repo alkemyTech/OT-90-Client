@@ -53,15 +53,15 @@ const Register = () => {
 
   const handleOnSubmit = async (values, { resetForm }) => {
     try {
-      const userData = {
+      const data = {
         firstName: values.firstName,
         lastName: values.lastName,
         email: values.email,
         role: 'standard',
       }
       const password = { password: values.password }
-      await sendRequest(httpActionEnum.POST, '/users', { ...userData, ...password })
-      dispatch(setLogged(userData))
+      const userData = await sendRequest(httpActionEnum.POST, '/users', { ...data, ...password })
+      dispatch(setLogged(userData.data.body))
       history.push('/')
     } catch (e) {
       setShow(true)

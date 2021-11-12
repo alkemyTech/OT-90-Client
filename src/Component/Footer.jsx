@@ -1,63 +1,123 @@
 import '../static/styles/Footer.css'
 
-import React, { useEffect, useState } from 'react'
-
-import {Link} from 'react-router-dom'
-
-const fetchSocialMedia = [
-  {
-    url:"#",
-    text: 'Facebook'
-  },
-  {
-    url:"#",
-    text: 'Instagram'
-  },
-  {
-    url:"#",
-    text: 'Twitter'
-  }
-]
+import React, { useEffect, useReducer } from 'react'
+import { Link } from 'react-router-dom'
+import sendRequest from '../httpClient'
 
 function Footer() {
-  const [publicData, setPublicData] = useState(1)
-    useEffect(() => {
-      fetch('https://pokeapi.co/api/v2/pokemon/ditto')
-      .then((res) => res.json())
-      .then((data) => setPublicData(data))
-      .catch((error) => console.log(error))
-      }, [publicData])
+  const initialState = {
+    socialMedia: [],
+    isLoading: true,
+    publicData: {},
+    links: [
+      {
+        url: '',
+        text: 'link 1',
+      },
+      {
+        url: '',
+        text: 'link 2',
+      },
+      {
+        url: '',
+        text: 'link 3',
+      },
+    ],
+  }
+
+  const reducers = (state, action) => {
+    const { type, payload = {} } = action
+    const media = []
+    switch (type) {
+      case 'GET_DATA':
+        return {
+          isLoading: true,
+          publicData: {},
+        }
+      case 'GET_DATA_OK':
+        Object.entries(payload).forEach(([key, value]) => {
+          if (key.substring(0, 3) === 'url') {
+            media.push({ name: key.slice(3, key.length), url: value })
+          }
+        })
+        return {
+          isLoading: false,
+          publicData: payload,
+          socialMedia: media,
+          links: initialState.links,
+        }
+      case 'ERROR':
+        return {
+          isLoading: true,
+          publicData: {},
+        }
+      default:
+        return state
+    }
+  }
+
+  const [{
+    links, socialMedia, isLoading, publicData,
+  }, dispatch] = useReducer(reducers, initialState)
+
+  useEffect(() => {
+    const getIcon = async () => {
+      try {
+        const { data: datas } = await sendRequest('GET', '/organizations/1/public', null)
+        dispatch({ type: 'GET_DATA_OK', payload: datas })
+      } catch (e) {
+        dispatch({ type: 'ERROR', payload: e })
+      }
+    }
+    getIcon()
+  }, () => 'ss')
+
+  if (isLoading) {
+    return <div className="main-footer" />
+  }
 
   return (
-  <div className="main-footer">
-    <div className="container">
-      <div className="row">
-        {/* Column1 LOGO */}
-        <div className="col">
-          <h4>Somos Más</h4>
-          {publicData !== 1 ? <img src={publicData.sprites.front_default} alt={publicData.name} /> : null }
-        </div>
-        {/* Column2 NAV*/}
-        <div className="col">
-          <h4>Links</h4>
-          <ui className="list-unstyled">
-            {publicData !== 1 ? publicData.abilities.map(({ ability }, index) => {
-              return <li key={index}> <Link href="#">{ability.name}</Link></li>
-            }) : null }
-          </ui>
-        </div>
-        {/* Column3 Social */}
-        <div className="col">
-          <h4>Social Media</h4>
-          <ui className="list-unstyled">
-              {fetchSocialMedia.length > 0 ? fetchSocialMedia.map((oneSocial,i) => {
-                return <li key={i}><a href={oneSocial.url}>{oneSocial.text}</a></li>
-              } ) : null}
-          </ui>
+    <div className="main-footer">
+      <div className="container">
+        <div className="row">
+          {/* Column1 LOGO */}
+          <div className="col">
+            <h4>Somos Más</h4>
+            {publicData !== undefined ? (
+              <img
+                src={publicData.image}
+                alt={publicData.name}
+              />
+            ) : null}
+          </div>
+          <div className="col">
+            <h4>Links</h4>
+            <ui className="list-unstyled">
+              {links.map((link) => (
+                <li key={link.url}>
+                  <Link href={link.url}>{link.text}</Link>
+                </li>
+              ))}
+            </ui>
+          </div>
+          {/* Column3 Social */}
+          <div className="col">
+            <h4>Social Media</h4>
+            <ui className="list-unstyled">
+              {socialMedia.length > 0
+                ? socialMedia.map(
+                  (oneSocial) => (
+                    <li key={oneSocial.url}>
+                      <a href={oneSocial.url}>{oneSocial.name}</a>
+                    </li>
+                  ),
+                )
+                : null}
+            </ui>
+          </div>
         </div>
       </div>
     </div>
-  </div>
   )
 }
 

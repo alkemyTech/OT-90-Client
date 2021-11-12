@@ -3,13 +3,14 @@ import React, {useRef, useState} from 'react';
 import { Formik } from 'formik'
 import Loader from '../Component/Loader';
 import Swal from 'sweetalert2';
+import httpActionEnum from '../enums/HttpActionEnum'
 /* import Upload from './Upload' */
 import sendRequest from '../httpClient'
 import { useParams } from 'react-router-dom';
 
 let changed = false
 const validate = ({
-  name, image
+  name
 }) => {
   const errors = {}
   changed = true
@@ -27,11 +28,16 @@ const { id } = useParams()
 /* const fileInput = useRef();
 const file = fileInput.current.files[0];
 "ver html form" */
+const fileInput = useRef()
 
 const handleOnSubmit = async (values, { resetForm }) => {
   try {
+    const datOrg = {
+      name: values.name,
+      image: fileInput.current.files[0]
+    }
     setIsLoading(true)
-    await sendRequest('PUT', `/organization:${id}`, values)
+    await sendRequest(httpActionEnum.PUT, `/organization:${id}`, datOrg)
     resetForm({})
     Swal.fire({
       icon: 'success',
@@ -94,8 +100,8 @@ const EditOrganization = () => (
               id="image"
               name="image"
               ref={fileInput}
-              value={values.image}
-              onChange={handleChange}
+              /* value={values.image} */
+              /* onChange={handleChange} */
             />
 
             {Object.keys(errors).length === 0 && changed === true

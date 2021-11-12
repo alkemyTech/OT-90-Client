@@ -30,6 +30,10 @@ export default function UserFormPUT(){
           <Form.Text className="text-muted">0 = 'user', 1 = 'admin'</Form.Text>
         </Form.Group>
         <Form.Group className='mb-3'>
+          <Form.Label>Image</Form.Label>
+          <Form.Control name='image' type='file' onChange={formik.handleChange} value={formik.values.image}/>
+        </Form.Group>
+        <Form.Group className='mb-3'>
           <Button type='submit' variant="primary">Guardar</Button>
         </Form.Group>
       </Form>

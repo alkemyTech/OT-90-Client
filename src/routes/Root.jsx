@@ -8,6 +8,7 @@ import NewsDetail from '../Views/NewsDetail'
 import Backoffice from './Backoffice'
 import News from '../Views/News'
 import Contact from '../Views/Contact'
+import Members from '../Views/members'
 
 export default function Root() {
   return (
@@ -21,6 +22,7 @@ export default function Root() {
         <Route exact path="/novedades/:id" component={NewsDetail} />
         <Route path="/nosotros" component={() => '"Nostros" Screen under construction'} />
         <Route exact path="/contacto" component={Contact} />
+        <Route exact path="/members" component={Members} />
         <Route path="/backoffice" component={Backoffice} />
       </Switch>
     </Router>

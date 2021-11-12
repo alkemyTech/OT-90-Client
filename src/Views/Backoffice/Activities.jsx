@@ -57,7 +57,7 @@ const Activities = () => {
     getCategory()
   }, [toggle])
 
-  const headers = ['name', 'conent', 'image']
+  const headers = ['name', 'content', 'image']
 
   if (isLoading) {
     return <Loader visible />

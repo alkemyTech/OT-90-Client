@@ -7,9 +7,9 @@ const baseUrl = process.env.NODE_ENV === 'production'
 export default async function sendRequest(method, relativeUrl, data) {
   let token = null
   const userData = JSON.parse(localStorage.getItem('user-data')) || null
-  const roleId = userData.role
-  if (userData !== null) token = `Bearer ${userData.authorization}`
-
+  const role = userData ? userData.role : undefined
+  const roleId = role === 'Admin' ? 1 : 2
+  if (userData !== null) token = `Bearer ${userData.token}`
   const url = baseUrl + relativeUrl
   const response = await axios({
     method, url, data, headers: { Authorization: token, roleId },

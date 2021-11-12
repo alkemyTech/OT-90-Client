@@ -3,7 +3,7 @@ import React, {useRef, useState} from 'react';
 import { Formik } from 'formik'
 import Loader from '../Component/Loader';
 import Swal from 'sweetalert2';
-import { Upload } from './AWS'
+import {Upload} from './AWS'
 import httpActionEnum from '../enums/HttpActionEnum'
 import sendRequest from '../httpClient'
 import { useParams } from 'react-router-dom';
@@ -29,16 +29,15 @@ const [isLoading, setIsLoading] = useState(false)
 const fileInput = useRef()
 
 const handleOnSubmit = async (values, { resetForm }) => {
-  /* Upload(values.image) */
   try {
+    const imageAws = await Upload(fileInput.current.files[0], `${values.name}.logo`)
     const datOrg = {
       name: values.name,
-      image: fileInput.current.files[0]
+      image: imageAws.location !== undefined ?  imageAws.location : null
     }
     setIsLoading(true)
     console.log(datOrg, id)
-    alert(JSON.stringify(datOrg))
-    /* await sendRequest(httpActionEnum.PUT, `/organization:${id}`, datOrg) */
+    await sendRequest(httpActionEnum.PUT, `/organizations/1`, datOrg)
     resetForm({})
     Swal.fire({
       icon: 'success',
@@ -49,7 +48,7 @@ const handleOnSubmit = async (values, { resetForm }) => {
     Swal.fire({
       icon: 'error',
       title: 'Error',
-      text: 'Ocurrio un error modificando, intenta nuevamente.',
+      text: 'Ocurrio un error modificando, intenta nuevamente.'
     })
   } finally {
     setIsLoading(false)
@@ -64,7 +63,7 @@ return (
       <Formik
         initialValues={{
           name: '',
-          image: ""
+          image: ''
         }}
         validate={validate}
         onSubmit={handleOnSubmit}>

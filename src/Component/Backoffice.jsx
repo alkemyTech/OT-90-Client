@@ -1,10 +1,11 @@
-import React from 'react'
-import { useSelector } from 'react-redux'
-import PropTypes from 'prop-types'
-import Button from 'react-bootstrap/Button'
 import '../static/styles/Backoffice.css'
-import { useHistory } from 'react-router-dom'
+
+import Button from 'react-bootstrap/Button'
+import PropTypes from 'prop-types'
+import React from 'react'
 import { selectUser } from '../app/userSlice'
+import { useHistory } from 'react-router-dom'
+import { useSelector } from 'react-redux'
 
 // localStorage.setItem('user-data', JSON.stringify(
 // { username: 'Ben', token: null, role: 'admin' }))
@@ -19,6 +20,7 @@ const application = {
     { app: 'Contactos', permission: 'admin', route: '/contacts' },
     { app: 'Testimonios', permission: 'admin', route: '/testimonials' },
     { app: 'Usuarios', permission: 'admin', route: '/users' },
+    { app: 'EditOrganization', permission: 'admin', route: '/editorganization/1' },
     { app: 'Editar Perfil', permission: 'standard', route: '/users' }],
 }
 

@@ -60,7 +60,8 @@ const Register = () => {
         role: 'standard',
       }
       const password = { password: values.password }
-      await sendRequest(httpActionEnum.POST, '/users', { ...userData, ...password })
+      const { data: { body: { token } } } = await sendRequest(httpActionEnum.POST, '/users', { ...userData, ...password })
+      localStorage.setItem('user-data', JSON.stringify({ ...userData, token }))
       dispatch(setLogged(userData))
       history.push('/')
     } catch (e) {

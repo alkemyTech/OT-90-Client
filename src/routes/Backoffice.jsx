@@ -7,6 +7,7 @@ import Testimonials from '../Views/Testimonials'
 import Activities from '../Views/Backoffice/Activities'
 import News from '../Views/Backoffice/News'
 import Users from '../Views/Backoffice/Users'
+import AllTestimonial from '../Views/Backoffice/AllTestimonial'
 
 const Backoffice = (props) => {
   const { match } = props
@@ -21,6 +22,7 @@ const Backoffice = (props) => {
         <Route path={`${path}/testimonials`} component={Testimonials} />
         <Route exact path={`${path}/news`} component={News} />
         <Route exact path={`${path}/users`} component={Users} />
+        <Route path={`${path}/alltestimonials`} component={AllTestimonial} />
       </Switch>
     </Router>
   )

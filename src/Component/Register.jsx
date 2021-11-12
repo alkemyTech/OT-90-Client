@@ -71,8 +71,8 @@ const Register = () => {
 
   return (
     <>
+      <AlertComponent show={show} title="Hubo un error" action={() => setShow(false)} variant="warning" />
       <div className="formPage vh-100 d-flex align-items-center">
-        <AlertComponent show={show} title="Hubo un error" action={() => setShow(false)} />
         <Formik
           initialValues={{
             firstName: '',

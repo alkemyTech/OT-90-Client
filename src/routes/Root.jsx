@@ -1,21 +1,24 @@
-import React from 'react'
-import { BrowserRouter as Router, Route, Switch } from 'react-router-dom'
-// import App from '../App'
-import { useSelector } from 'react-redux'
-import Register from '../Component/Register'
+import { Route, BrowserRouter as Router, Switch } from 'react-router-dom'
+
+import Backoffice from './Backoffice'
+import Conditional from './ConditionalRoute'
+import Contact from '../Views/Contact'
+import Header from '../Component/Header'
 import Home from '../Views/Home'
 import Login from '../Views/Login'
-import NewsDetail from '../Views/NewsDetail'
-import Backoffice from './Backoffice'
 import News from '../Views/News'
-import Contact from '../Views/Contact'
-import Conditional from './ConditionalRoute'
+import NewsDetail from '../Views/NewsDetail'
+import React from 'react'
+import Register from '../Component/Register'
 import { selectUser } from '../app/userSlice'
+// import App from '../App'
+import { useSelector } from 'react-redux'
 
 export default function Root() {
   const isLogged = useSelector(selectUser).isAuthenticated
   return (
     <Router>
+      <Route path="/" component={Header} />
       <Switch>
         {/* <Route exact path="/" component={App} /> */}
         <Route exact path="/" component={Home} />

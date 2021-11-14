@@ -1,16 +1,15 @@
 import React, { useEffect, useReducer, useState } from 'react';
-import AlertComponent from '../../Component/Alert';
-import Loader from '../../Component/Loader';
 import Table from '../../Component/Table'
 import sendRequest from '../../httpClient'
+import Loader from '../../Component/Loader';
+import AlertComponent from '../../Component/Alert';
 
-const NewsContainer = () => {
+const AllTestimonial = () => {
   const initialState = {
     data: {},
     isLoading: true,
     error: null,
   }
-
   const reducer = (state, action) => {
     const { type, payload = {} } = action
     switch (type) {
@@ -32,12 +31,6 @@ const NewsContainer = () => {
           error: payload,
           data: {},
         };
-      case 'DELETE_OK':
-        return {
-          isLoading: false,
-          error: null,
-          data: action.deleted.data.filter((d) => d.id !== action.deleted.id),
-        };
       default:
         return state
     }
@@ -51,37 +44,28 @@ const NewsContainer = () => {
     setToggle(!toggle)
   }
 
-  const deleteNew = async (id) => {
-    try {
-      const response = await sendRequest('DELETE', `/news/${id}`, null)
-      dispatch({ type: 'DELETE_OK', payload: response, deleted: { id, data } })
-    } catch (e) {
-      dispatch({ type: 'ERROR', payload: e })
-    }
-  }
-
   useEffect(() => {
-    const getNews = async () => {
+    const getCategory = async () => {
       try {
-        const { data: news } = await sendRequest('GET', '/news', null)
-        dispatch({ type: 'GET_DATA_OK', payload: news })
+        const { data: contacts } = await sendRequest('GET', '/testimonials', null)
+        dispatch({ type: 'GET_DATA_OK', payload: contacts })
       } catch (e) {
         dispatch({ type: 'ERROR', payload: e })
       }
     }
-    getNews()
+    getCategory()
   }, [toggle])
 
-  const headers = ['name', 'image', 'createdAt']
+  const headers = ['image', 'name', 'content']
 
   if (isLoading) {
     return <Loader visible />
   }
   return (
     error
-      ? <AlertComponent show={!isLoading} title="Error obteniendo novedadades" variant="warning" action={alertAction} />
-      : <Table title="Novedades" headers={headers} data={data} onDelete={deleteNew} />
+      ? <AlertComponent show={!isLoading} title="Error obteniendo testimonios" variant="warning" action={alertAction} />
+      : <Table title="Testimonios" headers={headers} data={data} />
   )
 }
 
-export default NewsContainer
+export default AllTestimonial

@@ -12,7 +12,7 @@ function RenderRows({ data, headers, onDelete = () => alert('Eliminar') }) {
   const openAlert = (id) => {
     Swal.fire({
       title: 'Atencion',
-      html: '¿Esta seguro que desea eliminar esta novedad?',
+      html: '¿Esta seguro que desea eliminar este registro?',
       icon: 'warning',
       showCancelButton: true,
       confirmButtonText: 'Eliminar',

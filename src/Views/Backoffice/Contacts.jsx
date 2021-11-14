@@ -64,7 +64,7 @@ const Contacts = () => {
   }
   return (
     error
-      ? <AlertComponent show={!isLoading} title="Error obteniendo novedadades" variant="warning" action={alertAction} />
+      ? <AlertComponent show={!isLoading} title="Error obteniendo contactos" variant="warning" action={alertAction} />
       : <Table title="Contactos" headers={headers} data={data} />
   )
 }

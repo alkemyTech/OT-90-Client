@@ -1,6 +1,7 @@
 import React from 'react'
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom'
 // import App from '../App'
+import { useSelector } from 'react-redux'
 import Register from '../Component/Register'
 import Home from '../Views/Home'
 import Login from '../Views/Login'
@@ -9,8 +10,11 @@ import Backoffice from './Backoffice'
 import News from '../Views/News'
 import Contact from '../Views/Contact'
 import Members from '../Views/members'
+import Conditional from './ConditionalRoute'
+import { selectUser } from '../app/userSlice'
 
 export default function Root() {
+  const isLogged = useSelector(selectUser).isAuthenticated
   return (
     <Router>
       <Switch>
@@ -24,6 +28,7 @@ export default function Root() {
         <Route exact path="/contacto" component={Contact} />
         <Route exact path="/members" component={Members} />
         <Route path="/backoffice" component={Backoffice} />
+        <Conditional conditionToOpen={isLogged} component={Backoffice} pathRedirect="/" path="/backoffice" />
       </Switch>
     </Router>
   )

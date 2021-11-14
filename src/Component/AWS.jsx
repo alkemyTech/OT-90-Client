@@ -1,7 +1,5 @@
 import S3 from 'react-aws-s3';
 
-require('dotenv').config()
-
 const config = {
   bucketName: process.env.REACT_APP_AWS_S3_BUCKET,
   s3Url: process.env.REACT_APP_AWS_S3_URL,

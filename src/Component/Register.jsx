@@ -5,7 +5,7 @@ import { Formik } from 'formik'
 import '../features/register/register.css'
 import sendRequest from '../httpClient'
 import httpActionEnum from '../enums/HttpActionEnum'
-import Upload from './Upload'
+import Upload from './AWS'
 
 let changed = false
 const validate = ({

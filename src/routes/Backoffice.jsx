@@ -20,23 +20,21 @@ const Backoffice = (props) => {
   return (
     <Router>
       <Switch>
-        <Route exact path={path} component={() => 'Main backoffice route'} />
-        <Route path={`${path}/activities`} component={Activities} />
-        <Route path={`${path}/categories`} component={Categories} />
-        <Route path={`${path}/contacts`} component={Contacts} />
-        <Route path={`${path}/testimonials`} component={Testimonials} />
-        <Route exact path={`${path}/news`} component={News} />
-        <Route exact path={`${path}/users`} component={Users} />
-        <Route path={`${path}/alltestimonials`} component={AllTestimonial} />
+        <Route exact path={path} render={() => <BackofficeMain path={path} />} />
+        <Conditional path={`${path}/activities`} component={Activities} conditionToOpen={isAdmin} pathRedirect={path} />
+        <Conditional path={`${path}/categories`} component={Categories} conditionToOpen={isAdmin} pathRedirect={path} />
+        <Conditional path={`${path}/contacts`} component={Contacts} conditionToOpen={isAdmin} pathRedirect={path} />
+        <Conditional path={`${path}/testimonials`} component={Testimonials} conditionToOpen={isAdmin} pathRedirect={path} />
+        <Conditional exact path={`${path}/news`} component={News} conditionToOpen={isAdmin} pathRedirect={path} />
+        <Conditional exact path={`${path}/users`} component={Users} conditionToOpen={isAdmin} pathRedirect={path} />
+        <Conditional exact path={`${path}/alltestimonials`} component={AllTestimonial} conditionToOpen={isAdmin} pathRedirect={path} />
       </Switch>
     </Router>
   )
 }
-
 Backoffice.propTypes = {
   match: PropTypes.shape({
     path: PropTypes.string.isRequired,
   }).isRequired,
 };
-
 export default Backoffice;

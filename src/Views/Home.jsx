@@ -8,6 +8,7 @@ import Swal from 'sweetalert2';
 import Loader from '../Component/Loader';
 import Slider from '../Component/Slider';
 import sendRequest from '../httpClient'
+import Footer from '../Component/Footer';
 
 const Home = ({ news }) => (
   <Container>
@@ -28,6 +29,7 @@ const Home = ({ news }) => (
         </Col>
       ))}
     </Row>
+    <Footer />
   </Container>
 )
 

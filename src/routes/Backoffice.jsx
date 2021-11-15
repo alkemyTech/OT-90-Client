@@ -31,15 +31,14 @@ const Backoffice = (props) => {
         <Conditional path={`${path}/testimonials`} component={Testimonials} conditionToOpen={isAdmin} pathRedirect={path} />
         <Conditional exact path={`${path}/news`} component={News} conditionToOpen={isAdmin} pathRedirect={path} />
         <Conditional exact path={`${path}/users`} component={Users} conditionToOpen={isAdmin} pathRedirect={path} />
+        <Conditional exact path={`${path}/alltestimonials`} component={AllTestimonial} conditionToOpen={isAdmin} pathRedirect={path} />
       </Switch>
     </Router>
   )
 }
-
 Backoffice.propTypes = {
   match: PropTypes.shape({
     path: PropTypes.string.isRequired,
   }).isRequired,
-}
-
+};
 export default Backoffice

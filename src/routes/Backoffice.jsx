@@ -1,8 +1,11 @@
-import { Route, BrowserRouter as Router, Switch } from 'react-router-dom'
-
-import Activities from '../Views/Backoffice/Activities'
+import React from 'react'
+import { BrowserRouter as Router, Route, Switch } from 'react-router-dom'
+import { useSelector } from 'react-redux'
+import PropTypes from 'prop-types'
+import AllTestimonial from '../Views/Backoffice/AllTestimonial'
 import BackofficeMain from '../Views/Backoffice/Main'
-import Categories from '../Views/Backoffice/Catogeries'
+import Categories from '../Views/Backoffice/Categories'
+import Activities from '../Views/Backoffice/Activities'
 import Conditional from './ConditionalRoute'
 import Contacts from '../Views/Backoffice/Contacts'
 import EditOrganization from '../Component/EditOrganization'
@@ -12,7 +15,6 @@ import React from 'react'
 import Testimonials from '../Views/Testimonials'
 import Users from '../Views/Backoffice/Users'
 import { selectUser } from '../app/userSlice'
-import { useSelector } from 'react-redux'
 
 const Backoffice = (props) => {
   const isAdmin = useSelector(selectUser).role === 'admin'
@@ -38,6 +40,6 @@ Backoffice.propTypes = {
   match: PropTypes.shape({
     path: PropTypes.string.isRequired,
   }).isRequired,
-};
+}
 
-export default Backoffice;
+export default Backoffice

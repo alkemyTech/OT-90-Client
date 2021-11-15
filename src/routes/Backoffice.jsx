@@ -2,7 +2,7 @@ import React from 'react'
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom'
 import { useSelector } from 'react-redux'
 import PropTypes from 'prop-types'
-import Categories from '../Views/Backoffice/Catogeries'
+import Categories from '../Views/Backoffice/Categories'
 import Contacts from '../Views/Backoffice/Contacts'
 import Testimonials from '../Views/Testimonials'
 import Activities from '../Views/Backoffice/Activities'
@@ -37,4 +37,5 @@ Backoffice.propTypes = {
     path: PropTypes.string.isRequired,
   }).isRequired,
 };
-export default Backoffice;
+
+export default Backoffice

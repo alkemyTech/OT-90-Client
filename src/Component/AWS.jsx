@@ -10,19 +10,14 @@ const config = {
 
 const ReactS3Client = new S3(config);
 
-function Upload(file, newFileName) {
-  ReactS3Client.uploadFile(file, newFileName)
+export function Upload(file, newFileName) {
+return  ReactS3Client.uploadFile(file, newFileName)
     .then((response) => response)
     .catch((error) => error)
 }
 
-function Delete(fileName) {
-  ReactS3Client.deleteFile(fileName)
+export function Delete(fileName) {
+  return ReactS3Client.deleteFile(fileName)
     .then((response) => response)
     .catch((error) => error)
-}
-
-export default {
-  Upload,
-  Delete,
 }

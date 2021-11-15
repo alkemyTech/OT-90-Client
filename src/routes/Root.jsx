@@ -1,18 +1,25 @@
-import React from 'react'
-import { BrowserRouter as Router, Route, Switch } from 'react-router-dom'
-// import App from '../App'
-import Register from '../Component/Register'
+import { Route, BrowserRouter as Router, Switch } from 'react-router-dom'
+
+import Backoffice from './Backoffice'
+import Conditional from './ConditionalRoute'
+import Contact from '../Views/Contact'
+import Header from '../Component/Header'
 import Home from '../Views/Home'
 import Login from '../Views/Login'
 import NewsDetail from '../Views/NewsDetail'
 import ActivitiesDetail from '../Views/ActivitiesDetails'
-import Backoffice from './Backoffice'
 import News from '../Views/News'
-import Contact from '../Views/Contact'
+import React from 'react'
+import Register from '../Component/Register'
+import { selectUser } from '../app/userSlice'
+// import App from '../App'
+import { useSelector } from 'react-redux'
 
 export default function Root() {
+  const isLogged = useSelector(selectUser).isAuthenticated
   return (
     <Router>
+      <Route path="/" component={Header} />
       <Switch>
         {/* <Route exact path="/" component={App} /> */}
         <Route exact path="/" component={Home} />
@@ -23,7 +30,7 @@ export default function Root() {
         <Route exact path="/actividades/:id" component={ActivitiesDetail} />
         <Route path="/nosotros" component={() => '"Nostros" Screen under construction'} />
         <Route exact path="/contacto" component={Contact} />
-        <Route path="/backoffice" component={Backoffice} />
+        <Conditional conditionToOpen={isLogged} component={Backoffice} pathRedirect="/" path="/backoffice" />
       </Switch>
     </Router>
   )

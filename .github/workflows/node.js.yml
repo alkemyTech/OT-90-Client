@@ -30,3 +30,4 @@ jobs:
     - run: npm run lint
     - run: npm run format
     - run: npm run test:nowatch
+    - run: npm run build

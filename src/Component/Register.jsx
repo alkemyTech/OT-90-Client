@@ -62,6 +62,7 @@ const Register = () => {
       const password = { password: values.password }
       const userData = await sendRequest(httpActionEnum.POST, '/users', { ...data, ...password })
       dispatch(setLogged(userData.data.body))
+      localStorage.setItem('user-data', JSON.stringify(userData.data.body))
       history.push('/')
     } catch (e) {
       setShow(true)

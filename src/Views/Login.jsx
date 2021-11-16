@@ -5,16 +5,17 @@ import {
 } from 'react-bootstrap';
 import { useDispatch } from 'react-redux'
 import { useHistory } from 'react-router-dom'
+import Swal from 'sweetalert2';
 import { setLogged } from '../app/userSlice'
 import sendRequest from '../httpClient'
 import HttpActionEnum from '../enums/HttpActionEnum'
-import AlertComponent from '../Component/Alert'
+import Loader from '../Component/Loader';
 
 const Login = () => {
   const history = useHistory()
   const dispatch = useDispatch()
   const [showPassword, setShowpassword] = useState(false)
-  const [show, setShow] = useState(false)
+  const [isLoading, setIsLoading] = useState(false)
 
   const validation = ({ email, password }) => {
     const errors = {};
@@ -34,28 +35,34 @@ const Login = () => {
   }
 
   const onSubmit = async (values) => {
-    // eslint-disable-next-line no-alert
     try {
+      setIsLoading(true)
       const userData = await sendRequest(HttpActionEnum.POST, '/users/login', values)
-
+      localStorage.setItem('user-data', JSON.stringify(userData.data.body.user))
       dispatch(setLogged(userData.data.body.user))
       history.push('/')
-      return 'ok'
     } catch (e) {
-      setShow(true)
-      return 'error'
+      const text = e === 'Request failed with status code 400' ? 'Email o contraseña invalido' : 'Ocurrio un error, intenta nuevamente.'
+      Swal.fire({
+        icon: 'error',
+        title: 'Error',
+        text,
+      })
+    } finally {
+      setIsLoading(false)
     }
   }
 
   return (
     <>
-      <AlertComponent show={show} title="Hubo un error" action={() => setShow(false)} variant="warning" />
+      <Loader visible={isLoading} />
       <Formik
         validate={validation}
         initialValues={{
           email: '',
           password: '',
         }}
+        onSubmit={onSubmit}
       >
         {({
           handleSubmit,
@@ -65,7 +72,7 @@ const Login = () => {
           touched,
         }) => (
 
-          <Row className="justify-content-center min-vh-100 align-content-center">
+          <Row className="m-0 justify-content-center min-vh-100 align-content-center">
             <Col sm="6" md="4" lg="3" className="p-4 p-md-0">
               <h1 className="text-center mb-4">Inicia Sesion</h1>
               <Form noValidate onSubmit={handleSubmit}>
@@ -111,7 +118,7 @@ const Login = () => {
                   label="Mostrar contraseña"
                   onChange={() => setShowpassword(!showPassword)}
                 />
-                <Button className="d-block mx-auto" type="submit" onClick={() => onSubmit(values, history, dispatch)}>Iniciar Sesion</Button>
+                <Button className="d-block mx-auto" type="submit">Iniciar Sesion</Button>
               </Form>
             </Col>
           </Row>

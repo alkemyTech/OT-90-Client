@@ -22,7 +22,7 @@ const Members = () => {
 
   useEffect(() => {
     cargar()
-  }, [])
+  })
 
   return (
     <div style={{ textAlign: 'center' }}>
@@ -43,4 +43,4 @@ const Members = () => {
   )
 }
 
-export default Members;
+export default Members

@@ -64,7 +64,7 @@ const Activities = () => {
   }
   return (
     error
-      ? <AlertComponent show={!isLoading} title="Error obteniendo novedadades" variant="warning" action={alertAction} />
+      ? <AlertComponent show={!isLoading} title="Error obteniendo actividades" variant="warning" action={alertAction} />
       : <Table title="Actividades" headers={headers} data={data} />
   )
 }

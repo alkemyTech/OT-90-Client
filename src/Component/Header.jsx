@@ -1,29 +1,42 @@
-import React, { useState, useEffect } from 'react'
+import { Button, Container, Nav, NavDropdown, Navbar } from 'react-bootstrap/'
+import React, { useEffect, useState } from 'react'
+
+import { Link } from 'react-router-dom'
+import NavBarComponent from './NavBar'
+import { selectUser } from '../app/userSlice'
+import { useSelector } from 'react-redux'
 
 export default function Header() {
-  const [publicData, setPublicData] = useState(null)
+  const [logo, setLogo] = useState(null)
   useEffect(() => {
     fetch('https://pokeapi.co/api/v2/pokemon/ditto')
       .then((res) => res.json())
-      .then((data) => setPublicData(data))
+      .then((data) => setLogo(data))
       .catch((error) => error)
   }, [])
+
+const user = useSelector(selectUser)
   return (
     <>
-      {publicData && (
-        <>
-          {/* this would be the logo */}
-          <img src={publicData.sprites.front_default} alt={publicData.name} />
-          {/* this would be the items */}
-          <ul>
-            {publicData.abilities.map(({ ability }) => <li key={ability.name}>{ability.name}</li>)}
-          </ul>
-        </>
-      )}
-      <div>
-        <input type="button" value="Login" />
-        <input type="button" value="Registrarse" />
-      </div>
+    <Navbar bg="light" expand="lg">
+    <Container>
+      <Navbar.Brand href="#home">
+        {logo ? <Link to='/' ><img src={logo.sprites.front_default} alt={logo.name}/></Link> : <Link to='/' >"SomosMas"</Link>
+        }</Navbar.Brand>
+      <Navbar.Toggle aria-controls="basic-navbar-nav" />
+      <Navbar.Collapse id="basic-navbar-nav">
+        <Nav className="me-auto">     
+          <NavDropdown title="Menu" id="basic-nav-dropdown">
+            <NavBarComponent/>
+          </NavDropdown>
+        </Nav>
+        {user.isAuthenticated ? <Nav.Link><Link to='/logout' >Cerrar Sesion</Link></Nav.Link>
+        :<> <Button variant="outline-warning"><Link to='/login' >Login</Link></Button>
+        <Button variant="outline-warning"><Link to='/register' >Registro</Link></Button> </>
+        }
+      </Navbar.Collapse>
+  </Container>
+</Navbar>
     </>
   )
 }

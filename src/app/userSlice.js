@@ -4,17 +4,17 @@ export const userSlice = createSlice({
   name: 'user',
   initialState: {
     isAuthenticated: false,
-    user: {},
+    user: null,
   },
   reducers: {
     setLogged: (state, action) => {
-      state.isAuthenticated = true
-      state.user = action.payload
+      state = { isAuthenticated: true, ...action.payload }
+      return state
     },
     logOut: (state) => {
       localStorage.removeItem('user-data')
-      state.isAuthenticated = false
-      state.user = {}
+      state = { isAuthenticated: false, user: null }
+      return state
     },
   },
 });

@@ -1,133 +1,194 @@
 /* eslint-disable jsx-a11y/label-has-associated-control */
-import React from 'react'
+// import React from 'react'
+import React, { useState } from 'react';
 import { Formik } from 'formik'
 import '../features/register/register.css'
+import { useDispatch } from 'react-redux';
+import { useHistory } from 'react-router-dom';
+import sendRequest from '../httpClient'
+import httpActionEnum from '../enums/HttpActionEnum'
+import { setLogged } from '../app/userSlice'
+import AlertComponent from './Alert';
 
-const validate = ({ name, lastname, mail, password }) => {
-  const errors = {}
-  if (!name) {
-    errors.name = 'Ingrese su nombre'
-  } else if (!/^[a-zA-ZÀ-ÿ\s]{1,40}$/.test(name)) {
-    errors.name = 'El nombre solo puede tener letras'
+const Register = () => {
+  let changed = false
+  const [show, setShow] = useState(false)
+
+  const dispatch = useDispatch()
+  const history = useHistory();
+
+  const validate = ({
+    firstName, lastName, email, password, confirmPassword,
+  }) => {
+    const errors = {}
+    changed = true
+    if (!firstName) {
+      errors.firstName = 'Ingrese su nombre'
+    } else if (!/^[a-zA-ZÀ-ÿ\s]{3,40}$/.test(firstName)) {
+      errors.firstName = 'El nombre debe contener solo letras, al menos 3.'
+    }
+    if (!lastName) {
+      errors.lastName = 'Ingrese su apellido'
+    } else if (!/^[a-zA-ZÀ-ÿ\s]{3,40}$/.test(lastName)) {
+      errors.lastName = 'El apellido solo puede tener letras, al menos 3.'
+    }
+    if (!email) {
+      errors.email = 'Ingrese su email'
+    } else if (!/^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$/.test(email)) {
+      errors.email = 'Ingrese un correo valido'
+    }
+
+    if (!password) {
+      errors.password = 'Ingrese su contraseña'
+    }
+    if (!/^(?=.*[A-Za-z])(?=.*\d)[a-zA-Z0-9!@#$%^&*()~¥=_+}{":;'?/>.<,`\-|[\]]{6,50}$/.test(password)) {
+      errors.password = 'La contraseña debe tener al menos 6 digitos'
+    }
+
+    if (!confirmPassword) errors.confirmPassword = 'Por favor, confirme su contraseña'
+    if (confirmPassword !== password) errors.confirmPassword = 'Las contraseñas deben coincidir'
+
+    return errors
   }
-  if (!lastname) {
-    errors.lastname = 'Ingrese su apellido'
-  } else if (!/^[a-zA-ZÀ-ÿ\s]{1,40}$/.test(lastname)) {
-    errors.lastname = 'El apellido solo puede tener letras'
+
+  const handleOnSubmit = async (values, { resetForm }) => {
+    try {
+      const data = {
+        firstName: values.firstName,
+        lastName: values.lastName,
+        email: values.email,
+        role: 'Standard',
+      }
+      const password = { password: values.password }
+      const userData = await sendRequest(httpActionEnum.POST, '/users', { ...data, ...password })
+      dispatch(setLogged(userData.data.body))
+      history.push('/')
+    } catch (e) {
+      setShow(true)
+    }
+    resetForm()
   }
-  if (!mail) {
-    errors.mail = 'Ingrese su email'
-  } else if (!/^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$/.test(mail)) {
-    errors.mail = 'Ingrese un correo valido'
-  }
 
-  if (!password) {
-    errors.password = 'Ingrese su contraseña'
-  } else if (/^[0-9]{1,5}$/.test(password)) {
-    errors.password = 'La contraseña debe tener al menos 6 digitos'
-  }
+  return (
+    <>
+      <AlertComponent show={show} title="Hubo un error" action={() => setShow(false)} variant="warning" />
+      <div className="formPage vh-100 d-flex align-items-center">
+        <Formik
+          initialValues={{
+            firstName: '',
+            lastName: '',
+            email: '',
+            password: '',
+            confirmPassword: '',
+          }}
+          validate={validate}
+          onSubmit={handleOnSubmit}
+        >
+          {({
+            handleSubmit,
+            values,
+            handleChange,
+            handleBlur,
+            errors,
+            touched,
+          }) => (
+            <form
+              className="formContainer d-flex flex-column py-5 px-5 col-12 col-md-6 mx-auto"
+              onSubmit={handleSubmit}
+            >
+              <h1 className="text-center py-3">Registrate</h1>
 
-  return errors
-}
+              <label htmlFor="firstName">Nombre</label>
+              <input
+                type="text"
+                id="firstName"
+                name="firstName"
+                placeholder="Ingrese su nombre"
+                value={values.firstName}
+                onChange={handleChange}
+                onBlur={handleBlur}
+              />
 
-const handleOnSubmit = (values, { resetForm }) => {
-  resetForm()
-}
+              {touched.firstName && errors.firstName && (
+              <p className="text-danger">{errors.firstName}</p>
+              )}
 
-const Register = () => (
-  <>
-    <div className="formPage vh-100 d-flex align-items-center">
-      <Formik
-        initialValues={{
-          name: '',
-          lastname: '',
-          mail: '',
-          password: '',
-        }}
-        validate={validate}
-        onSubmit={handleOnSubmit}
-      >
-        {({
-          handleSubmit,
-          values,
-          handleChange,
-          handleBlur,
-          errors,
-          touched,
-        }) => (
-          <form
-            className="formContainer d-flex flex-column py-5 px-5 col-12 col-md-6 mx-auto"
-            onSubmit={handleSubmit}
-          >
-            <h1 className="text-center py-3">Registrate</h1>
+              <label htmlFor="lastName">Apellido</label>
+              <input
+                type="text"
+                id="lastName"
+                name="lastName"
+                placeholder="Ingrese su apellido"
+                value={values.lastName}
+                onChange={handleChange}
+                onBlur={handleBlur}
+              />
 
-            <label htmlFor="name">Nombre</label>
-            <input
-              type="text"
-              id="name"
-              name="name"
-              placeholder="Ingrese su nombre"
-              value={values.name}
-              onChange={handleChange}
-              onBlur={handleBlur}
-            />
+              {touched.lastName && errors.lastName && (
+              <p className="text-danger">{errors.lastName}</p>
+              )}
 
-            {touched.name && errors.name && (
-              <p className="text-danger">{errors.name}</p>
-            )}
+              <label htmlFor="email">Correo</label>
+              <input
+                type="email"
+                id="email"
+                name="email"
+                placeholder="Ingrese su correo electrónico"
+                value={values.email}
+                onChange={handleChange}
+                onBlur={handleBlur}
+              />
+              {touched.email && errors.email && (
+              <p className="text-danger">{errors.email}</p>
+              )}
 
-            <label htmlFor="lastname">Apellido</label>
-            <input
-              type="text"
-              id="lastname"
-              name="lastname"
-              placeholder="Ingrese su apellido"
-              value={values.lastname}
-              onChange={handleChange}
-              onBlur={handleBlur}
-            />
+              <label htmlFor="password">Contraseña</label>
+              <input
+                type="password"
+                id="password"
+                name="password"
+                placeholder="Al menos 6 caracteres, debe incluir un número"
+                value={values.password}
+                onChange={handleChange}
+                onBlur={handleBlur}
+              />
 
-            {touched.lastname && errors.lastname && (
-              <p className="text-danger">{errors.lastname}</p>
-            )}
-
-            <label htmlFor="mail">Correo</label>
-            <input
-              type="email"
-              id="mail"
-              name="mail"
-              placeholder="Ingrese un correo valido"
-              value={values.mail}
-              onChange={handleChange}
-              onBlur={handleBlur}
-            />
-            {touched.mail && errors.mail && (
-              <p className="text-danger">{errors.mail}</p>
-            )}
-
-            <label htmlFor="password">Contraseña</label>
-            <input
-              type="password"
-              id="password"
-              name="password"
-              placeholder="Al menos 6 caracteres"
-              value={values.password}
-              onChange={handleChange}
-              onBlur={handleBlur}
-            />
-
-            {touched.password && errors.password && (
+              {touched.password && errors.password && (
               <p className="text-danger">{errors.password}</p>
-            )}
+              )}
 
-            <button type="submit" className="btn btn-primary">
-              Registrarse
-            </button>
-          </form>
-        )}
-      </Formik>
-    </div>
-  </>
-)
+              <label htmlFor="confirmPassword">Confirmar Contraseña</label>
+              <input
+                type="password"
+                id="confirmPassword"
+                name="confirmPassword"
+                placeholder="Confirme su contraseña"
+                value={values.confirmPassword}
+                onChange={handleChange}
+                onBlur={handleBlur}
+              />
+
+              {touched.confirmPassword && errors.confirmPassword && (
+              <p className="text-danger">{errors.confirmPassword}</p>
+              )}
+
+              {Object.keys(errors).length === 0 && changed === true
+                ? (
+                  <button type="submit" className="btn btn-primary">
+                    Registrarse
+                  </button>
+                )
+                : (
+                  <button type="submit" className="btn btn-primary" disabled>
+                    Registrarse
+                  </button>
+                )}
+            </form>
+          )}
+        </Formik>
+      </div>
+    </>
+  )
+}
 
 export default Register

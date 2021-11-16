@@ -1,0 +1,26 @@
+.titleh1 {
+    margin-top: 50px;
+    margin-bottom: 35px;
+    text-align: center;
+}
+
+.titleh2 {
+    margin-top: 40px;
+    margin-bottom: 15px;
+    text-align: center;
+}
+
+.titleh3 {
+    text-align: center;
+    margin-top: 70px;
+    margin-bottom: 35px;
+}
+
+@media (max-width: 600px) {
+    p {
+        padding: 10px !important 
+    }
+    h5, h3 {
+        text-align: center !important
+    }
+  }

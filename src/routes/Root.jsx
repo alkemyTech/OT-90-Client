@@ -9,6 +9,7 @@ import Header from '../Component/Header'
 import Home from '../Views/Home'
 import Login from '../Views/Login'
 import News from '../Views/News'
+import Member from '../Views/Members'
 import NewsDetail from '../Views/NewsDetail'
 import React from 'react'
 import Register from '../Component/Register'
@@ -29,6 +30,7 @@ export default function Root() {
         <Route exact path="/novedades" component={News} />
         <Route exact path="/novedades/:id" component={NewsDetail} />
         <Route exact path="/actividades/:id" component={ActivitiesDetail} />
+        <Route exact path="/members" component={Member} />
         <Route path="/nosotros" component={About} />
         <Route exact path="/contacto" component={Contact} />
         <Conditional conditionToOpen={isLogged} component={Backoffice} pathRedirect="/" path="/backoffice" />

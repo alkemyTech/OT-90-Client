@@ -1,37 +1,43 @@
-import React, { useState } from 'react';
-import { Formik } from 'formik';
 import {
-  Col, Form, Row, Button, FloatingLabel, Container,
-} from 'react-bootstrap';
-import Swal from 'sweetalert2';
+  Button,
+  Col,
+  Container,
+  FloatingLabel,
+  Form,
+  Row,
+} from 'react-bootstrap'
+import React, { useState } from 'react'
+
+import { Formik } from 'formik'
+import Loader from '../Component/Loader'
+import Swal from 'sweetalert2'
 import sendRequest from '../httpClient'
-import Loader from '../Component/Loader';
 
 const Contact = () => {
   const [isLoading, setIsLoading] = useState(false)
   const validation = ({
     email, name, message, phone,
   }) => {
-    const errors = {};
+    const errors = {}
     if (!email) {
-      errors.email = 'El email es requerido';
+      errors.email = 'El email es requerido'
     } else if (
       !/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i.test(email)
     ) {
-      errors.email = 'Email inválido';
+      errors.email = 'Email inválido'
     }
     if (!name) {
-      errors.name = 'El nombre es requerido';
+      errors.name = 'El nombre es requerido'
     }
     if (!phone) {
-      errors.phone = 'El número de teléfono es requerido';
+      errors.phone = 'El número de teléfono es requerido'
     } else if (
       !/^(?:(?:00)?549?)?0?(?:11|[2368]\d)(?:(?=\d{0,2}15)\d{2})??\d{8}$/.test(phone)
     ) {
-      errors.phone = 'Numero de telefono inválido';
+      errors.phone = 'Numero de telefono inválido'
     }
     if (!message) {
-      errors.message = 'El mensaje es requerido';
+      errors.message = 'El mensaje es requerido'
     }
     return errors;
   }

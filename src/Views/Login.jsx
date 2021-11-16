@@ -36,7 +36,7 @@ const Login = () => {
   const onSubmit = async (values) => {
     // eslint-disable-next-line no-alert
     try {
-      const userData = await sendRequest(HttpActionEnum.POST, '/users/auth/login', values)
+      const userData = await sendRequest(HttpActionEnum.POST, '/users/login', values)
 
       dispatch(setLogged(userData.data.body.user))
       history.push('/')

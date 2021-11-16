@@ -4,13 +4,12 @@ import sendRequest from '../../httpClient'
 import Loader from '../../Component/Loader';
 import AlertComponent from '../../Component/Alert';
 
-const Activities = () => {
+const AllTestimonial = () => {
   const initialState = {
     data: {},
     isLoading: true,
     error: null,
   }
-
   const reducer = (state, action) => {
     const { type, payload = {} } = action
     switch (type) {
@@ -48,7 +47,7 @@ const Activities = () => {
   useEffect(() => {
     const getCategory = async () => {
       try {
-        const { data: contacts } = await sendRequest('GET', '/activities', null)
+        const { data: contacts } = await sendRequest('GET', '/testimonials', null)
         dispatch({ type: 'GET_DATA_OK', payload: contacts })
       } catch (e) {
         dispatch({ type: 'ERROR', payload: e })
@@ -57,15 +56,16 @@ const Activities = () => {
     getCategory()
   }, [toggle])
 
-  const headers = ['name', 'conent', 'image']
+  const headers = ['image', 'name', 'content']
 
   if (isLoading) {
     return <Loader visible />
   }
   return (
     error
-      ? <AlertComponent show={!isLoading} title="Error obteniendo actividades" variant="warning" action={alertAction} />
-      : <Table title="Actividades" headers={headers} data={data} />
+      ? <AlertComponent show={!isLoading} title="Error obteniendo testimonios" variant="warning" action={alertAction} />
+      : <Table title="Testimonios" headers={headers} data={data} />
   )
 }
-export default Activities
+
+export default AllTestimonial

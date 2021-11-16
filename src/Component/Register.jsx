@@ -53,16 +53,16 @@ const Register = () => {
 
   const handleOnSubmit = async (values, { resetForm }) => {
     try {
-      const userData = {
+      const data = {
         firstName: values.firstName,
         lastName: values.lastName,
         email: values.email,
-        role: 'standard',
+        role: 'Standard',
       }
       const password = { password: values.password }
-      const { data: { body: { token } } } = await sendRequest(httpActionEnum.POST, '/users', { ...userData, ...password })
-      localStorage.setItem('user-data', JSON.stringify({ ...userData, token }))
-      dispatch(setLogged(userData))
+      const userData = await sendRequest(httpActionEnum.POST, '/users', { ...data, ...password })
+      dispatch(setLogged(userData.data.body))
+      localStorage.setItem('user-data', JSON.stringify(userData.data.body))
       history.push('/')
     } catch (e) {
       setShow(true)

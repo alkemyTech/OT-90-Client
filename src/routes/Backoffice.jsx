@@ -39,5 +39,4 @@ Backoffice.propTypes = {
     path: PropTypes.string.isRequired,
   }).isRequired,
 };
-
 export default Backoffice

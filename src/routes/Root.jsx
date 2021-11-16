@@ -32,7 +32,6 @@ export default function Root() {
         <Route path="/nosotros" component={() => '"Nostros" Screen under construction'} />
         <Route exact path="/contacto" component={Contact} />
         <Route exact path="/members" component={Members} />
-        <Route path="/backoffice" component={Backoffice} />
         <Conditional conditionToOpen={isLogged} component={Backoffice} pathRedirect="/" path="/backoffice" />
       </Switch>
     </Router>

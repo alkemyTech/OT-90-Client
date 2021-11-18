@@ -38,7 +38,7 @@ const Login = () => {
     try {
       setIsLoading(true)
       const userData = await sendRequest(HttpActionEnum.POST, '/users/login', values)
-      localStorage.setItem('user-data', JSON.stringify(userData.data.body.user))
+      localStorage.setItem('user-data', JSON.stringify({ token: userData.data.body.user.token }))
       dispatch(setLogged(userData.data.body.user))
       history.push('/')
     } catch (e) {

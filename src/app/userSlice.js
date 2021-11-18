@@ -12,6 +12,7 @@ export const userSlice = createSlice({
       return state
     },
     logOut: (state) => {
+      localStorage.removeItem('user-data')
       state = { isAuthenticated: false, user: null }
       return state
     },

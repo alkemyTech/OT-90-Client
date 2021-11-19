@@ -78,7 +78,7 @@ const Register = () => {
         ...password,
       })
       dispatch(setLogged(userData.data.body))
-      localStorage.setItem('user-data', JSON.stringify(userData.data.body))
+      localStorage.setItem('user-data', JSON.stringify({ token: userData.data.body.token }))
       history.push('/')
     } catch (e) {
       const text = 'Ocurrio un error, intenta nuevamente.'

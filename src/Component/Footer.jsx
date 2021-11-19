@@ -18,15 +18,15 @@ function Footer() {
     publicData: {},
     links: [
       {
-        url: '',
+        url: '1',
         text: 'link 1',
       },
       {
-        url: '',
+        url: '2',
         text: 'link 2',
       },
       {
-        url: '',
+        url: '3',
         text: 'link 3',
       },
     ],
@@ -70,7 +70,7 @@ function Footer() {
   useEffect(() => {
     const getIcon = async () => {
       try {
-        const { data: datas } = await sendRequest('GET', '/organizations/1/public', null)
+        const { data: { body: datas } } = await sendRequest('GET', '/organizations/1/public', null)
         dispatch({ type: 'GET_DATA_OK', payload: datas })
       } catch (e) {
         dispatch({ type: 'ERROR', payload: e })
@@ -105,18 +105,18 @@ function Footer() {
           </div>
           <div className="col">
             <h4>Links</h4>
-            <ui className="list-unstyled">
+            <ul className="list-unstyled">
               {links.map((link) => (
                 <li key={link.url}>
                   <Link href={link.url}>{link.text}</Link>
                 </li>
               ))}
-            </ui>
+            </ul>
           </div>
           {/* Column3 Social */}
           <div className="col">
             <h4>Social Media</h4>
-            <ui className="list-unstyled">
+            <ul className="list-unstyled">
               {socialMedia.length > 0
                 ? socialMedia.map(
                   (oneSocial) => (
@@ -126,7 +126,7 @@ function Footer() {
                   ),
                 )
                 : null}
-            </ui>
+            </ul>
           </div>
         </div>
       </div>

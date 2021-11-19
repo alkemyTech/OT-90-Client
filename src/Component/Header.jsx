@@ -27,10 +27,7 @@ export default function Header() {
     <>
       <Navbar bg="light" expand="lg">
         <Container>
-          <Navbar.Brand href="#home">
-            {logo ? <Link to="/"><img src={logo.sprites.front_default} alt={logo.name} /></Link> : <Link to="/">"SomosMas"</Link>}
-
-          </Navbar.Brand>
+          {logo ? <Link to="/"><img src={logo.sprites.front_default} alt={logo.name} /></Link> : <Link to="/">SomosMas</Link>}
           <Navbar.Toggle aria-controls="basic-navbar-nav" />
           <Navbar.Collapse id="basic-navbar-nav">
             <Nav className="me-auto">

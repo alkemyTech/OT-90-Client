@@ -18,15 +18,15 @@ function Footer() {
     publicData: {},
     links: [
       {
-        url: '1',
+        url: '',
         text: 'link 1',
       },
       {
-        url: '2',
+        url: '',
         text: 'link 2',
       },
       {
-        url: '3',
+        url: '',
         text: 'link 3',
       },
     ],
@@ -108,7 +108,9 @@ function Footer() {
             <ul className="list-unstyled">
               {links.map((link) => (
                 <li key={link.url}>
-                  <Link href={link.url}>{link.text}</Link>
+                  {/* <Link href={link.url}> */}
+                  {link.text}
+                  {/* </Link> */}
                 </li>
               ))}
             </ul>

@@ -1,25 +1,39 @@
-import React from 'react'
+/* eslint-disable no-unused-expressions */
+import React, { useEffect, useState } from 'react'
 import 'bootstrap/dist/css/bootstrap.min.css'
-import Footer from '../Component/Footer';
-import Header from '../Component/Header';
+import { Card } from 'react-bootstrap';
 import TestimonyForm from '../Component/TestimonyForm';
+import HttpActionEnum from '../enums/HttpActionEnum'
+import sendRequest from '../httpClient'
+import Loader from '../Component/Loader';
+import '../static/styles/testimonials.css'
 
 function Testimonials() {
+  const [testimonials, setTestimonials] = useState([])
+  useEffect(() => {
+    async function fetchData() {
+      const testimos = await sendRequest(HttpActionEnum.GET, '/testimonials')
+      setTestimonials(testimos.data)
+    }
+    try {
+      fetchData()
+    } catch (error) { }
+  }, [])
+
   return (
-    <div className="App">
-      <Header />
-      <div
-        className="container"
-        style={{
-          minHeight: '100vh',
-          justifyContent: 'center',
-          alignItems: 'center',
-          display: 'flex',
-        }}
-      >
-       <TestimonyForm /> 
-      </div>
-      <Footer />
+    <div className="testimonials">
+      {testimonials && testimonials.map((testimony) => (
+        <Card style={{ width: '18rem' }} key={testimony.id}>
+          <Card.Img variant="top" src={testimony.image} />
+          <Card.Body>
+            <Card.Title>{testimony.name}</Card.Title>
+            <Card.Text>
+              {testimony.content}
+            </Card.Text>
+          </Card.Body>
+        </Card>
+
+      ))}
     </div>
   )
 }

@@ -1,0 +1,19 @@
+.testimonials {
+  display: flex;
+  padding: 4%;
+  justify-content: center;
+  flex-wrap: wrap;
+  
+}
+.card-img-top {
+  height: 190px;  
+  width: auto;    
+  max-width: 250px;  
+  max-height: 250px;
+  padding: 2%;
+}
+
+.card {
+  border: 1px solid rgba(0, 0, 0, 0.034) !important;
+  margin: 2%;
+}

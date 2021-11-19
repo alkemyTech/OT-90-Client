@@ -1,32 +1,15 @@
 import React, { useEffect, useReducer, useState } from 'react';
 import PropTypes from 'prop-types'
-import {
-  Col, Row, Card, Container,
-} from 'react-bootstrap';
-import { Link } from 'react-router-dom';
+import { Container } from 'react-bootstrap';
 import Swal from 'sweetalert2';
 import Loader from '../Component/Loader';
 import sendRequest from '../httpClient'
+import NewsList from '../Component/NewsList';
 
 const News = ({ news }) => (
   <Container>
     <h1 className="p-3">{news.length ? 'Novedades' : 'Sin Novedades' }</h1>
-    <Row xs={1} md={2} lg={4} className="g-4 p-3">
-      {news.map(({
-        image, name, id,
-      }) => (
-        <Col key={id}>
-          <Card>
-            <Link className="text-dark text-decoration-none" to={`/novedades/${id}`}>
-              <Card.Img variant="top" src={image} />
-              <Card.Body>
-                <Card.Title className="text-capitalize">{name}</Card.Title>
-              </Card.Body>
-            </Link>
-          </Card>
-        </Col>
-      ))}
-    </Row>
+    <NewsList news={news} />
   </Container>
 )
 

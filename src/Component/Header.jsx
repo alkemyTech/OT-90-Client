@@ -5,6 +5,7 @@ import { Link } from 'react-router-dom'
 import NavBarComponent from './NavBar'
 import { selectUser } from '../app/userSlice'
 import { useSelector } from 'react-redux'
+import '../static/styles/header.css'
 
 export default function Header() {
   const [logo, setLogo] = useState(null)
@@ -18,7 +19,7 @@ export default function Header() {
 const user = useSelector(selectUser)
   return (
     <>
-    <Navbar bg="light" expand="lg">
+    <Navbar className="header" bg="light" expand="lg">
     <Container>
       <Navbar.Brand href="#home">
         {logo ? <Link to='/' ><img src={logo.sprites.front_default} alt={logo.name}/></Link> : <Link to='/' >"SomosMas"</Link>

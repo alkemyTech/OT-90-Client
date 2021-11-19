@@ -11,7 +11,7 @@ import sendRequest from '../httpClient'
 const Activities = ({ activities }) => (
   <Container>
     <h1 className="p-3">{activities.length ? 'Actividades' : 'Sin Actividades' }</h1>
-    <Row xs={1} md={2} lg={4} className="g-4 p-3">
+    <Row xs={1} md={3} lg={4} className="g-4 p-3">
       {activities.map(({
         image, name, id,
       }) => (
@@ -19,11 +19,9 @@ const Activities = ({ activities }) => (
           <Card>
             <Link className="text-dark text-decoration-none" to={`/actividades/${id}`}>
               <Card.Img src={image} />
+              <Card.Title style={{maxHeight: '30px', maxWidth: '189px'}} className="text-capitalize">{name}</Card.Title>
             </Link>
           </Card>
-          <Card.Body>
-                <Card.Title style={{marginLeft: '11px'}} className="text-capitalize">{name}</Card.Title>
-          </Card.Body>
         </Col>
       ))}
     </Row>

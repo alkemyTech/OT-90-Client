@@ -5,7 +5,7 @@ import React from 'react';
 import PropTypes from 'prop-types'
 
 const SliderCarousel = ({ fetchSlider }) => (
-  <Carousel className="carouselContainer">
+  <Carousel className="carouselContainer shadow">
     {fetchSlider.length > 0 ? (
       fetchSlider.map(({ text, imageURL }) => (
         <Carousel.Item className="carouselItem" key={imageURL}>

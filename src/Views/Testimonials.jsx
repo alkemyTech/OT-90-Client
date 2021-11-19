@@ -2,10 +2,8 @@
 import React, { useEffect, useState } from 'react'
 import 'bootstrap/dist/css/bootstrap.min.css'
 import { Card } from 'react-bootstrap';
-import TestimonyForm from '../Component/TestimonyForm';
 import HttpActionEnum from '../enums/HttpActionEnum'
 import sendRequest from '../httpClient'
-import Loader from '../Component/Loader';
 import '../static/styles/testimonials.css'
 
 function Testimonials() {

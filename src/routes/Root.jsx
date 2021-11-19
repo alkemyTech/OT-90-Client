@@ -1,4 +1,9 @@
 import React, { useEffect, useState } from 'react'
+
+import {
+  CSSTransition,
+  TransitionGroup,
+} from 'react-transition-group';
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom'
 // import App from '../App'
 import { useSelector, useDispatch } from 'react-redux'
@@ -46,21 +51,27 @@ export default function Root() {
   if (isLoading) return <Loader visible />
   return (
     <Router>
-      <Header />
-      <Switch>
-        {/* <Route exact path="/" component={App} /> */}
-        <Route exact path="/" component={Home} />
-        <Route path="/register" component={Register} />
-        <Route exact path="/login" component={Login} />
-        <Route exact path="/novedades" component={News} />
-        <Route exact path="/novedades/:id" component={NewsDetail} />
-        <Route exact path="/actividades/:id" component={ActivitiesDetail} />
-        <Route exact path="/members" component={Member} />
-        <Route path="/nosotros" component={About} />
-        <Route exact path="/contacto" component={Contact} />
-        <Conditional conditionToOpen={isAuthenticated} component={Backoffice} pathRedirect="/" path="/backoffice" />
-      </Switch>
-      <Footer />
+      <Route render={({ location }) => (
+        <TransitionGroup>
+          <Header />
+          <CSSTransition key={location.key} timeout={1000} classNames="fade">
+            <Switch location={location}>
+              <Route exact path="/" component={Home} />
+              <Route path="/register" component={Register} />
+              <Route exact path="/login" component={Login} />
+              <Route exact path="/novedades" component={News} />
+              <Route exact path="/novedades/:id" component={NewsDetail} />
+              <Route exact path="/actividades/:id" component={ActivitiesDetail} />
+              <Route exact path="/members" component={Member} />
+              <Route path="/nosotros" component={About} />
+              <Route exact path="/contacto" component={Contact} />
+              <Conditional conditionToOpen={isAuthenticated} component={Backoffice} pathRedirect="/" path="/backoffice" />
+            </Switch>
+          </CSSTransition>
+          <Footer />
+        </TransitionGroup>
+      )}
+      />
     </Router>
   )
 }

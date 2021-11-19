@@ -70,7 +70,7 @@ function Footer() {
   useEffect(() => {
     const getIcon = async () => {
       try {
-        const { data: datas } = await sendRequest('GET', '/organizations/1/public', null)
+        const { data: { body: datas } } = await sendRequest('GET', '/organizations/1/public', null)
         dispatch({ type: 'GET_DATA_OK', payload: datas })
       } catch (e) {
         dispatch({ type: 'ERROR', payload: e })

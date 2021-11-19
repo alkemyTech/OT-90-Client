@@ -1,0 +1,23 @@
+.card_news{
+  background: #FFFFFF;
+  margin-top: 50px;
+  transition: all 0.2s ease-in;
+  box-shadow: 0px 3px 4px rgba(0, 0, 0, 0.40);
+}
+.card_img_box{
+  overflow: hidden;
+}
+.card_img {
+  transition:all .9s ease;
+  width: 100%;
+}
+.card_news:hover .card_img {
+  opacity: 0.7;
+  transform:scale(1.15);
+}
+.card_news:hover {
+  background: #fff;
+  box-shadow: 0px 15px 26px rgba(0, 0, 0, 0.50);
+  transition: all 0.2s ease-in;
+  margin-top: 50px;
+}

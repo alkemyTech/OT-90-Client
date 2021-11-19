@@ -14,6 +14,7 @@ import Login from '../Views/Login'
 import News from '../Views/News'
 import Member from '../Views/Members'
 import NewsDetail from '../Views/NewsDetail'
+import Footer from '../Component/Footer'
 import { selectUser, setLogged } from '../app/userSlice'
 
 export default function Root() {
@@ -28,7 +29,7 @@ export default function Root() {
   }
   return (
     <Router>
-      <Route path="/" component={Header} />
+      <Header />
       <Switch>
         {/* <Route exact path="/" component={App} /> */}
         <Route exact path="/" component={Home} />
@@ -42,6 +43,7 @@ export default function Root() {
         <Route exact path="/contacto" component={Contact} />
         <Conditional conditionToOpen={isLogged} component={Backoffice} pathRedirect="/" path="/backoffice" />
       </Switch>
+      <Footer />
     </Router>
   )
 }

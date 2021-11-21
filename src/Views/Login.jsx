@@ -38,7 +38,7 @@ const Login = () => {
     try {
       setIsLoading(true)
       const userData = await sendRequest(HttpActionEnum.POST, '/users/login', values)
-      localStorage.setItem('user-data', JSON.stringify(userData.data.body.user))
+      localStorage.setItem('user-data', JSON.stringify({ token: userData.data.body.user.token }))
       dispatch(setLogged(userData.data.body.user))
       history.push('/')
     } catch (e) {
@@ -55,7 +55,6 @@ const Login = () => {
 
   return (
     <>
-      <Loader visible={isLoading} />
       <Formik
         validate={validation}
         initialValues={{
@@ -118,7 +117,7 @@ const Login = () => {
                   label="Mostrar contraseña"
                   onChange={() => setShowpassword(!showPassword)}
                 />
-                <Button className="d-block mx-auto" type="submit">Iniciar Sesion</Button>
+                <Button className="d-block mx-auto" type="submit">{ isLoading ? <Loader visible={isLoading} width={20} height={20} className="" /> : 'Iniciar Sesion' }</Button>
               </Form>
             </Col>
           </Row>

@@ -1,7 +1,6 @@
 import '../static/styles/Footer.css'
 
 import React, { useEffect, useReducer } from 'react'
-import { Link } from 'react-router-dom'
 import { FaFacebook, FaInstagram, FaLinkedin } from 'react-icons/fa'
 import sendRequest from '../httpClient'
 
@@ -108,9 +107,7 @@ function Footer() {
             <ul className="list-unstyled">
               {links.map((link) => (
                 <li key={link.url}>
-                  {/* <Link href={link.url}> */}
                   {link.text}
-                  {/* </Link> */}
                 </li>
               ))}
             </ul>

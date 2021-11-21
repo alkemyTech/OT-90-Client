@@ -15,7 +15,9 @@ function Testimonials() {
     }
     try {
       fetchData()
-    } catch (error) { }
+    } catch (error) {
+      return error
+    }
   }, [])
 
   return (

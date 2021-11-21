@@ -17,11 +17,9 @@ function Testimonials() {
       fetchData()
     } catch (error) { }
   }, [])
-  {console.log(testimonials)}
 
   return (
     <div className="testimonials">
-
       {testimonials && testimonials.map((testimony) => (
         <Card style={{ width: '18rem' }} key={testimony.id}>
           <Card.Img variant="top" src={testimony.image} />

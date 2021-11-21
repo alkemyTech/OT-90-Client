@@ -37,7 +37,7 @@ const HomeContainer = () => {
         return {
           isLoading: false,
           news: payload.news,
-          welcomeTxt: payload.welcomeTxt,
+          welcomeTxt: payload.welcomeTxt.welcomeText,
           error: null,
         };
       case 'ERROR':

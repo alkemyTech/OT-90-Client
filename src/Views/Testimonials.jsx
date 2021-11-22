@@ -1,13 +1,11 @@
 import React from 'react'
 import 'bootstrap/dist/css/bootstrap.min.css'
 import Footer from '../Component/Footer';
-import Header from '../Component/Header';
 import TestimonyForm from '../Component/TestimonyForm';
 
 function Testimonials() {
   return (
     <div className="App">
-      <Header />
       <div
         className="container"
         style={{
@@ -17,7 +15,7 @@ function Testimonials() {
           display: 'flex',
         }}
       >
-       <TestimonyForm /> 
+        <TestimonyForm />
       </div>
       <Footer />
     </div>

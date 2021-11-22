@@ -10,6 +10,7 @@ import { useSelector, useDispatch } from 'react-redux'
 import Swal from 'sweetalert2'
 import Register from '../Component/Register'
 import About from '../Views/About'
+import Activities from '../Views/Activities'
 import ActivitiesDetail from '../Views/ActivitiesDetails'
 import Backoffice from './Backoffice'
 import Conditional from './ConditionalRoute'
@@ -30,23 +31,25 @@ export default function Root() {
   const dispatch = useDispatch()
   const { isAuthenticated } = useSelector(selectUser)
   useEffect(() => {
-    const userData = JSON.parse(localStorage.getItem('user-data'))
-    if (!isAuthenticated && userData) {
-      sendRequest('GET', '/auth/me', null)
-        .then(({ data }) => {
+    (async () => {
+      const userData = JSON.parse(localStorage.getItem('user-data'))
+      if (!isAuthenticated && userData) {
+        try {
+          const { data } = await sendRequest('GET', '/auth/me', null)
           dispatch(setLogged(data.body))
-        })
-        .catch(() => {
+        } catch (error) {
           Swal.fire({
             icon: 'error',
             title: 'Error',
             text: 'Ocurrio un Error, intenta nuevamente',
           })
-        })
-        .finally(setIsLoading(false))
-    } else {
-      setIsLoading(false)
-    }
+        } finally {
+          setIsLoading(false)
+        }
+      } else {
+        setIsLoading(false)
+      }
+    })()
   }, [isAuthenticated, dispatch])
   if (isLoading) return <Loader visible />
   return (
@@ -61,6 +64,7 @@ export default function Root() {
               <Route exact path="/login" component={Login} />
               <Route exact path="/novedades" component={News} />
               <Route exact path="/novedades/:id" component={NewsDetail} />
+              <Route exact path="/actividades" component={Activities} />
               <Route exact path="/actividades/:id" component={ActivitiesDetail} />
               <Route exact path="/members" component={Member} />
               <Route path="/nosotros" component={About} />

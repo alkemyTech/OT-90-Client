@@ -1,14 +1,13 @@
-import React, { useEffect, useReducer, useState } from 'react';
+import React, { useEffect, useReducer, useState } from 'react'
 import PropTypes from 'prop-types'
 import {
   Card, Row, Col, Container,
-} from 'react-bootstrap';
-import { Link } from 'react-router-dom';
-import Swal from 'sweetalert2';
-import Loader from '../Component/Loader';
-import Slider from '../Component/Slider';
+} from 'react-bootstrap'
+import { Link } from 'react-router-dom'
+import Swal from 'sweetalert2'
+import Loader from '../Component/Loader'
+import Slider from '../Component/Slider'
 import sendRequest from '../httpClient'
-import Footer from '../Component/Footer';
 
 const Home = ({ news }) => (
   <Container>
@@ -29,7 +28,6 @@ const Home = ({ news }) => (
         </Col>
       ))}
     </Row>
-    <Footer />
   </Container>
 )
 

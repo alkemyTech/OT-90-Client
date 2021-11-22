@@ -10,6 +10,7 @@ import { useSelector, useDispatch } from 'react-redux'
 import Swal from 'sweetalert2'
 import Register from '../Component/Register'
 import About from '../Views/About'
+import Activities from '../Views/Activities'
 import ActivitiesDetail from '../Views/ActivitiesDetails'
 import Backoffice from './Backoffice'
 import Conditional from './ConditionalRoute'
@@ -63,6 +64,7 @@ export default function Root() {
               <Route exact path="/login" component={Login} />
               <Route exact path="/novedades" component={News} />
               <Route exact path="/novedades/:id" component={NewsDetail} />
+              <Route exact path="/actividades" component={Activities} />
               <Route exact path="/actividades/:id" component={ActivitiesDetail} />
               <Route exact path="/members" component={Member} />
               <Route path="/nosotros" component={About} />

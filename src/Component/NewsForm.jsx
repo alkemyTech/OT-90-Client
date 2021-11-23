@@ -69,7 +69,7 @@ const NewsForm = ({ news }) => {
       content: Yup.string().required('El contenido es requerido'),
       image: Yup.string().required('Una imagen es requerida'),
     }),
-    onSubmit: async (values, { resetForm }) => {
+    onSubmit: async (values) => {
       if (
         !formik.errors.content && !formik.errors.name && !formik.errors.image
         && formik.values.content.length > 0 && formik.values.name.length > 0
@@ -86,7 +86,6 @@ const NewsForm = ({ news }) => {
           const relativeUrl = action === 'post' ? '/news' : `/news/${config.id}`
           if (action === 'put') body.id = config.id
           await sendRequest(action, relativeUrl, body)
-          resetForm({})
           Swal.fire({
             icon: 'success',
             title: 'Cambios guardados',

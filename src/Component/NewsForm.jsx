@@ -33,6 +33,7 @@ const loadComponent = (news) => {
 const NewsForm = ({ news }) => {
   const [config] = useState(loadComponent(news))
   const [action] = useState(news ? 'put' : 'post')
+  const [img, setImg] = useState(config.image)
   const [isLoading, setIsLoading] = useState(true)
   const [isSavingData, setIsSavingData] = useState(false)
   const [categories, setCategories] = useState([])
@@ -102,6 +103,10 @@ const NewsForm = ({ news }) => {
       }
     },
   })
+  const changeImg = (e) => {
+    const imgUrl = URL.createObjectURL(e.target.files[0])
+    setImg(imgUrl)
+  }
 
   return (
     <>
@@ -137,7 +142,10 @@ const NewsForm = ({ news }) => {
         <Form.Control
           type="file"
           name="image"
-          onChange={formik.handleChange}
+          onChange={(e) => {
+            formik.handleChange(e)
+            changeImg(e)
+          }}
           ref={fileInput}
           onBlur={formik.handleBlur}
           className="mb-4"
@@ -145,6 +153,7 @@ const NewsForm = ({ news }) => {
         <Form.Label className="d-block" style={{ color: 'red' }}>
           {formik.errors.image}
         </Form.Label>
+        {img && <img src={img} style={{ maxWidth: '450px', display: 'block' }} alt="" />}
         <Form.Label>Categoria</Form.Label>
         <Form.Select
           aria-label="Default select example"

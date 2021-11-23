@@ -13,9 +13,11 @@ import News from '../Views/Backoffice/News'
 import Testimonials from '../Views/Testimonials'
 import Users from '../Views/Backoffice/Users'
 import { selectUser } from '../app/userSlice'
+import NewsEdit from '../Views/Backoffice/NewsEdit'
+import UserProfile from '../Views/Backoffice/UserProfile'
 
 const Backoffice = (props) => {
-  const isAdmin = useSelector(selectUser).role === 'admin'
+  const isAdmin = useSelector(selectUser).role.toLowerCase().trim() === 'admin'
   const { match } = props
   const { path } = match
   return (
@@ -30,6 +32,8 @@ const Backoffice = (props) => {
         <Conditional exact path={`${path}/news`} component={News} conditionToOpen={isAdmin} pathRedirect={path} />
         <Conditional exact path={`${path}/users`} component={Users} conditionToOpen={isAdmin} pathRedirect={path} />
         <Conditional exact path={`${path}/alltestimonials`} component={AllTestimonial} conditionToOpen={isAdmin} pathRedirect={path} />
+        <Conditional exact path={`${path}/news/edit/:id`} component={NewsEdit} conditionToOpen={isAdmin} pathRedirect={path} />
+        <Route path={`${path}/profile`} component={UserProfile} />
       </Switch>
     </Router>
   )

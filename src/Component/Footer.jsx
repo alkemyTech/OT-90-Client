@@ -1,7 +1,6 @@
 import '../static/styles/Footer.css'
 
 import React, { useEffect, useReducer } from 'react'
-import { Link } from 'react-router-dom'
 import { FaFacebook, FaInstagram, FaLinkedin } from 'react-icons/fa'
 import sendRequest from '../httpClient'
 
@@ -105,18 +104,18 @@ function Footer() {
           </div>
           <div className="col">
             <h4>Links</h4>
-            <ui className="list-unstyled">
+            <ul className="list-unstyled">
               {links.map((link) => (
                 <li key={link.url}>
-                  <Link href={link.url}>{link.text}</Link>
+                  {link.text}
                 </li>
               ))}
-            </ui>
+            </ul>
           </div>
           {/* Column3 Social */}
           <div className="col">
             <h4>Social Media</h4>
-            <ui className="list-unstyled">
+            <ul className="list-unstyled">
               {socialMedia.length > 0
                 ? socialMedia.map(
                   (oneSocial) => (
@@ -126,7 +125,7 @@ function Footer() {
                   ),
                 )
                 : null}
-            </ui>
+            </ul>
           </div>
         </div>
       </div>

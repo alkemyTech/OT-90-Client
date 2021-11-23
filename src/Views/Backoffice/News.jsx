@@ -23,7 +23,7 @@ const NewsContainer = () => {
       case 'GET_DATA_OK':
         return {
           isLoading: false,
-          data: payload,
+          data: payload.body,
           error: null,
         };
       case 'ERROR':

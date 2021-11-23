@@ -1,24 +1,32 @@
 /* eslint-disable jsx-a11y/label-has-associated-control */
 // import React from 'react'
-import React, { useState } from 'react';
+import React, { useState } from 'react'
 import { Formik } from 'formik'
 import '../features/register/register.css'
-import { useDispatch } from 'react-redux';
-import { useHistory } from 'react-router-dom';
+import { useDispatch } from 'react-redux'
+import { useHistory } from 'react-router-dom'
+import {
+  Col, Form, Row, FloatingLabel,
+} from 'react-bootstrap'
+import Swal from 'sweetalert2'
 import sendRequest from '../httpClient'
 import httpActionEnum from '../enums/HttpActionEnum'
 import { setLogged } from '../app/userSlice'
-import AlertComponent from './Alert';
+import Loader from './Loader'
 
 const Register = () => {
   let changed = false
-  const [show, setShow] = useState(false)
+  const [isLoading, setLoading] = useState(false)
 
   const dispatch = useDispatch()
-  const history = useHistory();
+  const history = useHistory()
 
   const validate = ({
-    firstName, lastName, email, password, confirmPassword,
+    firstName,
+    lastName,
+    email,
+    password,
+    confirmPassword,
   }) => {
     const errors = {}
     changed = true
@@ -34,15 +42,19 @@ const Register = () => {
     }
     if (!email) {
       errors.email = 'Ingrese su email'
-    } else if (!/^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$/.test(email)) {
+    } else if (
+      !/^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$/.test(email)
+    ) {
       errors.email = 'Ingrese un correo valido'
     }
 
     if (!password) {
       errors.password = 'Ingrese su contraseña'
     }
-    if (!/^(?=.*[A-Za-z])(?=.*\d)[a-zA-Z0-9!@#$%^&*()~¥=_+}{":;'?/>.<,`\-|[\]]{6,50}$/.test(password)) {
-      errors.password = 'La contraseña debe tener al menos 6 digitos'
+    if (
+      !/^(?=.*[A-Za-z])(?=.*\d)[a-zA-Z0-9!@#$%^&*()~¥=_+}{":;'?/>.<,`\-|[\]]{6,50}$/.test(password)
+    ) {
+      errors.password = 'La contraseña debe tener al menos 6 digitos e incluir carácteres alfanuméricos'
     }
 
     if (!confirmPassword) errors.confirmPassword = 'Por favor, confirme su contraseña'
@@ -60,134 +72,153 @@ const Register = () => {
         role: 'Standard',
       }
       const password = { password: values.password }
-      const userData = await sendRequest(httpActionEnum.POST, '/users', { ...data, ...password })
+      setLoading(true)
+      const userData = await sendRequest(httpActionEnum.POST, '/users', {
+        ...data,
+        ...password,
+      })
       dispatch(setLogged(userData.data.body))
       localStorage.setItem('user-data', JSON.stringify({ token: userData.data.body.token }))
       history.push('/')
     } catch (e) {
-      setShow(true)
+      const text = 'Ocurrio un error, intenta nuevamente.'
+      Swal.fire({
+        icon: 'error',
+        title: 'Error',
+        text,
+      })
+    } finally {
+      setLoading(false)
     }
     resetForm()
   }
 
   return (
     <>
-      <AlertComponent show={show} title="Hubo un error" action={() => setShow(false)} variant="warning" />
-      <div className="formPage vh-100 d-flex align-items-center">
-        <Formik
-          initialValues={{
-            firstName: '',
-            lastName: '',
-            email: '',
-            password: '',
-            confirmPassword: '',
-          }}
-          validate={validate}
-          onSubmit={handleOnSubmit}
-        >
-          {({
-            handleSubmit,
-            values,
-            handleChange,
-            handleBlur,
-            errors,
-            touched,
-          }) => (
-            <form
-              className="formContainer d-flex flex-column py-5 px-5 col-12 col-md-6 mx-auto"
-              onSubmit={handleSubmit}
-            >
-              <h1 className="text-center py-3">Registrate</h1>
+      <Formik
+        initialValues={{
+          firstName: '',
+          lastName: '',
+          email: '',
+          password: '',
+          confirmPassword: '',
+        }}
+        validate={validate}
+        onSubmit={handleOnSubmit}
+      >
+        {({
+          handleSubmit,
+          values,
+          handleChange,
+          handleBlur,
+          errors,
+          touched,
+        }) => (
+          <Row className="m-0 justify-content-center min-vh-100 align-content-center">
+            <Col sm="6" md="4" lg="3" className="p-4 p-md-0">
+              <h1 className="text-center mb-4">Registrate</h1>
+              <Form noValidate onSubmit={handleSubmit}>
+                <Form.Group controlId="validationFormik01">
+                  <FloatingLabel label="Nombre" className="mb-3">
+                    <Form.Control
+                      type="text"
+                      placeholder="Nombre"
+                      name="firstName"
+                      value={values.firstName}
+                      onChange={handleChange}
+                      onBlur={handleBlur}
+                      isInvalid={touched.firstName && !!errors.firstName}
+                    />
+                    <Form.Control.Feedback type="invalid">
+                      {errors.firstName}
+                    </Form.Control.Feedback>
+                  </FloatingLabel>
+                </Form.Group>
 
-              <label htmlFor="firstName">Nombre</label>
-              <input
-                type="text"
-                id="firstName"
-                name="firstName"
-                placeholder="Ingrese su nombre"
-                value={values.firstName}
-                onChange={handleChange}
-                onBlur={handleBlur}
-              />
+                <Form.Group controlId="validationFormik01">
+                  <FloatingLabel label="Apellido" className="mb-3">
+                    <Form.Control
+                      type="text"
+                      placeholder="Apellido"
+                      name="lastName"
+                      value={values.lastName}
+                      onChange={handleChange}
+                      onBlur={handleBlur}
+                      isInvalid={touched.lastName && !!errors.lastName}
+                    />
+                    <Form.Control.Feedback type="invalid">
+                      {errors.lastName}
+                    </Form.Control.Feedback>
+                  </FloatingLabel>
+                </Form.Group>
 
-              {touched.firstName && errors.firstName && (
-              <p className="text-danger">{errors.firstName}</p>
-              )}
+                <Form.Group controlId="validationFormik01">
+                  <FloatingLabel label="Correo" className="mb-3">
+                    <Form.Control
+                      type="email"
+                      placeholder="Correo"
+                      name="email"
+                      value={values.email}
+                      onChange={handleChange}
+                      onBlur={handleBlur}
+                      isInvalid={touched.email && !!errors.email}
+                    />
+                    <Form.Control.Feedback type="invalid">
+                      {errors.email}
+                    </Form.Control.Feedback>
+                  </FloatingLabel>
+                </Form.Group>
 
-              <label htmlFor="lastName">Apellido</label>
-              <input
-                type="text"
-                id="lastName"
-                name="lastName"
-                placeholder="Ingrese su apellido"
-                value={values.lastName}
-                onChange={handleChange}
-                onBlur={handleBlur}
-              />
+                <Form.Group controlId="validationFormik01">
+                  <FloatingLabel label="Contraseña" className="mb-3">
+                    <Form.Control
+                      type="password"
+                      placeholder="Contraseña"
+                      name="password"
+                      value={values.password}
+                      onChange={handleChange}
+                      onBlur={handleBlur}
+                      isInvalid={touched.password && !!errors.password}
+                    />
+                    <Form.Control.Feedback type="invalid">
+                      {errors.password}
+                    </Form.Control.Feedback>
+                  </FloatingLabel>
+                </Form.Group>
 
-              {touched.lastName && errors.lastName && (
-              <p className="text-danger">{errors.lastName}</p>
-              )}
+                <Form.Group controlId="validationFormik01">
+                  <FloatingLabel label="Confirmar Contraseña" className="mb-3">
+                    <Form.Control
+                      type="password"
+                      placeholder="Confirmar Contraseña"
+                      name="confirmPassword"
+                      value={values.confirmPassword}
+                      onChange={handleChange}
+                      onBlur={handleBlur}
+                      isInvalid={
+                        touched.confirmPassword && !!errors.confirmPassword
+                      }
+                    />
+                    <Form.Control.Feedback type="invalid">
+                      {errors.confirmPassword}
+                    </Form.Control.Feedback>
+                  </FloatingLabel>
+                </Form.Group>
 
-              <label htmlFor="email">Correo</label>
-              <input
-                type="email"
-                id="email"
-                name="email"
-                placeholder="Ingrese su correo electrónico"
-                value={values.email}
-                onChange={handleChange}
-                onBlur={handleBlur}
-              />
-              {touched.email && errors.email && (
-              <p className="text-danger">{errors.email}</p>
-              )}
-
-              <label htmlFor="password">Contraseña</label>
-              <input
-                type="password"
-                id="password"
-                name="password"
-                placeholder="Al menos 6 caracteres, debe incluir un número"
-                value={values.password}
-                onChange={handleChange}
-                onBlur={handleBlur}
-              />
-
-              {touched.password && errors.password && (
-              <p className="text-danger">{errors.password}</p>
-              )}
-
-              <label htmlFor="confirmPassword">Confirmar Contraseña</label>
-              <input
-                type="password"
-                id="confirmPassword"
-                name="confirmPassword"
-                placeholder="Confirme su contraseña"
-                value={values.confirmPassword}
-                onChange={handleChange}
-                onBlur={handleBlur}
-              />
-
-              {touched.confirmPassword && errors.confirmPassword && (
-              <p className="text-danger">{errors.confirmPassword}</p>
-              )}
-
-              {Object.keys(errors).length === 0 && changed === true
-                ? (
+                {Object.keys(errors).length === 0 && changed === true ? (
                   <button type="submit" className="btn btn-primary">
                     Registrarse
                   </button>
-                )
-                : (
+                ) : (
                   <button type="submit" className="btn btn-primary" disabled>
-                    Registrarse
+                    { isLoading ? <Loader visible={isLoading} width={20} height={20} className="" /> : 'Registrarse' }
                   </button>
                 )}
-            </form>
-          )}
-        </Formik>
-      </div>
+              </Form>
+            </Col>
+          </Row>
+        )}
+      </Formik>
     </>
   )
 }

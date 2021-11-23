@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from 'react'
-
 import {
   CSSTransition,
   TransitionGroup,
@@ -58,6 +57,7 @@ export default function Root() {
       <Route render={({ location }) => (
         <TransitionGroup>
           <Header />
+          <img src="images/assets/wave.svg" className="position-absolute d-none d-lg-block" style={{ height: '890px', width: '100%', zIndex: '-10' }} alt="" />
           <CSSTransition key={location.key} timeout={1000} classNames="fade">
             <Switch location={location}>
               <Route exact path="/" component={Home} />

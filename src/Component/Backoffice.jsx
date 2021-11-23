@@ -3,9 +3,9 @@ import '../static/styles/Backoffice.css'
 import Button from 'react-bootstrap/Button'
 import PropTypes from 'prop-types'
 import React from 'react'
-import { selectUser } from '../app/userSlice'
 import { useHistory } from 'react-router-dom'
 import { useSelector } from 'react-redux'
+import { selectUser } from '../app/userSlice'
 
 // localStorage.setItem('user-data', JSON.stringify(
 // { username: 'Ben', token: null, role: 'admin' }))
@@ -21,15 +21,15 @@ const application = {
     { app: 'Testimonios', permission: 'admin', route: '/testimonials' },
     { app: 'Usuarios', permission: 'admin', route: '/users' },
     { app: 'EditOrganization', permission: 'admin', route: '/editorganization/1' },
-    { app: 'Editar Perfil', permission: 'standard', route: '/users' }],
+    { app: 'Editar Perfil', permission: 'standard', route: '/profile' }],
 }
 
 export default function Backoffice({ path }) {
   const history = useHistory()
   const { role } = useSelector(selectUser)
-  const appsFiltered = role === 'admin'
+  const appsFiltered = role.toLowerCase().trim() === 'admin'
     ? application.body
-    : application.body.filter((app) => app.permission.includes(role))
+    : application.body.filter((app) => app.permission.includes(role.toLowerCase().trim()))
   return (
     <div className="grid">
       {appsFiltered.map((app) => (<Button size="lg" key={app.app} onClick={() => history.push(`${path}${app.route}`)}>{app.app}</Button>))}

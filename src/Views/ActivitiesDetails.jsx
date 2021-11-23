@@ -15,8 +15,9 @@ const ActivitiesDetail = ({ data }) => {
         {notFounded ? <h1 className="text-center">Actividad no encontrada</h1>
           : (
             <article>
-              <img src={image} alt="activities" className="mx-auto d-block" />
-              <h1>{name}</h1>
+              <h1>Actividad</h1>
+              <img src={image} alt="activities" className="mx-auto d-block" style={{marginTop: '75px', marginBottom: '65px'}}/>
+              <h2>{name}</h2>
               <p>{content}</p>
             </article>
           )}

@@ -1,0 +1,36 @@
+.testimonials {
+  display: flex;
+  padding: 4%;
+  justify-content: center;
+  flex-wrap: wrap;
+  
+}
+.card-img-top {
+  height: 190px;  
+  width: auto;    
+  max-width: 250px;  
+  max-height: 250px;
+  padding: 2%;
+  transition:all .9s ease;
+  width: 100%;
+}
+
+.card {
+  border: 1px solid rgba(0, 0, 0, 0.034) !important;
+  margin: 2%;
+}
+
+
+.card_news{
+  background: #FFFFFF;
+  margin-top: 50px;
+  transition: all 0.2s ease-in;
+  box-shadow: 0px 3px 4px rgba(0, 0, 0, 0.40);
+}
+
+.card:hover {
+  background: #fff;
+  box-shadow: 0px 15px 26px rgba(0, 0, 0, 0.50);
+  transition: all 0.2s ease-in;
+  margin-top: 50px;
+}

@@ -25,6 +25,7 @@ import Footer from '../Component/Footer'
 import { selectUser, setLogged } from '../app/userSlice'
 import sendRequest from '../httpClient'
 import Loader from '../Component/Loader'
+import Testimonials from '../Views/Testimonials';
 
 export default function Root() {
   const [isLoading, setIsLoading] = useState(true)
@@ -69,6 +70,7 @@ export default function Root() {
               <Route exact path="/members" component={Member} />
               <Route path="/nosotros" component={About} />
               <Route exact path="/contacto" component={Contact} />
+              <Route exact path="/testimonios" component={Testimonials} />
               <Conditional conditionToOpen={isAuthenticated} component={Backoffice} pathRedirect="/" path="/backoffice" />
             </Switch>
           </CSSTransition>

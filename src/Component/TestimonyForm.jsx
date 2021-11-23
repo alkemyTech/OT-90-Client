@@ -6,6 +6,7 @@ import ClassicEditor from '@ckeditor/ckeditor5-build-classic'
 import { Form } from 'react-bootstrap'
 import ButtonComponent from './Button'
 import HttpActionEnum from '../enums/HttpActionEnum'
+import sendRequest from '../httpClient'
 
 const loadComponent = (testimony) => {
   if (testimony) {
@@ -35,21 +36,12 @@ function TestimonyForm(props) {
 
   const threadSleep = (ms) => new Promise((resolve) => setTimeout(resolve, ms))
 
-  const onSumbit = async (testimonials, actionn) => {
+  const onSumbit = async (testimonials) => {
     setIsLoading(true)
     await threadSleep(1000)
+    await sendRequest(action, '/testimonials', testimonials)
     setIsLoading(false)
-    if (action === HttpActionEnum.POST) {
-      // eslint-disable-next-line no-console
-      console.log(`Accion: ${actionn}`)
-      // eslint-disable-next-line no-console
-      console.log(testimonials)
-    } else if (action === HttpActionEnum.PUT) {
-      // eslint-disable-next-line no-console
-      console.log(`Accion: ${actionn}`)
-      // eslint-disable-next-line no-console
-      console.log(testimonials)
-    }
+
   }
 
   const validation = ({ name, image, content }) => {

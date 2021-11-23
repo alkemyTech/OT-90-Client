@@ -2,13 +2,15 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import { Table } from 'react-bootstrap'
 import Swal from 'sweetalert2'
+import { useHistory } from 'react-router-dom'
 import ButtonComponent from './Button'
 
-// eslint-disable-next-line no-alert
-function RenderRows({ data, headers, onDelete = () => alert('Eliminar') }) {
+function RenderRows({
   // eslint-disable-next-line no-alert
-  const edit = () => alert('Editar')
-
+  data, headers, onDelete = () => alert('Eliminar'),
+}) {
+  const { location: { pathname }, push } = useHistory()
+  const edit = (id) => push(`${pathname}/edit/${id}`)
   const openAlert = (id) => {
     Swal.fire({
       title: 'Atencion',
@@ -24,17 +26,23 @@ function RenderRows({ data, headers, onDelete = () => alert('Eliminar') }) {
       }
     })
   }
+
+  const type = (element, header) => {
+    if (header === 'image') return <img style={{ maxWidth: '200px' }} src={element[header]} alt="" />
+    if (header === 'createdAt') return element[header].substring(0, 10).split('-').reverse().join('-')
+    return element[header]
+  }
   return data.map((element, index) => (
     <tr key={element.id}>
       <th scope="row">{index + 1}</th>
       {headers.map((header) => (
         <td key={header}>
-          {header === 'image' ? <img style={{ maxWidth: '200px' }} src={element[header]} alt="" /> : element[header]}
+          {type(element, header)}
         </td>
       ))}
       <td>
         <div className="d-flex justify-content-evenly">
-          <ButtonComponent isLoading={false} disabled={false} title="Editar" onClick={edit} />
+          <ButtonComponent isLoading={false} disabled={false} title="Editar" onClick={() => edit(element.id)} />
           <ButtonComponent isLoading={false} disabled={false} title="Eliminar" variant="danger" onClick={() => openAlert(element.id)} />
         </div>
       </td>

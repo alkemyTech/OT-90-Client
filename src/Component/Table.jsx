@@ -56,7 +56,7 @@ function TableComponent({
 }) {
   return (
     <Table striped responsive hover bordered className="caption-top table align-middle">
-      <caption>{title}</caption>
+      <caption className="fs-2 my-4">{title}</caption>
       <thead>
         <tr>
           <th scope="col">#</th>

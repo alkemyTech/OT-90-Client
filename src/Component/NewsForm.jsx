@@ -6,6 +6,7 @@ import ClassicEditor from '@ckeditor/ckeditor5-build-classic'
 import { Button, Form } from 'react-bootstrap'
 import { useFormik } from 'formik';
 import Swal from 'sweetalert2';
+import { useHistory } from 'react-router-dom';
 import sendRequest from '../httpClient';
 import { Upload } from './AWS';
 import Loader from './Loader';
@@ -39,6 +40,7 @@ const NewsForm = ({ news }) => {
   const [categories, setCategories] = useState([])
   const [blurredEditor, setblurredEditor] = useState(false)
   const fileInput = useRef()
+  const { push } = useHistory()
 
   useEffect(() => {
     const getCategories = async () => {
@@ -87,10 +89,13 @@ const NewsForm = ({ news }) => {
           const relativeUrl = action === 'post' ? '/news' : `/news/${config.id}`
           if (action === 'put') body.id = config.id
           await sendRequest(action, relativeUrl, body)
-          Swal.fire({
+          const { isConfirmed } = await Swal.fire({
             icon: 'success',
             title: 'Cambios guardados',
+            allowOutsideClick: false,
+            allowEscapeKey: false,
           })
+          if (isConfirmed) push('/backoffice/news')
         } catch (e) {
           Swal.fire({
             icon: 'error',

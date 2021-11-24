@@ -70,7 +70,7 @@ export default function Root() {
               <Route exact path="/members" component={Member} />
               <Route path="/nosotros" component={About} />
               <Route exact path="/contacto" component={Contact} />
-              <Route exact path="/testimonios" component={Testimonials} />
+              <Route exact path="/testimonials" component={Testimonials} />
               <Conditional conditionToOpen={isAuthenticated} component={Backoffice} pathRedirect="/" path="/backoffice" />
             </Switch>
           </CSSTransition>

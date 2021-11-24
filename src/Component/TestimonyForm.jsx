@@ -1,12 +1,15 @@
 import { Formik } from 'formik'
 import PropTypes from 'prop-types'
-import React, { useState } from 'react'
+import Swal from 'sweetalert2'
+import React, { useState, useRef } from 'react'
 import { CKEditor } from '@ckeditor/ckeditor5-react'
 import ClassicEditor from '@ckeditor/ckeditor5-build-classic'
 import { Form } from 'react-bootstrap'
+import { propTypes } from 'react-bootstrap/esm/Image'
 import ButtonComponent from './Button'
 import HttpActionEnum from '../enums/HttpActionEnum'
 import sendRequest from '../httpClient'
+import { Upload } from './AWS'
 
 const loadComponent = (testimony) => {
   if (testimony) {
@@ -26,6 +29,7 @@ const loadComponent = (testimony) => {
 }
 
 function TestimonyForm(props) {
+  const { change, setChange } = props
   const { testimony } = props
   const [config] = useState(loadComponent(testimony))
   const [action] = useState(
@@ -35,13 +39,27 @@ function TestimonyForm(props) {
   const [blurredEditor, setblurredEditor] = useState(false)
 
   const threadSleep = (ms) => new Promise((resolve) => setTimeout(resolve, ms))
+  const inputRef = useRef()
 
   const onSumbit = async (testimonials) => {
-    setIsLoading(true)
-    await threadSleep(1000)
-    await sendRequest(action, '/testimonials', testimonials)
-    setIsLoading(false)
-
+    try {
+      setIsLoading(true)
+      const [file] = inputRef.current.files
+      const image = await Upload(file, file.name)
+      testimonials.image = image.location
+      await threadSleep(1000)
+      await sendRequest(action, '/testimonials', testimonials)
+      setIsLoading(false)
+      setChange(!change)
+      Swal.fire('Testimonio agregado correctamente')
+    } catch (err) {
+      setIsLoading(false)
+      Swal.fire({
+        icon: 'error',
+        title: 'Oops...',
+        text: 'Algo salió mal, intenta nuevamente!',
+      })
+    }
   }
 
   const validation = ({ name, image, content }) => {
@@ -73,7 +91,6 @@ function TestimonyForm(props) {
     >
       {({
         handleChange,
-        setFieldValue,
         handleBlur,
         values,
         errors,
@@ -107,6 +124,7 @@ function TestimonyForm(props) {
               type="file"
               placeholder="Ingrese imagen del testimonio"
               name="image"
+              ref={inputRef}
               value={values.image}
               onBlur={handleBlur}
               onChange={handleChange}
@@ -122,17 +140,17 @@ function TestimonyForm(props) {
             <Form.Label style={{ justifyContent: 'left', display: 'flex' }}>
               Contenido
             </Form.Label>
-            <CKEditor
-              config={{ placeholder: 'Ingrese el contenido del testimonio' }}
-              editor={ClassicEditor}
-              onBlur={() => {
-                setblurredEditor(true)
-              }}
-              data={values.content}
-              onChange={(event, editor) => {
-                setFieldValue('content', editor.getData(), true)
-              }}
+            <Form.Control
+              type="text"
+              placeholder="Ingrese el nombre del testimonio"
+              name="content"
+              value={values.content}
+              onBlur={handleBlur}
+              onChange={handleChange}
+              isValid={touched.name && !errors.name}
+              isInvalid={touched.name && errors.name}
             />
+
             <Form.Label visuallyHidden={!blurredEditor} style={{ color: 'red' }}>
               {errors.content}
             </Form.Label>
@@ -170,6 +188,8 @@ TestimonyForm.propTypes = {
     name: PropTypes.string,
     image: PropTypes.string,
     content: PropTypes.string,
+    change: PropTypes.bool,
+    setChange: PropTypes.bool,
   }).isRequired,
 }
 

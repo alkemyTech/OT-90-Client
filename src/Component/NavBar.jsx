@@ -15,11 +15,11 @@ export default function NavbarComponent() {
       },
       {
         view: 'Testimonios',
-        root: 'testimonials',
+        root: 'testimonios',
       },
       {
         view: 'Actividades',
-        root: 'Activities',
+        root: 'actividades',
       },
       {
         view: 'Novedades',
@@ -27,7 +27,7 @@ export default function NavbarComponent() {
       },
       {
         view: 'Miembros',
-        root: 'members',
+        root: 'miembros',
       },
       {
         view: 'Contacto',
@@ -42,11 +42,11 @@ export default function NavbarComponent() {
       },
       {
         view: 'Testimonios',
-        root: 'testimonials',
+        root: 'testimonios',
       },
       {
         view: 'Actividades',
-        root: 'activities',
+        root: 'actividades',
       },
       {
         view: 'Novedades',
@@ -54,7 +54,7 @@ export default function NavbarComponent() {
       },
       {
         view: 'Miembros',
-        root: 'members',
+        root: 'miembros',
       },
       {
         view: 'Contacto',

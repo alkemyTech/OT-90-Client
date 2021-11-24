@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import Table from '../../Component/Table'
 import sendRequest from '../../httpClient'
-
+import HttpActionEnum from '../../enums/HttpActionEnum'
 // this line below is just for testing only
 // eslint-disable-next-line max-len
 // localStorage.setItem('user-data', JSON.stringify({ username: 'Ben', token: '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', role: '1' }))
@@ -9,7 +9,7 @@ import sendRequest from '../../httpClient'
 export default function Users() {
   const [users, setUsers] = useState([])
   useEffect(() => {
-    sendRequest('GET', 'users', null)
+    sendRequest(HttpActionEnum.GET, '/users', null)
       .then((res) => setUsers(res.data))
       .catch((error) => error)
   }, [])

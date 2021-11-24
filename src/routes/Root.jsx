@@ -65,7 +65,7 @@ export default function Root() {
               <Route exact path="/login" component={Login} />
               <Route exact path="/novedades" component={News} />
               <Route exact path="/novedades/:id" component={NewsDetail} />
-              <Route exact path="/actividades" component={Activities} />
+              <Route exact path="/activities" component={Activities} />
               <Route exact path="/actividades/:id" component={ActivitiesDetail} />
               <Route exact path="/members" component={Member} />
               <Route path="/nosotros" component={About} />

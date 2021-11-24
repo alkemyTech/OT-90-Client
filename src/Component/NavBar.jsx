@@ -46,7 +46,7 @@ export default function NavbarComponent() {
       },
       {
         view: 'Actividades',
-        root: 'Activities',
+        root: 'activities',
       },
       {
         view: 'Novedades',

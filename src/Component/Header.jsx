@@ -1,12 +1,12 @@
+import React, { useEffect, useState } from 'react'
 import {
   Button, Container, Nav, NavDropdown, Navbar,
 } from 'react-bootstrap/'
-import React, { useEffect, useState } from 'react'
-
 import { Link } from 'react-router-dom'
 import { useSelector, useDispatch } from 'react-redux'
-import NavBarComponent from './NavBar'
 import { selectUser, logOut } from '../app/userSlice'
+import NavBarComponent from './NavBar'
+import '../static/styles/header.css'
 
 export default function Header() {
   const [logo, setLogo] = useState(null)
@@ -25,7 +25,7 @@ export default function Header() {
   const user = useSelector(selectUser)
   return (
     <>
-      <Navbar bg="light" expand="lg">
+      <Navbar className="header" bg="light" expand="lg">
         <Container>
           {logo ? <Link to="/"><img src={logo.sprites.front_default} alt={logo.name} /></Link> : <Link to="/">SomosMas</Link>}
           <Navbar.Toggle aria-controls="basic-navbar-nav" />

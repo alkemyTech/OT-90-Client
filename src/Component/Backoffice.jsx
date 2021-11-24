@@ -15,10 +15,10 @@ const application = {
   sucess: true,
   body: [
     { app: 'Novedades', permission: 'admin', route: '/news' },
-    { app: 'Actividades', permission: 'admin', route: '/activities' },
+    { app: 'Actividades', permission: 'admin', route: '/allactivities' },
     { app: 'Categorias', permission: 'admin', route: '/categories' },
     { app: 'Contactos', permission: 'admin', route: '/contacts' },
-    { app: 'Testimonios', permission: 'admin', route: '/testimonials' },
+    { app: 'Testimonios', permission: 'admin', route: '/alltestimonials' },
     { app: 'Usuarios', permission: 'admin', route: '/users' },
     { app: 'EditOrganization', permission: 'admin', route: '/editorganization/1' },
     { app: 'Editar Perfil', permission: 'standard', route: '/profile' }],

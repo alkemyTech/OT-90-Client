@@ -19,7 +19,8 @@ const Home = ({ news, welcomeTxt }) => (
 
 const HomeContainer = () => {
   const initialState = {
-    data: {},
+    welcomeTxt: '',
+    news: [],
     isLoading: true,
     error: null,
   }
@@ -30,7 +31,8 @@ const HomeContainer = () => {
       case 'GET_DATA':
         return {
           isLoading: true,
-          data: {},
+          welcomeTxt: '',
+          news: [],
           error: null,
         };
       case 'GET_DATA_OK':
@@ -44,7 +46,8 @@ const HomeContainer = () => {
         return {
           isLoading: false,
           error: payload,
-          data: {},
+          welcomeTxt: '',
+          news: [],
         };
       default:
         return state
@@ -71,6 +74,8 @@ const HomeContainer = () => {
           title: 'Error',
           text: 'Ocurrio un error obteniendo la información, intenta nuevamente.',
           confirmButtonText: 'Reintentar',
+          allowOutsideClick: false,
+          allowEscapeKey: false,
         })
         if (isConfirmed) {
           dispatch({ type: 'GET_DATA' })

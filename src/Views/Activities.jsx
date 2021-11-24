@@ -10,7 +10,7 @@ import sendRequest from '../httpClient'
 
 const Activities = ({ activities }) => (
   <Container>
-    <h1 className="p-3">{activities.length ? 'Actividades' : 'Sin Actividades' }</h1>
+    <h1 className="p-3">{activities && activities.length ? 'Actividades' : 'Sin Actividades' }</h1>
     <Row xs={1} md={3} lg={4} className="g-4 p-3">
       {activities.map(({
         image, name, id,

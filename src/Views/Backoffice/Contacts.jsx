@@ -1,23 +1,24 @@
 import React, { useEffect, useReducer, useState } from 'react';
+import Swal from 'sweetalert2';
+import { Container } from 'react-bootstrap';
 import Table from '../../Component/Table'
 import sendRequest from '../../httpClient'
 import Loader from '../../Component/Loader';
-import AlertComponent from '../../Component/Alert';
 
 const Contacts = () => {
   const initialState = {
-    data: {},
+    data: [],
     isLoading: true,
     error: null,
   }
 
   const reducer = (state, action) => {
-    const { type, payload = {} } = action
+    const { type, payload } = action
     switch (type) {
       case 'GET_DATA':
         return {
           isLoading: true,
-          data: {},
+          data: [],
           error: null,
         };
       case 'GET_DATA_OK':
@@ -30,20 +31,28 @@ const Contacts = () => {
         return {
           isLoading: false,
           error: payload,
-          data: {},
+          data: [],
         };
+      case 'LOADING':
+        return {
+          isLoading: true,
+          ...state,
+        };
+      case 'DELETE_OK': {
+        const filter = state.data.filter(({ id }) => id !== payload)
+        return {
+          isLoading: false,
+          error: null,
+          data: filter,
+        };
+      }
       default:
         return state
     }
   }
-  const [{ error, data, isLoading }, dispatch] = useReducer(reducer, initialState)
+  const [{ data, isLoading }, dispatch] = useReducer(reducer, initialState)
 
   const [toggle, setToggle] = useState(false)
-
-  const alertAction = () => {
-    dispatch({ type: 'GET_DATA' })
-    setToggle(!toggle)
-  }
 
   useEffect(() => {
     const getCategory = async () => {
@@ -52,20 +61,48 @@ const Contacts = () => {
         dispatch({ type: 'GET_DATA_OK', payload: contacts })
       } catch (e) {
         dispatch({ type: 'ERROR', payload: e })
+        const { isConfirmed } = await Swal.fire({
+          icon: 'error',
+          title: 'Error',
+          text: 'Ocurrio un error obteniendo la información, intenta nuevamente.',
+          confirmButtonText: 'Reintentar',
+          allowOutsideClick: false,
+          allowEscapeKey: false,
+        })
+        if (isConfirmed) {
+          dispatch({ type: 'GET_DATA' })
+          setToggle(!toggle)
+        }
       }
     }
     getCategory()
   }, [toggle])
 
+  const delteContact = async (id) => {
+    dispatch({ type: 'LOADING' })
+    try {
+      await sendRequest('DELETE', `/contacts/${id}`, null)
+      dispatch({ type: 'DELETE_OK', payload: id })
+      Swal.fire({
+        icon: 'success',
+        title: 'Contacto eliminado',
+      })
+    } catch (e) {
+      dispatch({ type: 'ERROR', payload: e })
+      Swal.fire({
+        icon: 'error',
+        title: 'Error',
+        text: 'Ocurrio un error borrando el contacto, intenta nuevamente.',
+      })
+    }
+  }
+
   const headers = ['name', 'phone', 'email', 'message']
 
-  if (isLoading) {
-    return <Loader visible />
-  }
-  return (
-    error
-      ? <AlertComponent show={!isLoading} title="Error obteniendo contactos" variant="warning" action={alertAction} />
-      : <Table title="Contactos" headers={headers} data={data} />
+  return isLoading ? <Loader visible /> : (
+    <Container style={{ minHeight: '100vh' }}>
+      <Table title="Contactos" headers={headers} data={data} onDelete={delteContact} />
+    </Container>
   )
 }
 

@@ -15,8 +15,8 @@ const application = {
   sucess: true,
   body: [
     { app: 'Novedades', permission: 'admin', route: '/news' },
+    { app: 'Categorias', permission: 'admin', route: '/allcategories' },
     { app: 'Actividades', permission: 'admin', route: '/allactivities' },
-    { app: 'Categorias', permission: 'admin', route: '/categories' },
     { app: 'Contactos', permission: 'admin', route: '/contacts' },
     { app: 'Testimonios', permission: 'admin', route: '/alltestimonials' },
     { app: 'Usuarios', permission: 'admin', route: '/users' },

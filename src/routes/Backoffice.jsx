@@ -4,7 +4,8 @@ import { useSelector } from 'react-redux'
 import PropTypes from 'prop-types'
 import AllTestimonial from '../Views/Backoffice/AllTestimonial'
 import BackofficeMain from '../Views/Backoffice/Main'
-import Categories from '../Views/Backoffice/Categories'
+import AllCategories from '../Views/Backoffice/AllCategories'
+import EditCategory from '../Views/Backoffice/EditCategory'
 import AllActivities from '../Views/Backoffice/Activities'
 import Conditional from './ConditionalRoute'
 import Contacts from '../Views/Backoffice/Contacts'
@@ -26,8 +27,10 @@ const Backoffice = (props) => {
     <Router>
       <Switch>
         <Route exact path={path} render={() => <BackofficeMain path={path} />} />
+        <Conditional exact path={`${path}/allcategories`} component={AllCategories} conditionToOpen={isAdmin} pathRedirect={path} />
+        <Conditional path={`${path}/allcategories/edit/:id`} component={EditCategory} conditionToOpen={isAdmin} pathRedirect={path} />        
+        <Conditional path={`${path}/contacts`} component={Contacts} conditionToOpen={isAdmin} pathRedirect={path} />
         <Conditional path={`${path}/allActivities`} component={AllActivities} conditionToOpen={isAdmin} pathRedirect={path} />
-        <Conditional path={`${path}/categories`} component={Categories} conditionToOpen={isAdmin} pathRedirect={path} />
         <Conditional exact path={`${path}/contacts`} component={Contacts} conditionToOpen={isAdmin} pathRedirect={path} />
         <Conditional path={`${path}/editorganization/1`} component={EditOrganization} conditionToOpen={isAdmin} pathRedirect={path} />
         <Conditional exact path={`${path}/news`} component={News} conditionToOpen={isAdmin} pathRedirect={path} />

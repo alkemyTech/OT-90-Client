@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { useCallback, useEffect, useState } from 'react'
 import { useParams } from 'react-router-dom'
 import { Container } from 'react-bootstrap'
 import sendRequest from '../../httpClient'
@@ -10,7 +10,7 @@ export default function GetCategory() {
   const { id } = useParams()
   const [category, setCategory] = useState({})
 
-  const fetchData = async () => {
+  const fetchData = useCallback(async () => {
     const categories = await sendRequest(HttpActionEnum.GET, '/categories')
     if (categories && categories.data) {
       const categoryFiltered = categories.data
@@ -21,7 +21,7 @@ export default function GetCategory() {
         setCategory({ ...categoryFiltered[0] })
       }
     }
-  }
+  }, [])
 
   useEffect(() => {
     fetchData()

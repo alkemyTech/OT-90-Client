@@ -84,7 +84,7 @@ const NewsContainer = () => {
   const headers = ['name', 'image', 'createdAt']
 
   return isLoading ? <Loader visible /> : (
-    <Container>
+    <Container style={{ minHeight: '100vh' }}>
       <Button as={Link} size="lg" variant="info" className="mt-4 me-2 position-absolute end-0" to="/backoffice/news/create">Crear Novedad</Button>
       <Table title="Novedades" headers={headers} data={data} onDelete={deleteNew} />
     </Container>

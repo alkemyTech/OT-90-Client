@@ -13,6 +13,7 @@ import News from '../Views/Backoffice/News'
 import Users from '../Views/Backoffice/Users'
 import { selectUser } from '../app/userSlice'
 import NewsEdit from '../Views/Backoffice/NewsEdit'
+import NewsCreate from '../Views/Backoffice/NewsCreate'
 import UserProfile from '../Views/Backoffice/UserProfile'
 
 const Backoffice = (props) => {
@@ -31,6 +32,7 @@ const Backoffice = (props) => {
         <Conditional exact path={`${path}/users`} component={Users} conditionToOpen={isAdmin} pathRedirect={path} />
         <Conditional path={`${path}/alltestimonials`} component={AllTestimonial} conditionToOpen={isAdmin} pathRedirect={path} />
         <Conditional exact path={`${path}/news/edit/:id`} component={NewsEdit} conditionToOpen={isAdmin} pathRedirect={path} />
+        <Conditional exact path={`${path}/news/create`} component={NewsCreate} conditionToOpen={isAdmin} pathRedirect={path} />
         <Route path={`${path}/profile`} component={UserProfile} />
       </Switch>
     </Router>

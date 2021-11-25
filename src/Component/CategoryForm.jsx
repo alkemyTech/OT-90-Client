@@ -1,7 +1,7 @@
 import { Formik } from 'formik'
 import PropTypes from 'prop-types'
 import Swal from 'sweetalert2'
-import React, { useState, useRef } from 'react'
+import React, { useState } from 'react'
 import { Form } from 'react-bootstrap'
 import { useHistory } from 'react-router-dom'
 import ButtonComponent from './Button'

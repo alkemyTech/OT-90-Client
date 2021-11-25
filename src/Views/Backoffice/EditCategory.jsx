@@ -25,7 +25,7 @@ export default function GetCategory() {
 
   useEffect(() => {
     fetchData()
-  }, [])
+  }, [fetchData])
 
   if (Object.keys(category).length !== 0) {
     return (

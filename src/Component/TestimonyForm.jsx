@@ -37,7 +37,6 @@ function TestimonyForm(props) {
   )
 
   const [isLoading, setIsLoading] = useState(false)
-  const [blurredEditor, setblurredEditor] = useState(false)
 
   const threadSleep = (ms) => new Promise((resolve) => setTimeout(resolve, ms))
   const inputRef = useRef()
@@ -49,7 +48,6 @@ function TestimonyForm(props) {
       if (file !== undefined) {
         const image = await Upload(file, file.name)
         testimonials.image = image.location
-
       } else {
         testimonials.image = testimony.image
       }
@@ -66,7 +64,6 @@ function TestimonyForm(props) {
       }
       return history.push('/testimonios')
     } catch (err) {
-      console.log(err)
       setIsLoading(false)
       Swal.fire({
         icon: 'error',
@@ -165,7 +162,7 @@ function TestimonyForm(props) {
               isInvalid={touched.name && errors.name}
             />
 
-            <Form.Label visuallyHidden={!blurredEditor} style={{ color: 'red' }}>
+            <Form.Label style={{ color: 'red' }}>
               {errors.content}
             </Form.Label>
           </Form.Group>

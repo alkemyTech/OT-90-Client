@@ -10,21 +10,19 @@ export default function OneTestimony() {
   const { id } = useParams()
   const [testimony, setTestimony] = useState({})
 
-
   useEffect(() => {
     async function fetchData() {
       const testimonies = await sendRequest(HttpActionEnum.GET, '/testimonials')
       const theTestimony = testimonies.data.filter((test) => test.id === parseInt(id, 10))[0]
       // console.log(theTestimony, 'theTestimony')
       setTestimony(theTestimony)
- 
     }
     try {
       fetchData()
     } catch (error) {
       return error
     }
-  }, [])
+  }, [id])
 
   if (Object.keys(testimony).length !== 0) {
     return (

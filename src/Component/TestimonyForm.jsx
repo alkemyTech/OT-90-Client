@@ -1,12 +1,13 @@
 import { Formik } from 'formik'
 import PropTypes from 'prop-types'
-import React, { useState } from 'react'
-import { CKEditor } from '@ckeditor/ckeditor5-react'
-import ClassicEditor from '@ckeditor/ckeditor5-build-classic'
+import Swal from 'sweetalert2'
+import React, { useState, useRef } from 'react'
 import { Form } from 'react-bootstrap'
+import { useHistory } from 'react-router-dom'
 import ButtonComponent from './Button'
 import HttpActionEnum from '../enums/HttpActionEnum'
 import sendRequest from '../httpClient'
+import { Upload } from './AWS'
 
 const loadComponent = (testimony) => {
   if (testimony) {
@@ -26,22 +27,50 @@ const loadComponent = (testimony) => {
 }
 
 function TestimonyForm(props) {
+  const { change, setChange } = props
   const { testimony } = props
+  const history = useHistory()
+
   const [config] = useState(loadComponent(testimony))
   const [action] = useState(
     testimony ? HttpActionEnum.PUT : HttpActionEnum.POST,
   )
+
   const [isLoading, setIsLoading] = useState(false)
-  const [blurredEditor, setblurredEditor] = useState(false)
 
   const threadSleep = (ms) => new Promise((resolve) => setTimeout(resolve, ms))
+  const inputRef = useRef()
 
   const onSumbit = async (testimonials) => {
-    setIsLoading(true)
-    await threadSleep(1000)
-    await sendRequest(action, '/testimonials', testimonials)
-    setIsLoading(false)
+    try {
+      setIsLoading(true)
+      const [file] = inputRef.current.files
+      if (file !== undefined) {
+        const image = await Upload(file, file.name)
+        testimonials.image = image.location
+      } else {
+        testimonials.image = testimony.image
+      }
+      await threadSleep(1000)
+      if (action === 'post') {
+        await sendRequest(action, '/testimonials', testimonials)
+      } else await sendRequest(action, `/testimonials/${testimonials.id}`, testimonials)
 
+      setIsLoading(false)
+      if (setChange && change) setChange(!change)
+      Swal.fire('Testimonio agregado correctamente')
+      if (testimony !== undefined) {
+        return history.push('/backoffice/alltestimonials')
+      }
+      return history.push('/testimonios')
+    } catch (err) {
+      setIsLoading(false)
+      Swal.fire({
+        icon: 'error',
+        title: 'Oops...',
+        text: 'Algo salió mal, intenta nuevamente!',
+      })
+    }
   }
 
   const validation = ({ name, image, content }) => {
@@ -73,7 +102,6 @@ function TestimonyForm(props) {
     >
       {({
         handleChange,
-        setFieldValue,
         handleBlur,
         values,
         errors,
@@ -107,7 +135,8 @@ function TestimonyForm(props) {
               type="file"
               placeholder="Ingrese imagen del testimonio"
               name="image"
-              value={values.image}
+              ref={inputRef}
+              // value={values.image}
               onBlur={handleBlur}
               onChange={handleChange}
               isValid={touched.image && !errors.image}
@@ -122,18 +151,18 @@ function TestimonyForm(props) {
             <Form.Label style={{ justifyContent: 'left', display: 'flex' }}>
               Contenido
             </Form.Label>
-            <CKEditor
-              config={{ placeholder: 'Ingrese el contenido del testimonio' }}
-              editor={ClassicEditor}
-              onBlur={() => {
-                setblurredEditor(true)
-              }}
-              data={values.content}
-              onChange={(event, editor) => {
-                setFieldValue('content', editor.getData(), true)
-              }}
+            <Form.Control
+              type="text"
+              placeholder="Ingrese el nombre del testimonio"
+              name="content"
+              value={values.content}
+              onBlur={handleBlur}
+              onChange={handleChange}
+              isValid={touched.name && !errors.name}
+              isInvalid={touched.name && errors.name}
             />
-            <Form.Label visuallyHidden={!blurredEditor} style={{ color: 'red' }}>
+
+            <Form.Label style={{ color: 'red' }}>
               {errors.content}
             </Form.Label>
           </Form.Group>
@@ -148,14 +177,17 @@ function TestimonyForm(props) {
               onClick={
                 async () => onSumbit(
                   testimony ? {
-                    id: testimony.id, name: values.name, image: values.image, content: values.content,
+                    id: testimony.id,
+                    name: values.name,
+                    image: values.image,
+                    content: values.content,
                   } : {
                     name: values.name, image: values.image, content: values.content,
                   }, action,
                 )
               }
               isLoading={isLoading}
-              disabled={errors.name || errors.content}
+              disabled={!!((errors.name || errors.content))}
             />
           </Form.Group>
         </Form>
@@ -171,6 +203,12 @@ TestimonyForm.propTypes = {
     image: PropTypes.string,
     content: PropTypes.string,
   }).isRequired,
+  change: PropTypes.bool,
+  setChange: PropTypes.bool,
 }
+TestimonyForm.defaultProps = {
+  change: true,
+  setChange: false,
+};
 
 export default TestimonyForm

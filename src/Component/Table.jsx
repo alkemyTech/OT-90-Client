@@ -7,10 +7,11 @@ import ButtonComponent from './Button'
 
 function RenderRows({
   // eslint-disable-next-line no-alert
-  data, headers, onDelete = () => alert('Eliminar'),
+  data, headers, onDelete,
 }) {
   const { location: { pathname }, push } = useHistory()
   const edit = (id) => push(`${pathname}/edit/${id}`)
+
   const openAlert = (id) => {
     Swal.fire({
       title: 'Atencion',
@@ -52,7 +53,7 @@ function RenderRows({
 
 function TableComponent({
   // eslint-disable-next-line no-alert
-  headers, data, title, onDelete = () => alert('Eliminar'),
+  headers, data, title, onDelete,
 }) {
   return (
     <Table striped responsive hover bordered className="caption-top table align-middle">
@@ -76,6 +77,7 @@ TableComponent.propTypes = {
   title: PropTypes.string.isRequired,
   data: PropTypes.arrayOf(PropTypes.object).isRequired,
   onDelete: PropTypes.func.isRequired,
+  // onEdit: PropTypes.func.isRequired,
 }
 
 export default TableComponent

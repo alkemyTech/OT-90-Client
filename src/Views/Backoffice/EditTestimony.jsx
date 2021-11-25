@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import { useParams } from 'react-router-dom'
+import { Container } from 'react-bootstrap'
 import sendRequest from '../../httpClient'
 import HttpActionEnum from '../../enums/HttpActionEnum'
 import TestimonyForm from '../../Component/TestimonyForm'
@@ -8,12 +9,15 @@ import Loader from '../../Component/Loader'
 export default function OneTestimony() {
   const { id } = useParams()
   const [testimony, setTestimony] = useState({})
+  const [image, setImage] = useState('')
+
   useEffect(() => {
     async function fetchData() {
       const testimonies = await sendRequest(HttpActionEnum.GET, '/testimonials')
       const theTestimony = testimonies.data.filter((test) => test.id === parseInt(id, 10))[0]
       // console.log(theTestimony, 'theTestimony')
       setTestimony(theTestimony)
+      setImage(theTestimony.image)
     }
     try {
       fetchData()
@@ -21,8 +25,13 @@ export default function OneTestimony() {
       return error
     }
   }, [])
-  // console.log(Object.keys(testimony).length, 'keyes')
 
-  if (Object.keys(testimony).length !== 0) return <TestimonyForm testimony={testimony} />
-  return <h1>LOADING</h1>
+  if (Object.keys(testimony).length !== 0) {
+    return (
+      <Container className="m-5">
+        <TestimonyForm testimony={testimony} setImage={setImage} />
+      </Container>
+    )
+  }
+  return <Loader />
 }

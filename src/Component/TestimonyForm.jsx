@@ -3,13 +3,13 @@ import PropTypes from 'prop-types'
 import Swal from 'sweetalert2'
 import React, { useState, useRef } from 'react'
 import { Form } from 'react-bootstrap'
+import { useHistory } from 'react-router-dom'
 import ButtonComponent from './Button'
 import HttpActionEnum from '../enums/HttpActionEnum'
 import sendRequest from '../httpClient'
 import { Upload } from './AWS'
 
 const loadComponent = (testimony) => {
-  // console.log(testimony, 'testimony load component')
   if (testimony) {
     return {
       textButton: 'Editar',
@@ -27,10 +27,9 @@ const loadComponent = (testimony) => {
 }
 
 function TestimonyForm(props) {
-  const { change, setChange } = props
+  const { change, setChange, setImage } = props
   const { testimony } = props
-
-  // console.log(testimony, 'testimony form')
+  const history = useHistory()
 
   const [config] = useState(loadComponent(testimony))
   const [action] = useState(
@@ -46,10 +45,14 @@ function TestimonyForm(props) {
   const onSumbit = async (testimonials) => {
     try {
       setIsLoading(true)
-      console.log(testimonials)
       const [file] = inputRef.current.files
-      const image = await Upload(file, file.name)
-      testimonials.image = image.location
+      if (file !== undefined) {
+        const image = await Upload(file, file.name)
+        testimonials.image = image.location
+        setImage(image.location)
+      } else {
+        testimonials.image = testimony.image
+      }
       await threadSleep(1000)
       if (action === 'post') {
         await sendRequest(action, '/testimonials', testimonials)
@@ -58,8 +61,11 @@ function TestimonyForm(props) {
       setIsLoading(false)
       if (setChange && change) setChange(!change)
       Swal.fire('Testimonio agregado correctamente')
+      if (testimony !== undefined) {
+        return history.push('/backoffice/alltestimonials')
+      }
+      return history.push('/testimonios')
     } catch (err) {
-      console.log(err)
       setIsLoading(false)
       Swal.fire({
         icon: 'error',
@@ -199,6 +205,16 @@ TestimonyForm.propTypes = {
     image: PropTypes.string,
     content: PropTypes.string,
   }).isRequired,
+  change: PropTypes.bool,
+  setChange: PropTypes.bool,
+  image: PropTypes.string,
+  setImage: PropTypes.func,
 }
+TestimonyForm.defaultProps = {
+  change: true,
+  setChange: false,
+  image: '',
+  setImage: null,
+};
 
 export default TestimonyForm

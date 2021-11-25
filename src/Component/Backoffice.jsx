@@ -16,7 +16,7 @@ const application = {
   body: [
     { app: 'Novedades', permission: 'admin', route: '/news' },
     { app: 'Actividades', permission: 'admin', route: '/activities' },
-    { app: 'Categorias', permission: 'admin', route: '/categories' },
+    { app: 'Categorias', permission: 'admin', route: '/allcategories' },
     { app: 'Contactos', permission: 'admin', route: '/contacts' },
     { app: 'Testimonios', permission: 'admin', route: '/testimonials' },
     { app: 'Usuarios', permission: 'admin', route: '/users' },

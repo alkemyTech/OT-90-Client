@@ -34,10 +34,8 @@ function CategoryForm(props) {
   )
 
   const [isLoading, setIsLoading] = useState(false)
-  const [blurredEditor, setblurredEditor] = useState(false)
 
   const threadSleep = (ms) => new Promise((resolve) => setTimeout(resolve, ms))
-  const inputRef = useRef()
 
   const onSumbit = async (categories) => {
     try {
@@ -55,7 +53,6 @@ function CategoryForm(props) {
       }
       return history.push('/categorias')
     } catch (err) {
-      console.log(err)
       setIsLoading(false)
       Swal.fire({
         icon: 'error',

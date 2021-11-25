@@ -16,6 +16,7 @@ import NewsEdit from '../Views/Backoffice/NewsEdit'
 import NewsCreate from '../Views/Backoffice/NewsCreate'
 import UserProfile from '../Views/Backoffice/UserProfile'
 import ContactsEdit from '../Views/Backoffice/ContactsEdit'
+import OneTestimony from '../Views/Backoffice/EditTestimony'
 
 const Backoffice = (props) => {
   const isAdmin = useSelector(selectUser).role.toLowerCase().trim() === 'admin'
@@ -31,7 +32,8 @@ const Backoffice = (props) => {
         <Conditional path={`${path}/editorganization/1`} component={EditOrganization} conditionToOpen={isAdmin} pathRedirect={path} />
         <Conditional exact path={`${path}/news`} component={News} conditionToOpen={isAdmin} pathRedirect={path} />
         <Conditional exact path={`${path}/users`} component={Users} conditionToOpen={isAdmin} pathRedirect={path} />
-        <Conditional path={`${path}/alltestimonials`} component={AllTestimonial} conditionToOpen={isAdmin} pathRedirect={path} />
+        <Conditional exact path={`${path}/alltestimonials`} component={AllTestimonial} conditionToOpen={isAdmin} pathRedirect={path} />
+        <Conditional path={`${path}/alltestimonials/edit/:id`} component={OneTestimony} conditionToOpen={isAdmin} pathRedirect={path} />
         <Conditional exact path={`${path}/news/edit/:id`} component={NewsEdit} conditionToOpen={isAdmin} pathRedirect={path} />
         <Conditional exact path={`${path}/news/create`} component={NewsCreate} conditionToOpen={isAdmin} pathRedirect={path} />
         <Conditional exact path={`${path}/contacts/edit/:id`} component={ContactsEdit} conditionToOpen={isAdmin} pathRedirect={path} />

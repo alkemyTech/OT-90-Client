@@ -5,9 +5,11 @@ import { Card } from 'react-bootstrap';
 import HttpActionEnum from '../enums/HttpActionEnum'
 import sendRequest from '../httpClient'
 import '../static/styles/testimonials.css'
+import TestimonyForm from '../Component/TestimonyForm'
 
 function Testimonials() {
   const [testimonials, setTestimonials] = useState([])
+  const [change, setChange] = useState(false)
   useEffect(() => {
     async function fetchData() {
       const testimos = await sendRequest(HttpActionEnum.GET, '/testimonials')
@@ -18,7 +20,7 @@ function Testimonials() {
     } catch (error) {
       return error
     }
-  }, [])
+  }, [change])
 
   return (
     <div className="testimonials">
@@ -34,6 +36,8 @@ function Testimonials() {
         </Card>
 
       ))}
+
+      <TestimonyForm setChange={setChange} change={change} />
     </div>
   )
 }

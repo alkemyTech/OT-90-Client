@@ -3,6 +3,7 @@ import '../static/styles/Footer.css'
 import React, { useEffect, useReducer } from 'react'
 import { FaFacebook, FaInstagram, FaLinkedin } from 'react-icons/fa'
 import sendRequest from '../httpClient'
+import logo from '../static/assets/somosMasLogo.png'
 
 const socialMediaIcons = {
   Facebook: (<FaFacebook />),
@@ -97,7 +98,7 @@ function Footer() {
             <h4>Somos Más</h4>
             {publicData !== undefined ? (
               <img
-                src={publicData.image}
+                src={logo}
                 alt={publicData.name}
               />
             ) : null}

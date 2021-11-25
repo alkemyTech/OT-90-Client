@@ -1,8 +1,10 @@
 import React, { useEffect, useReducer, useState } from 'react';
+import Swal from 'sweetalert2'
 import Table from '../../Component/Table'
 import sendRequest from '../../httpClient'
 import Loader from '../../Component/Loader';
 import AlertComponent from '../../Component/Alert';
+import HttpActionEnum from '../../enums/HttpActionEnum';
 
 const AllTestimonial = () => {
   const initialState = {
@@ -39,6 +41,22 @@ const AllTestimonial = () => {
 
   const [toggle, setToggle] = useState(false)
 
+  const onEdit = (id) => id
+
+  const onDelete = async (id) => {
+    try {
+      await sendRequest(HttpActionEnum.DELETE, `/testimonials/${id}`)
+      Swal.fire('Testimonio eliminado!')
+      setToggle(!toggle)
+    } catch (err) {
+      Swal.fire({
+        icon: 'error',
+        title: 'Oops...',
+        text: 'Algo salió mal, intenta nuevamente!',
+      })
+    }
+  }
+
   const alertAction = () => {
     dispatch({ type: 'GET_DATA' })
     setToggle(!toggle)
@@ -64,7 +82,7 @@ const AllTestimonial = () => {
   return (
     error
       ? <AlertComponent show={!isLoading} title="Error obteniendo testimonios" variant="warning" action={alertAction} />
-      : <Table title="Testimonios" headers={headers} data={data} />
+      : <Table title="Testimonios" headers={headers} data={data} onDelete={onDelete} onEdit={onEdit} />
   )
 }
 

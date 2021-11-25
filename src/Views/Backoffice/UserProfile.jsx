@@ -1,14 +1,17 @@
 import React, { useState } from 'react'
 
-import Button from 'react-bootstrap/Button'
+import {Button, Container} from 'react-bootstrap'
 import { Link } from 'react-router-dom'
 import Loader from '../../Component/Loader';
-import { selectUser } from '../../app/userSlice'
+import { selectUser, logOut } from '../../app/userSlice'
 import sendRequest from '../../httpClient'
-import { useSelector } from 'react-redux'
+import { useSelector, useDispatch } from 'react-redux'
+import '../../static/styles/UserProfileEdit.css'
+import Swal from 'sweetalert2'
 
 function UserProfile() {
   const user = useSelector(selectUser)
+  const dispatch = useDispatch()
   const [visible, setVisible] = useState(false)
   const [deleteResult, setDeleteResult] = useState('')
   
@@ -16,9 +19,22 @@ function UserProfile() {
     e.preventDefault()
     try {
       setVisible(true)
-        await sendRequest('delete', `/users/:${user.id}`, user.id)
+        await sendRequest('delete', `/users/${user.id}`, null)
         setVisible(false)
-        setDeleteResult("Usuario eliminado con exito")
+          Swal.fire({
+            title: 'Atencion',
+            html: '¿Esta seguro que desea eliminar su usuario?',
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonText: 'Eliminar',
+            confirmButtonColor: 'red',
+            cancelButtonText: 'Cancelar',
+          }).then((result) => {
+            if (result.isConfirmed) {
+              setDeleteResult("Usuario eliminado con exito")
+              dispatch(logOut())
+            }
+          })     
     } catch (error) {
       setVisible(false)
       setDeleteResult("El usuario no se ha podido eliminar")
@@ -26,22 +42,22 @@ function UserProfile() {
   }
   return (
     <>
-      <section class="container">
+      <Container className="containerCard">
         <h3> Perfil de Usuario </h3>
         <ul>
-        Nombre:<li> { user.name } </li>
-        Apellido:<li>  { user.lastName } </li>
-        Email:<li> { user.email } </li>
+        <li>Nombre: { user.firstName } </li>
+        <li>Apellido:  { user.lastName } </li>
+        <li>Email: { user.email } </li>
         { user.image? <img src={user.image} alt="foto de usuario" style={{ maxWidth: 250, maxHeight: 250  }}/> 
         : <img src="/images/userImage.png" alt="foto de usuario" style={{ maxWidth: 250, maxHeight: 250  }}/>  }  
         </ul>
-      </section> 
-      <Link to={`/editarusuario/:${user.id}`}> 
+      <Link to={`/backoffice/profile/edit`}> 
         <Button variant="secondary">Editar perfil</Button>
       </Link>
         <Loader visible={visible} />
         <Button onClick={handleSubmit} variant="danger">Eliminar perfil</Button>
-        <p>{deleteResult}</p>       
+        <p>{deleteResult}</p>    
+        </Container>    
     </>
   )
 }

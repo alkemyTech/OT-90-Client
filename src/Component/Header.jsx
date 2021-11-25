@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React from 'react'
 import {
   Button, Container, Nav, NavDropdown, Navbar,
 } from 'react-bootstrap/'
@@ -7,27 +7,21 @@ import { useSelector, useDispatch } from 'react-redux'
 import { selectUser, logOut } from '../app/userSlice'
 import NavBarComponent from './NavBar'
 import '../static/styles/header.css'
+import logo from '../static/assets/somosMasLogo.png'
 
 export default function Header() {
-  const [logo, setLogo] = useState(null)
   const dispatch = useDispatch()
 
   const closeSesion = () => {
     dispatch(logOut())
   }
-  useEffect(() => {
-    fetch('https://pokeapi.co/api/v2/pokemon/ditto')
-      .then((res) => res.json())
-      .then((data) => setLogo(data))
-      .catch((error) => error)
-  }, [])
 
   const user = useSelector(selectUser)
   return (
     <>
       <Navbar className="header" bg="light" expand="lg">
         <Container>
-          {logo ? <Link to="/"><img src={logo.sprites.front_default} alt={logo.name} /></Link> : <Link to="/">SomosMas</Link>}
+          <Link to="/"><img src={logo} alt={logo.name} /></Link>
           <Navbar.Toggle aria-controls="basic-navbar-nav" />
           <Navbar.Collapse id="basic-navbar-nav">
             <Nav className="me-auto">

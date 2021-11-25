@@ -12,14 +12,19 @@ const Activities = ({ activities }) => (
   <Container>
     <h1 className="p-3">{activities && activities.length ? 'Actividades' : 'Sin Actividades' }</h1>
     <Row xs={1} md={3} lg={4} className="g-4 p-3">
-      {activities.map(({
+      {activities && activities.map(({
         image, name, id,
       }) => (
         <Col key={id}>
           <Card>
             <Link className="text-dark text-decoration-none" to={`/actividades/${id}`}>
               <Card.Img src={image} />
-              <Card.Title style={{maxHeight: '30px', maxWidth: '189px'}} className="text-capitalize">{name}</Card.Title>
+              <Card.Title
+                style={{ maxHeight: '30px', maxWidth: '189px' }}
+                className="text-capitalize"
+              >
+                {name}
+              </Card.Title>
             </Link>
           </Card>
         </Col>

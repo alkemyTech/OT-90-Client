@@ -15,6 +15,7 @@ import { selectUser } from '../app/userSlice'
 import NewsEdit from '../Views/Backoffice/NewsEdit'
 import NewsCreate from '../Views/Backoffice/NewsCreate'
 import UserProfile from '../Views/Backoffice/UserProfile'
+import ContactsEdit from '../Views/Backoffice/ContactsEdit'
 import OneTestimony from '../Views/Backoffice/EditTestimony'
 
 const Backoffice = (props) => {
@@ -27,7 +28,7 @@ const Backoffice = (props) => {
         <Route exact path={path} render={() => <BackofficeMain path={path} />} />
         <Conditional path={`${path}/allActivities`} component={AllActivities} conditionToOpen={isAdmin} pathRedirect={path} />
         <Conditional path={`${path}/categories`} component={Categories} conditionToOpen={isAdmin} pathRedirect={path} />
-        <Conditional path={`${path}/contacts`} component={Contacts} conditionToOpen={isAdmin} pathRedirect={path} />
+        <Conditional exact path={`${path}/contacts`} component={Contacts} conditionToOpen={isAdmin} pathRedirect={path} />
         <Conditional path={`${path}/editorganization/1`} component={EditOrganization} conditionToOpen={isAdmin} pathRedirect={path} />
         <Conditional exact path={`${path}/news`} component={News} conditionToOpen={isAdmin} pathRedirect={path} />
         <Conditional exact path={`${path}/users`} component={Users} conditionToOpen={isAdmin} pathRedirect={path} />
@@ -35,6 +36,7 @@ const Backoffice = (props) => {
         <Conditional path={`${path}/alltestimonials/edit/:id`} component={OneTestimony} conditionToOpen={isAdmin} pathRedirect={path} />
         <Conditional exact path={`${path}/news/edit/:id`} component={NewsEdit} conditionToOpen={isAdmin} pathRedirect={path} />
         <Conditional exact path={`${path}/news/create`} component={NewsCreate} conditionToOpen={isAdmin} pathRedirect={path} />
+        <Conditional exact path={`${path}/contacts/edit/:id`} component={ContactsEdit} conditionToOpen={isAdmin} pathRedirect={path} />
         <Route path={`${path}/profile`} component={UserProfile} />
       </Switch>
     </Router>

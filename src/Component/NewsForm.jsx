@@ -71,12 +71,13 @@ const NewsForm = ({ news }) => {
       name: Yup.string().required('El Nombre es requerido').max(200, 'Maximo 200 caracteres'),
       content: Yup.string().required('El contenido es requerido'),
       image: Yup.string().required('Una imagen es requerida'),
+      categoryId: Yup.string().required('Seleccione la categoria'),
     }),
     onSubmit: async (values) => {
       if (
         !formik.errors.content && !formik.errors.name && !formik.errors.image
-        && formik.values.content.length > 0 && formik.values.name.length > 0
-        && formik.values.image.length > 0
+        && !formik.errors.categoryId && formik.values.content.length > 0
+        && formik.values.name.length > 0 && formik.values.image.length > 0
       ) {
         try {
           setIsSavingData(true)
@@ -168,12 +169,16 @@ const NewsForm = ({ news }) => {
           value={formik.values.categoryId}
           className="mb-4"
         >
-          <option disabled>Seleccione</option>
+          <option value="">Seleccione una categoria</option>
           { categories.map(({ name, id }) => <option key={id} value={id}>{name}</option>)}
         </Form.Select>
+        <Form.Label className="d-block" style={{ color: 'red' }}>
+          {formik.errors.categoryId}
+        </Form.Label>
         <Button
           disabled={
-            formik.errors.name || formik.errors.content || formik.errors.image || isSavingData
+            formik.errors.name || formik.errors.content || formik.errors.image
+            || formik.errors.categoryId || isSavingData
           }
           className="d-block w-50 mx-auto"
           type="submit"

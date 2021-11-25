@@ -2,16 +2,14 @@ import { Formik } from 'formik'
 import PropTypes from 'prop-types'
 import Swal from 'sweetalert2'
 import React, { useState, useRef } from 'react'
-import { CKEditor } from '@ckeditor/ckeditor5-react'
-import ClassicEditor from '@ckeditor/ckeditor5-build-classic'
 import { Form } from 'react-bootstrap'
-import { propTypes } from 'react-bootstrap/esm/Image'
 import ButtonComponent from './Button'
 import HttpActionEnum from '../enums/HttpActionEnum'
 import sendRequest from '../httpClient'
 import { Upload } from './AWS'
 
 const loadComponent = (testimony) => {
+  // console.log(testimony, 'testimony load component')
   if (testimony) {
     return {
       textButton: 'Editar',
@@ -31,10 +29,14 @@ const loadComponent = (testimony) => {
 function TestimonyForm(props) {
   const { change, setChange } = props
   const { testimony } = props
+
+  // console.log(testimony, 'testimony form')
+
   const [config] = useState(loadComponent(testimony))
   const [action] = useState(
     testimony ? HttpActionEnum.PUT : HttpActionEnum.POST,
   )
+
   const [isLoading, setIsLoading] = useState(false)
   const [blurredEditor, setblurredEditor] = useState(false)
 
@@ -44,15 +46,20 @@ function TestimonyForm(props) {
   const onSumbit = async (testimonials) => {
     try {
       setIsLoading(true)
+      console.log(testimonials)
       const [file] = inputRef.current.files
       const image = await Upload(file, file.name)
       testimonials.image = image.location
       await threadSleep(1000)
-      await sendRequest(action, '/testimonials', testimonials)
+      if (action === 'post') {
+        await sendRequest(action, '/testimonials', testimonials)
+      } else await sendRequest(action, `/testimonials/${testimonials.id}`, testimonials)
+
       setIsLoading(false)
-      setChange(!change)
+      if (setChange && change) setChange(!change)
       Swal.fire('Testimonio agregado correctamente')
     } catch (err) {
+      console.log(err)
       setIsLoading(false)
       Swal.fire({
         icon: 'error',
@@ -125,7 +132,7 @@ function TestimonyForm(props) {
               placeholder="Ingrese imagen del testimonio"
               name="image"
               ref={inputRef}
-              value={values.image}
+              // value={values.image}
               onBlur={handleBlur}
               onChange={handleChange}
               isValid={touched.image && !errors.image}
@@ -166,14 +173,17 @@ function TestimonyForm(props) {
               onClick={
                 async () => onSumbit(
                   testimony ? {
-                    id: testimony.id, name: values.name, image: values.image, content: values.content,
+                    id: testimony.id,
+                    name: values.name,
+                    image: values.image,
+                    content: values.content,
                   } : {
                     name: values.name, image: values.image, content: values.content,
                   }, action,
                 )
               }
               isLoading={isLoading}
-              disabled={errors.name || errors.content}
+              disabled={!!((errors.name || errors.content))}
             />
           </Form.Group>
         </Form>
@@ -188,8 +198,6 @@ TestimonyForm.propTypes = {
     name: PropTypes.string,
     image: PropTypes.string,
     content: PropTypes.string,
-    change: PropTypes.bool,
-    setChange: PropTypes.bool,
   }).isRequired,
 }
 

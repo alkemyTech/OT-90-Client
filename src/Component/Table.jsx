@@ -7,7 +7,7 @@ import ButtonComponent from './Button'
 
 function RenderRows({
   // eslint-disable-next-line no-alert
-  data, headers, onDelete, onEdit,
+  data, headers, onDelete,
 }) {
   const { location: { pathname }, push } = useHistory()
   const edit = (id) => push(`${pathname}/edit/${id}`)
@@ -43,7 +43,7 @@ function RenderRows({
       ))}
       <td>
         <div className="d-flex justify-content-evenly">
-          <ButtonComponent isLoading={false} disabled={false} title="Editar" onClick={() => onEdit(element.id)} />
+          <ButtonComponent isLoading={false} disabled={false} title="Editar" onClick={() => edit(element.id)} />
           <ButtonComponent isLoading={false} disabled={false} title="Eliminar" variant="danger" onClick={() => openAlert(element.id)} />
         </div>
       </td>
@@ -53,7 +53,7 @@ function RenderRows({
 
 function TableComponent({
   // eslint-disable-next-line no-alert
-  headers, data, title, onDelete, onEdit,
+  headers, data, title, onDelete,
 }) {
   return (
     <Table striped responsive hover bordered className="caption-top table align-middle">
@@ -66,7 +66,7 @@ function TableComponent({
         </tr>
       </thead>
       <tbody>
-        <RenderRows data={data} headers={headers} onDelete={onDelete} onEdit={onEdit} />
+        <RenderRows data={data} headers={headers} onDelete={onDelete} />
       </tbody>
     </Table>
   )
@@ -77,7 +77,7 @@ TableComponent.propTypes = {
   title: PropTypes.string.isRequired,
   data: PropTypes.arrayOf(PropTypes.object).isRequired,
   onDelete: PropTypes.func.isRequired,
-  onEdit: PropTypes.func.isRequired,
+  // onEdit: PropTypes.func.isRequired,
 }
 
 export default TableComponent

@@ -41,16 +41,14 @@ const AllTestimonial = () => {
 
   const [toggle, setToggle] = useState(false)
 
-  const onEdit = (id) => {
-    console.log(`onEdit ${id}`)
-  }
+  const onEdit = (id) => id
 
   const onDelete = async (id) => {
     try {
       await sendRequest(HttpActionEnum.DELETE, `/testimonials/${id}`)
       Swal.fire('Testimonio eliminado!')
       setToggle(!toggle)
-    } catch (error) {
+    } catch (err) {
       Swal.fire({
         icon: 'error',
         title: 'Oops...',

@@ -21,7 +21,7 @@ export default function GetCategory() {
         setCategory({ ...categoryFiltered[0] })
       }
     }
-  }, [])
+  }, [id])
 
   useEffect(() => {
     fetchData()

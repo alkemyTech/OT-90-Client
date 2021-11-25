@@ -9,7 +9,7 @@ import Loader from '../../Component/Loader'
 export default function OneTestimony() {
   const { id } = useParams()
   const [testimony, setTestimony] = useState({})
-  const [image, setImage] = useState('')
+
 
   useEffect(() => {
     async function fetchData() {
@@ -17,7 +17,7 @@ export default function OneTestimony() {
       const theTestimony = testimonies.data.filter((test) => test.id === parseInt(id, 10))[0]
       // console.log(theTestimony, 'theTestimony')
       setTestimony(theTestimony)
-      setImage(theTestimony.image)
+ 
     }
     try {
       fetchData()
@@ -29,7 +29,7 @@ export default function OneTestimony() {
   if (Object.keys(testimony).length !== 0) {
     return (
       <Container className="m-5">
-        <TestimonyForm testimony={testimony} setImage={setImage} />
+        <TestimonyForm testimony={testimony} />
       </Container>
     )
   }

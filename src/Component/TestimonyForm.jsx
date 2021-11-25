@@ -27,7 +27,7 @@ const loadComponent = (testimony) => {
 }
 
 function TestimonyForm(props) {
-  const { change, setChange, setImage } = props
+  const { change, setChange } = props
   const { testimony } = props
   const history = useHistory()
 
@@ -49,7 +49,7 @@ function TestimonyForm(props) {
       if (file !== undefined) {
         const image = await Upload(file, file.name)
         testimonials.image = image.location
-        setImage(image.location)
+
       } else {
         testimonials.image = testimony.image
       }
@@ -66,6 +66,7 @@ function TestimonyForm(props) {
       }
       return history.push('/testimonios')
     } catch (err) {
+      console.log(err)
       setIsLoading(false)
       Swal.fire({
         icon: 'error',
@@ -207,14 +208,10 @@ TestimonyForm.propTypes = {
   }).isRequired,
   change: PropTypes.bool,
   setChange: PropTypes.bool,
-  image: PropTypes.string,
-  setImage: PropTypes.func,
 }
 TestimonyForm.defaultProps = {
   change: true,
   setChange: false,
-  image: '',
-  setImage: null,
 };
 
 export default TestimonyForm

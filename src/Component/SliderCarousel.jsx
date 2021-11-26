@@ -10,9 +10,6 @@ const SliderCarousel = ({ fetchSlider }) => (
       fetchSlider.map(({ text, imageURL }) => (
         <Carousel.Item className="carouselItem" key={imageURL}>
           <img className="d-block w-100" alt="" src={imageURL} />
-          <Carousel.Caption className="carouselCaption">
-            <p>{text}</p>
-          </Carousel.Caption>
         </Carousel.Item>
       ))) : null }
   </Carousel>

@@ -28,8 +28,8 @@ const Backoffice = (props) => {
       <Switch>
         <Route exact path={path} render={() => <BackofficeMain path={path} />} />
         <Conditional exact path={`${path}/allcategories`} component={AllCategories} conditionToOpen={isAdmin} pathRedirect={path} />
-        <Conditional path={`${path}/allcategories/edit/:id`} component={EditCategory} conditionToOpen={isAdmin} pathRedirect={path} />        
-        <Conditional path={`${path}/contacts`} component={Contacts} conditionToOpen={isAdmin} pathRedirect={path} />
+        <Conditional path={`${path}/allcategories/edit/:id`} component={EditCategory} conditionToOpen={isAdmin} pathRedirect={path} />
+        <Conditional exact path={`${path}/contacts`} component={Contacts} conditionToOpen={isAdmin} pathRedirect={path} />
         <Conditional path={`${path}/allActivities`} component={AllActivities} conditionToOpen={isAdmin} pathRedirect={path} />
         <Conditional exact path={`${path}/contacts`} component={Contacts} conditionToOpen={isAdmin} pathRedirect={path} />
         <Conditional path={`${path}/editorganization/1`} component={EditOrganization} conditionToOpen={isAdmin} pathRedirect={path} />

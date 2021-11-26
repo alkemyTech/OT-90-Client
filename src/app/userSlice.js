@@ -11,6 +11,10 @@ export const userSlice = createSlice({
       state = { isAuthenticated: true, ...action.payload }
       return state
     },
+    updateLogged: (state, action) => {
+      state = { isAuthenticated: true, ...action.payload }
+      return state
+    },
     logOut: (state) => {
       localStorage.removeItem('user-data')
       state = { isAuthenticated: false, user: null }
@@ -19,7 +23,7 @@ export const userSlice = createSlice({
   },
 });
 
-export const { setLogged, logOut } = userSlice.actions;
+export const { setLogged, logOut, updateLogged } = userSlice.actions;
 
 export const selectUser = (state) => state.user;
 

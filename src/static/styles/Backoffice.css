@@ -1,6 +1,7 @@
-.grid{
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 30px;
-  margin: 30px;
+.backoffice_container {
+  min-height: 100vh;
+}
+
+.row_button {
+  row-gap: 3rem;
 }

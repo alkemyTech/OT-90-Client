@@ -12,10 +12,7 @@ export const userSlice = createSlice({
       return state
     },
     updateLogged: (state, action) => {
-      const { firstName, lastName, image } = action.payload.body
-      state.user.firstName = firstName 
-      state.user.lastName = lastName
-      state.user.image = image
+      state = { isAuthenticated: true, ...action.payload }
       return state
     },
     logOut: (state) => {

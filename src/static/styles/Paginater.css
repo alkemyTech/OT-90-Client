@@ -1,0 +1,27 @@
+.paginationNav{
+  display: flex;
+  padding: 0%;
+  margin: 0%;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+}
+
+ul.paginationUl{
+max-width: 100%;
+height: 100%;
+padding: 0%;
+margin: 0%;
+justify-content:center;
+}
+
+.paginationLi{
+margin-right: 30%;
+list-style: none;
+}
+
+.paginationA{
+  text-decoration: none;
+}
+
+

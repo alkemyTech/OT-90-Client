@@ -68,7 +68,7 @@ export default function NavbarComponent() {
   }
   return (
     <>
-      {NavBarItems.map((item, index) => <NavDropdown.Item key={index}><NavLink activeClassName="active" to={`/${item.root}`}>{item.view}</NavLink></NavDropdown.Item>)}
+      {NavBarItems.map((item) => <NavDropdown.Item key={item.root}><NavLink activeClassName="active" to={`/${item.root}`}>{item.view}</NavLink></NavDropdown.Item>)}
     </>
   )
 }

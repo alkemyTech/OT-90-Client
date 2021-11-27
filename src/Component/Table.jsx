@@ -1,8 +1,9 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import PropTypes from 'prop-types'
 import { Table } from 'react-bootstrap'
 import Swal from 'sweetalert2'
 import { useHistory } from 'react-router-dom'
+import Paginater from './Paginater'
 import ButtonComponent from './Button'
 
 function RenderRows({
@@ -33,9 +34,8 @@ function RenderRows({
     if (header === 'createdAt') return element[header].substring(0, 10).split('-').reverse().join('-')
     return element[header]
   }
-  return data.map((element, index) => (
+  return data.map((element) => (
     <tr key={element.id}>
-      <th scope="row">{index + 1}</th>
       {headers.map((header) => (
         <td key={header}>
           {type(element, header)}
@@ -55,19 +55,38 @@ function TableComponent({
   // eslint-disable-next-line no-alert
   headers, data, title, onDelete,
 }) {
+  const [paginate, setPaginate] = useState(0)
+  const [actualPage, setActualPage] = useState()
+
+  useEffect(() => {
+    setActualPage(data.slice(paginate, paginate + 9))
+  }, [paginate, data])
+
   return (
     <Table striped responsive hover bordered className="caption-top table align-middle">
       <caption className="fs-2 my-4">{title}</caption>
       <thead>
         <tr>
-          <th scope="col">#</th>
           {headers.map((col) => <th key={col} className="text-capitalize" scope="col">{col}</th>)}
           <th scope="col">Acciones</th>
         </tr>
       </thead>
-      <tbody>
-        <RenderRows data={data} headers={headers} onDelete={onDelete} />
-      </tbody>
+      <tbody />
+      {actualPage !== null && actualPage !== undefined
+        ? <RenderRows data={actualPage} headers={headers} onDelete={onDelete} />
+        : <h1> loading... </h1>}
+      {data !== undefined && data.length !== 0
+        ? (
+          <Paginater
+            itemsPerPage={5}
+            allItems={data}
+            pagin={setPaginate}
+            paginate={paginate}
+            actualPage={actualPage}
+            setPaginate={setPaginate}
+          />
+        )
+        : null}
     </Table>
   )
 }
@@ -77,7 +96,6 @@ TableComponent.propTypes = {
   title: PropTypes.string.isRequired,
   data: PropTypes.arrayOf(PropTypes.object).isRequired,
   onDelete: PropTypes.func.isRequired,
-  // onEdit: PropTypes.func.isRequired,
 }
 
 export default TableComponent

@@ -63,6 +63,11 @@ function TableComponent({
     window.scrollTo(0, document.body.scrollHeight);
   }
 
+  const pageNumbers = []
+  for (let i = 0; i < Math.ceil(data.length / 5) - 1; i += 1) {
+    pageNumbers.push(i)
+  }
+
   useEffect(() => {
     setActualPage(data.slice(paginate, paginate + 9))
   }, [paginate, data])
@@ -89,6 +94,7 @@ function TableComponent({
             paginate={paginate}
             actualPage={actualPage}
             setPaginate={setPaginate}
+            numbers={pageNumbers}
           />
         )
         : null}

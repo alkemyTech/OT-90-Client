@@ -3,7 +3,7 @@ import PropTypes from 'prop-types'
 import { Table } from 'react-bootstrap'
 import Swal from 'sweetalert2'
 import { useHistory } from 'react-router-dom'
-import Paginater from './Paginater'
+// import Paginater from './Paginater'
 import ButtonComponent from './Button'
 
 function RenderRows({
@@ -80,7 +80,7 @@ function TableComponent({
       {actualPage !== null && actualPage !== undefined
         ? <RenderRows data={actualPage} headers={headers} onDelete={onDelete} />
         : <h1> loading... </h1>}
-      {data !== undefined && data.length !== 0
+      {/* {data !== undefined && data.length !== 0
         ? (
           <Paginater
             itemsPerPage={5}
@@ -91,7 +91,7 @@ function TableComponent({
             setPaginate={setPaginate}
           />
         )
-        : null}
+        : null} */}
     </Table>
   )
 }

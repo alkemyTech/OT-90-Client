@@ -6,7 +6,7 @@ function Paginater({
   itemsPerPage, allItems, pagin, paginate, actualPage, setPaginate,
 }) {
   const pageNumbers = []
-  const [numbers, setNumber] = useState([0])
+  const [numbers, setNumber] = useState([])
 
   const nextPage = (e) => {
     e.preventDefault()
@@ -17,16 +17,12 @@ function Paginater({
     if (paginate > 0) { setPaginate(paginate - 9) }
   }
 
-  function carga() {
+  useEffect(() => {
     for (let i = 0; i < Math.ceil(allItems.length / itemsPerPage) - 1; i += 1) {
       pageNumbers.push(i)
     }
     setNumber(pageNumbers)
-  }
-
-  useEffect(() => {
-    carga()
-  }, [])
+  }, [allItems, itemsPerPage])
   return (
     <>
       <nav className="paginationNav">

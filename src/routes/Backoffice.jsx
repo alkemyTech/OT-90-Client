@@ -19,6 +19,8 @@ import UserProfile from '../Views/Backoffice/UserProfile'
 import ContactsEdit from '../Views/Backoffice/ContactsEdit'
 import OneTestimony from '../Views/Backoffice/EditTestimony'
 import UserFormPut from '../Component/UserFormPUT'
+import UserForm from '../Component/UserForm'
+import EditUser from '../Views/Backoffice/EditUser'
 
 const Backoffice = (props) => {
   const isAdmin = useSelector(selectUser).role.toLowerCase().trim() === 'admin'
@@ -29,7 +31,7 @@ const Backoffice = (props) => {
       <Switch>
         <Route exact path={path} render={() => <BackofficeMain path={path} />} />
         <Conditional exact path={`${path}/allcategories`} component={AllCategories} conditionToOpen={isAdmin} pathRedirect={path} />
-        <Conditional path={`${path}/allcategories/edit/:id`} component={EditCategory} conditionToOpen={isAdmin} pathRedirect={path} />        
+        <Conditional path={`${path}/allcategories/edit/:id`} component={EditCategory} conditionToOpen={isAdmin} pathRedirect={path} />
         <Conditional path={`${path}/contacts`} component={Contacts} conditionToOpen={isAdmin} pathRedirect={path} />
         <Conditional path={`${path}/allActivities`} component={AllActivities} conditionToOpen={isAdmin} pathRedirect={path} />
         <Conditional exact path={`${path}/contacts`} component={Contacts} conditionToOpen={isAdmin} pathRedirect={path} />
@@ -41,6 +43,8 @@ const Backoffice = (props) => {
         <Conditional exact path={`${path}/news/edit/:id`} component={NewsEdit} conditionToOpen={isAdmin} pathRedirect={path} />
         <Conditional exact path={`${path}/news/create`} component={NewsCreate} conditionToOpen={isAdmin} pathRedirect={path} />
         <Conditional exact path={`${path}/contacts/edit/:id`} component={ContactsEdit} conditionToOpen={isAdmin} pathRedirect={path} />
+        <Conditional exact path={`${path}/users/edit/:id`} component={EditUser} conditionToOpen={isAdmin} pathRedirect={path} />
+        <Conditional exact path={`${path}/users/edit/form/:id`} component={UserForm} conditionToOpen={isAdmin} pathRedirect={path} />
         <Route exact path={`${path}/profile`} component={UserProfile} />
         <Route path={`${path}/profile/edit`} component={UserFormPut} />
       </Switch>

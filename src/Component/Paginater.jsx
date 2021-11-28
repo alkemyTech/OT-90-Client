@@ -1,13 +1,10 @@
-import React, { useEffect, useState } from 'react'
+import React from 'react'
 import PropTypes from 'prop-types'
 import '../static/styles/Paginater.css'
 
 function Paginater({
-  itemsPerPage, allItems, pagin, paginate, actualPage, setPaginate,
+  allItems, pagin, paginate, actualPage, setPaginate, numbers,
 }) {
-  const pageNumbers = []
-  const [numbers, setNumber] = useState([])
-
   const nextPage = (e) => {
     e.preventDefault()
     if (allItems.length > paginate + 9) { setPaginate(paginate + 9) }
@@ -17,12 +14,6 @@ function Paginater({
     if (paginate > 0) { setPaginate(paginate - 9) }
   }
 
-  useEffect(() => {
-    for (let i = 0; i < Math.ceil(allItems.length / itemsPerPage) - 1; i += 1) {
-      pageNumbers.push(i)
-    }
-    setNumber(pageNumbers)
-  }, [allItems, itemsPerPage, pageNumbers])
   return (
     <>
       <nav className="paginationNav">
@@ -49,12 +40,12 @@ function Paginater({
 }
 
 Paginater.propTypes = {
-  itemsPerPage: PropTypes.number.isRequired,
   allItems: PropTypes.arrayOf(PropTypes.object).isRequired,
   pagin: PropTypes.number.isRequired,
   paginate: PropTypes.number.isRequired,
   actualPage: PropTypes.arrayOf(PropTypes.object).isRequired,
   setPaginate: PropTypes.func.isRequired,
+  numbers: PropTypes.arrayOf(PropTypes.number).isRequired,
 }
 
 export default Paginater

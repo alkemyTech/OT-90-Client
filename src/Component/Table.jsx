@@ -58,6 +58,11 @@ function TableComponent({
   const [paginate, setPaginate] = useState(0)
   const [actualPage, setActualPage] = useState()
 
+  const pagin = (n) => {
+    setPaginate(n)
+    window.scrollTo(0, document.body.scrollHeight);
+  }
+
   useEffect(() => {
     setActualPage(data.slice(paginate, paginate + 9))
   }, [paginate, data])
@@ -80,7 +85,7 @@ function TableComponent({
           <Paginater
             itemsPerPage={5}
             allItems={data}
-            pagin={setPaginate}
+            pagin={pagin}
             paginate={paginate}
             actualPage={actualPage}
             setPaginate={setPaginate}

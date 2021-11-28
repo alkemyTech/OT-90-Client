@@ -34,3 +34,11 @@
   transition: all 0.2s ease-in;
   margin-top: 50px;
 }
+
+.testimonyFormTitle {
+  padding: 0%;
+  margin: 0%;
+  margin-left: 35%;
+  margin-right: 35%;
+  width: 400px;
+}

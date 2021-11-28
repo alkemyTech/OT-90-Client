@@ -22,7 +22,7 @@ function Paginater({
       pageNumbers.push(i)
     }
     setNumber(pageNumbers)
-  }, [allItems])
+  }, [allItems, itemsPerPage, pageNumbers])
   return (
     <>
       <nav className="paginationNav">

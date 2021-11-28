@@ -26,7 +26,7 @@ function Paginater({
   return (
     <>
       <nav className="paginationNav">
-        {(paginate / 9 + 1) > 1 ? <button type="submit" onClick={prevPage}> Previous</button> : <button type="submit" onClick={prevPage} disabled> Previous</button>}
+        {(paginate / 9 + 1) > 1 ? <button className="paginationBtn" type="submit" onClick={prevPage}> Previous</button> : <button className="paginationBtn" type="submit" onClick={prevPage} disabled> Previous</button>}
 
         <ul className="paginationUl">
           {
@@ -42,7 +42,7 @@ function Paginater({
         }
         </ul>
 
-        {actualPage && actualPage.length > 8 ? <button type="submit" onClick={nextPage}> Next</button> : <button type="submit" onClick={nextPage} disabled> Next</button>}
+        {actualPage && actualPage.length > 8 ? <button className="paginationBtn" type="submit" onClick={nextPage}> Next</button> : <button className="paginationBtn" type="submit" onClick={nextPage} disabled> Next</button>}
       </nav>
     </>
   )

@@ -92,89 +92,91 @@ function TestimonyForm(props) {
   }
 
   return (
-    <Formik
-      validate={validation}
-      initialValues={{
-        name: config.name,
-        image: config.name,
-        content: config.content,
-      }}
-    >
-      {({
-        handleChange,
-        handleBlur,
-        values,
-        errors,
-        touched,
-      }) => (
-        <Form style={{ width: '100%' }} noValidate>
-          <Form.Group className="mb-3" controlId="validationFormik01">
-            <Form.Label style={{ justifyContent: 'left', display: 'flex' }}>
-              Nombre
-            </Form.Label>
-            <Form.Control
-              type="text"
-              placeholder="Ingrese el nombre del testimonio"
-              name="name"
-              value={values.name}
-              onBlur={handleBlur}
-              onChange={handleChange}
-              isValid={touched.name && !errors.name}
-              isInvalid={touched.name && errors.name}
-            />
-            <Form.Control.Feedback type="invalid">
-              {errors.name}
-            </Form.Control.Feedback>
-          </Form.Group>
+    <div>
+      <h2 className="testimonyFormTitle"> Dejanos tu Testimonio</h2>
+      <Formik
+        validate={validation}
+        initialValues={{
+          name: config.name,
+          image: config.name,
+          content: config.content,
+        }}
+      >
+        {({
+          handleChange,
+          handleBlur,
+          values,
+          errors,
+          touched,
+        }) => (
+          <Form style={{ width: '100%' }} noValidate>
+            <Form.Group className="mb-3" controlId="validationFormik01">
+              <Form.Label style={{ justifyContent: 'left', display: 'flex' }}>
+                Nombre
+              </Form.Label>
+              <Form.Control
+                type="text"
+                placeholder="Ingrese el nombre del testimonio"
+                name="name"
+                value={values.name}
+                onBlur={handleBlur}
+                onChange={handleChange}
+                isValid={touched.name && !errors.name}
+                isInvalid={touched.name && errors.name}
+              />
+              <Form.Control.Feedback type="invalid">
+                {errors.name}
+              </Form.Control.Feedback>
+            </Form.Group>
 
-          <Form.Group className="mb-3" controlId="validationFormik01">
-            <Form.Label style={{ justifyContent: 'left', display: 'flex' }}>
-              Imagen
-            </Form.Label>
-            <Form.Control
-              type="file"
-              placeholder="Ingrese imagen del testimonio"
-              name="image"
-              ref={inputRef}
+            <Form.Group className="mb-3" controlId="validationFormik01">
+              <Form.Label style={{ justifyContent: 'left', display: 'flex' }}>
+                Imagen
+              </Form.Label>
+              <Form.Control
+                type="file"
+                placeholder="Ingrese imagen del testimonio"
+                name="image"
+                ref={inputRef}
               // value={values.image}
-              onBlur={handleBlur}
-              onChange={handleChange}
-              isValid={touched.image && !errors.image}
-              isInvalid={touched.image && errors.image}
-            />
-            <Form.Control.Feedback type="invalid">
-              {errors.image}
-            </Form.Control.Feedback>
-          </Form.Group>
+                onBlur={handleBlur}
+                onChange={handleChange}
+                isValid={touched.image && !errors.image}
+                isInvalid={touched.image && errors.image}
+              />
+              <Form.Control.Feedback type="invalid">
+                {errors.image}
+              </Form.Control.Feedback>
+            </Form.Group>
 
-          <Form.Group className="mb-3" controlId="validationFormik02">
-            <Form.Label style={{ justifyContent: 'left', display: 'flex' }}>
-              Contenido
-            </Form.Label>
-            <Form.Control
-              type="text"
-              placeholder="Ingrese el nombre del testimonio"
-              name="content"
-              value={values.content}
-              onBlur={handleBlur}
-              onChange={handleChange}
-              isValid={touched.name && !errors.name}
-              isInvalid={touched.name && errors.name}
-            />
+            <Form.Group className="mb-3" controlId="validationFormik02">
+              <Form.Label style={{ justifyContent: 'left', display: 'flex' }}>
+                Contenido
+              </Form.Label>
+              <Form.Control
+                type="text"
+                placeholder="Ingrese el nombre del testimonio"
+                name="content"
+                value={values.content}
+                onBlur={handleBlur}
+                onChange={handleChange}
+                isValid={touched.name && !errors.name}
+                isInvalid={touched.name && errors.name}
+              />
 
-            <Form.Label style={{ color: 'red' }}>
-              {errors.content}
-            </Form.Label>
-          </Form.Group>
-          <Form.Group
-            className="mb-3"
-            controlId="formBasicPassword"
-            style={{ justifyContent: 'left', display: 'flex' }}
-          >
-            <ButtonComponent
-              variant="primary"
-              title={config.textButton}
-              onClick={
+              <Form.Label style={{ color: 'red' }}>
+                {errors.content}
+              </Form.Label>
+            </Form.Group>
+            <Form.Group
+              className="mb-3"
+              controlId="formBasicPassword"
+              style={{ justifyContent: 'left', display: 'flex' }}
+            >
+              <ButtonComponent
+                variant="primary"
+                title={config.textButton}
+                onClick={
                 async () => onSumbit(
                   testimony ? {
                     id: testimony.id,
@@ -186,13 +188,14 @@ function TestimonyForm(props) {
                   }, action,
                 )
               }
-              isLoading={isLoading}
-              disabled={!!((errors.name || errors.content))}
-            />
-          </Form.Group>
-        </Form>
-      )}
-    </Formik>
+                isLoading={isLoading}
+                disabled={!!((errors.name || errors.content))}
+              />
+            </Form.Group>
+          </Form>
+        )}
+      </Formik>
+    </div>
   )
 }
 

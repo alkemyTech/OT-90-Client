@@ -6,7 +6,6 @@ import HttpActionEnum from '../../enums/HttpActionEnum'
 
 // this line below is just for testing only
 // eslint-disable-next-line max-len
-// localStorage.setItem('user-data', JSON.stringify({ username: 'Ben', token: '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', role: '1' }))
 
 export default function Users() {
   const [toggle, setToggle] = useState(false)

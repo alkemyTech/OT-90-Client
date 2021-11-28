@@ -1,4 +1,5 @@
 import React, { useEffect, useReducer, useState } from 'react';
+import { useHistory } from 'react-router-dom'
 import Table from '../../Component/Table'
 import sendRequest from '../../httpClient'
 import Loader from '../../Component/Loader';
@@ -10,6 +11,8 @@ const Categories = () => {
     isLoading: true,
     error: null,
   }
+
+  const history = useHistory()
 
   const reducer = (state, action) => {
     const { type, payload = {} } = action
@@ -32,11 +35,11 @@ const Categories = () => {
           error: payload,
           data: {},
         };
-        case 'DELETE_OK':
-          return {
-            isLoading: false,
-            error: null,
-            data: action.deleted.data.filter((d) => d.id !== action.deleted.id),
+      case 'DELETE_OK':
+        return {
+          isLoading: false,
+          error: null,
+          data: action.deleted.data.filter((d) => d.id !== action.deleted.id),
         };
       default:
         return state
@@ -46,11 +49,14 @@ const Categories = () => {
 
   const [toggle, setToggle] = useState(false)
 
+  const toCreateCategory = () => {
+    history.push('/backoffice/categories/create')
+  }
+
   const alertAction = () => {
     dispatch({ type: 'GET_DATA' })
     setToggle(!toggle)
   }
-  
 
   const deleteCategories = async (id) => {
     try {
@@ -81,7 +87,12 @@ const Categories = () => {
   return (
     error
       ? <AlertComponent show={!isLoading} title="Error obteniendo categorias" variant="warning" action={alertAction} />
-      : <Table title="Categorias" headers={headers} data={data} onDelete={deleteCategories} />
+      : (
+        <>
+          <button onClick={toCreateCategory}> Agregar Categoría</button>
+          <Table title="Categorias" headers={headers} data={data} onDelete={deleteCategories} />
+        </>
+      )
   )
 }
 

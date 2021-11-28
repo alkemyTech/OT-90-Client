@@ -64,14 +64,9 @@ function TableComponent({
   }
 
   const pageNumbers = []
-  // const [numbers, setNumber] = useState([])
-
-  // useEffect(() => {
   for (let i = 0; i < Math.ceil(data.length / 5) - 1; i += 1) {
     pageNumbers.push(i)
   }
-  // setNumber(pageNumbers)
-  // }, [data, 5])
 
   useEffect(() => {
     setActualPage(data.slice(paginate, paginate + 9))

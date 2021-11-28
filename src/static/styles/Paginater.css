@@ -21,6 +21,7 @@ justify-content:center;
 .paginationA{
   text-decoration: none;
   margin: 10%;
+  font-size: 20px;
 }
 
 .paginationBtn {

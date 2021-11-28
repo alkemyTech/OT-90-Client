@@ -19,6 +19,7 @@ import UserProfile from '../Views/Backoffice/UserProfile'
 import ContactsEdit from '../Views/Backoffice/ContactsEdit'
 import OneTestimony from '../Views/Backoffice/EditTestimony'
 import UserFormPut from '../Component/UserFormPUT'
+import CategoryForm from '../Component/CategoryForm'
 
 const Backoffice = (props) => {
   const isAdmin = useSelector(selectUser).role.toLowerCase().trim() === 'admin'
@@ -41,6 +42,7 @@ const Backoffice = (props) => {
         <Conditional exact path={`${path}/news/edit/:id`} component={NewsEdit} conditionToOpen={isAdmin} pathRedirect={path} />
         <Conditional exact path={`${path}/news/create`} component={NewsCreate} conditionToOpen={isAdmin} pathRedirect={path} />
         <Conditional exact path={`${path}/contacts/edit/:id`} component={ContactsEdit} conditionToOpen={isAdmin} pathRedirect={path} />
+        <Conditional exact path={`${path}/categories/create`} component={CategoryForm} conditionToOpen={isAdmin} pathRedirect={path} />
         <Route exact path={`${path}/profile`} component={UserProfile} />
         <Route path={`${path}/profile/edit`} component={UserFormPut} />
       </Switch>

@@ -15,9 +15,10 @@ const NewsDetail = ({ data }) => {
         {notFounded ? <h1 className="text-center">Novedad no encontrada</h1>
           : (
             <article>
-              <img src={image} alt="news" className="mx-auto d-block" />
+              <img src={image} alt="news" className="mx-auto d-block" style={{ maxHeight: '100%', maxWidth: '100%' }} />
               <h1>{name}</h1>
-              <p>{content}</p>
+              {/* eslint-disable-next-line react/no-danger */}
+              <div dangerouslySetInnerHTML={{ __html: content }} />
             </article>
           )}
       </Col>
